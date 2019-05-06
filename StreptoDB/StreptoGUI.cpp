@@ -4,6 +4,7 @@
 #include <QtWidgets\QGraphicsPixmapItem>
 #include <string>
 #include <sqlite/sqlite3.h> 
+#include <DBController.cpp>
 
 using namespace std;
 
@@ -48,21 +49,15 @@ void StreptoGUI::test() {
 
 void StreptoGUI::test2() {
 	//####################################################
-//DBController* dbcon = new DBController();
-	sqlite3* db;
-	char* zErrMsg = 0;
+	DBController dbcon;// = new DBController();
 	int rc;
-	rc = sqlite3_open("../Database/StreptoDB.db", &db);
-	if (rc) {
-		ui.label_4->setText("Can't open database:\n");
-		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-		//return(0);
+	rc = dbcon.testCon();
+	if (rc==0) {
+		ui.label_4->setText("Can't open database.");
 	}
 	else {
-		ui.label_4->setText("Opened database successfully\n");
-		fprintf(stderr, "Opened database successfully\n");
+		ui.label_4->setText("Opened database successfully.");
 	}
-	sqlite3_close(db);
 	//####################################################
 
 }
