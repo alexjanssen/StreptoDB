@@ -36,6 +36,8 @@ public:
     QGraphicsView *graphicsView;
     QLabel *label_2;
     QLabel *label_3;
+    QPushButton *bttn_dbtest;
+    QLabel *label_4;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -68,6 +70,12 @@ public:
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(480, 330, 341, 16));
+        bttn_dbtest = new QPushButton(centralWidget);
+        bttn_dbtest->setObjectName(QString::fromUtf8("bttn_dbtest"));
+        bttn_dbtest->setGeometry(QRect(20, 350, 75, 23));
+        label_4 = new QLabel(centralWidget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(20, 330, 441, 16));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -82,6 +90,7 @@ public:
 
         retranslateUi(StreptoGUIClass);
         QObject::connect(bttn_upload, SIGNAL(clicked()), StreptoGUIClass, SLOT(test()));
+        QObject::connect(bttn_dbtest, SIGNAL(clicked()), StreptoGUIClass, SLOT(test2()));
 
         QMetaObject::connectSlotsByName(StreptoGUIClass);
     } // setupUi
@@ -93,6 +102,8 @@ public:
         label->setText(QApplication::translate("StreptoGUIClass", "StreptoDB", nullptr));
         label_2->setText(QApplication::translate("StreptoGUIClass", "Bilder Ansicht:", nullptr));
         label_3->setText(QApplication::translate("StreptoGUIClass", "Pfad...", nullptr));
+        bttn_dbtest->setText(QApplication::translate("StreptoGUIClass", "DB-Test", nullptr));
+        label_4->setText(QApplication::translate("StreptoGUIClass", "DB-Status...", nullptr));
     } // retranslateUi
 
 };

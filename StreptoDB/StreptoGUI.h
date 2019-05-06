@@ -18,4 +18,5 @@ public:
 	//void bttnPushed();
 public slots:
 	void test();
+	void test2();
 };

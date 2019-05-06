@@ -96,6 +96,32 @@
      <string>Pfad...</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="bttn_dbtest">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>350</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DB-Test</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>330</y>
+      <width>441</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DB-Status...</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -138,8 +164,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>bttn_dbtest</sender>
+   <signal>clicked()</signal>
+   <receiver>StreptoGUIClass</receiver>
+   <slot>test2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>384</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>439</x>
+     <y>293</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>test()</slot>
+  <slot>test2()</slot>
  </slots>
 </ui>

@@ -39,6 +39,9 @@
     <ClCompile Include="GeneratedFiles\qrc_StreptoGUI.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="DBController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="StreptoGUI.h">
@@ -59,5 +62,8 @@
     <ClInclude Include="GeneratedFiles\ui_StreptoGUI.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

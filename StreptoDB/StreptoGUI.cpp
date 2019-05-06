@@ -3,6 +3,8 @@
 #include <QtWidgets\QMessageBox>
 #include <QtWidgets\QGraphicsPixmapItem>
 #include <string>
+#include <sqlite/sqlite3.h> 
+
 using namespace std;
 
 
@@ -41,4 +43,26 @@ void StreptoGUI::test() {
 
 	ui.label_3->setText(fileName);
 	//delete(&fileName);
+}
+
+
+void StreptoGUI::test2() {
+	//####################################################
+//DBController* dbcon = new DBController();
+	sqlite3* db;
+	char* zErrMsg = 0;
+	int rc;
+	rc = sqlite3_open("../Database/StreptoDB.db", &db);
+	if (rc) {
+		ui.label_4->setText("Can't open database:\n");
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		//return(0);
+	}
+	else {
+		ui.label_4->setText("Opened database successfully\n");
+		fprintf(stderr, "Opened database successfully\n");
+	}
+	sqlite3_close(db);
+	//####################################################
+
 }
