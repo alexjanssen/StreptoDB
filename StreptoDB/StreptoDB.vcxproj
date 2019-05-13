@@ -93,7 +93,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Janssen\StreptoDB3\StreptoDB\x64\Debug;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>qtmaind.lib;Qt5Chartsd.lib;Qt5Cored.lib;Qt5DataVisualizationd.lib;Qt5Guid.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5UiToolsd.lib;Qt5Widgetsd.lib;%(AdditionalDependencies);$(SolutionDir)\$(PlatformTarget)\$(Configuration)\sqlite3.lib</AdditionalDependencies>
     </Link>
@@ -220,6 +220,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Isolat.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StreptoGUI.cpp" />
   </ItemGroup>
@@ -233,6 +234,7 @@
     <QtRcc Include="StreptoGUI.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DBController.h" />
     <ClInclude Include="GeneratedFiles\ui_StreptoGUI.h" />
   </ItemGroup>
   <ItemGroup>

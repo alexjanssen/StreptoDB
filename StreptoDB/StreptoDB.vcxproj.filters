@@ -28,19 +28,31 @@
       <Extensions>moc;h;cpp</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{9872974b-25d0-4e76-9a8d-fcefd054b9e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{6865b344-cde5-41ea-81db-094a6e14d1b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Control">
+      <UniqueIdentifier>{9e168bbb-7e9e-4633-8460-c2d4625790cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StreptoGUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_StreptoGUI.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="DBController.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Isolat.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="StreptoGUI.cpp">
+      <Filter>Source Files\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +73,9 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_StreptoGUI.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DBController.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

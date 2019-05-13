@@ -3,6 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_StreptoGUI.h"
 #include <QtWidgets\QLabel>
+#include <DBController.h>
 
 class StreptoGUI : public QMainWindow, public Ui::StreptoGUIClass
 {

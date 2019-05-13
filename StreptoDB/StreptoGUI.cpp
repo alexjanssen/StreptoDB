@@ -2,9 +2,9 @@
 #include <QtWidgets\QFileDialog>
 #include <QtWidgets\QMessageBox>
 #include <QtWidgets\QGraphicsPixmapItem>
-#include <string>
-#include <sqlite/sqlite3.h> 
-#include <DBController.cpp>
+//#include <string>
+//#include <sqlite/sqlite3.h> 
+
 
 using namespace std;
 
@@ -49,14 +49,17 @@ void StreptoGUI::test() {
 
 void StreptoGUI::test2() {
 	//####################################################
-	DBController dbcon;// = new DBController();
-	int rc;
-	rc = dbcon.testCon();
-	if (rc==0) {
+	
+	DBController *dbcon = new DBController();
+	
+	vector<Isolat> result2;
+	result2 = dbcon->testCon();
+	if (result2.size() == 0) {
 		ui.label_4->setText("Can't open database.");
 	}
 	else {
 		ui.label_4->setText("Opened database successfully.");
+		ui.label_3->setText(QString::fromStdString(result2[0].name));
 	}
 	//####################################################
 

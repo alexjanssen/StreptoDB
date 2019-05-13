@@ -1,59 +1,58 @@
-#include <stdio.h>
+#include <DBController.h>
 #include <sqlite/sqlite3.h> 
+//#include <stdio.h>
+//#include <string>
+//#include <Isolat.cpp>
+//#include <vector>
 
 
-class DBController {
-public:
-	double length;         // Length of a box
-	double breadth;        // Breadth of a box
-	double height;         // Height of a box
-
-	// Member functions declaration
-	//double getVolume(void);
-	//int testCon(void);
+using namespace std;
 
 
-	// Member functions definitions
-	int DBController::testCon(void) {
-		sqlite3* db;
-		char* zErrMsg = 0;
-		int rc;
+DBController::DBController() {
+	//result3 = *new vector<Isolat>;
+}
+	
+static int callback(void* param, int numCols, char** col, char** colName)
+{
+	// int numCols: holds the number of results
+	// (array) colName: holds each column returned
+	// (array) col: holds each value
+	Isolat iso2 = Isolat();
+	int i;
+	int* col_width = (int*)param; // this isn't necessary, but it's convenient
+	
+	result->empty();
+	// print out the contents of the row
+	//for (i = 0; i < numCols; i++) {
+	iso2.name = col[0];
+	iso2.image = (QImage)col[1];
+	iso2.medium = col[2];
+	result->push_back(iso2);
+	//cout << " | " << setw(col_width[i]) << col[i];
+//}
+//cout << endl;
 
-		rc = sqlite3_open("../Database/StreptoDB.db", &db);
+	return 0;
+}
 
-		if (rc) {
-			fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-			return '0';
-		}
-		else {
-			fprintf(stderr, "Opened database successfully\n");
-		}
-		sqlite3_close(db);
 
-		return 1;
-	}
-
-};
-
-/*int DBController(){
+vector<Isolat> DBController::testCon(void) {
 	sqlite3* db;
 	char* zErrMsg = 0;
 	int rc;
+	string query = "SELECT * FROM Streptomyceten;";
 
 	rc = sqlite3_open("../Database/StreptoDB.db", &db);
 
 	if (rc) {
 		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-		//return(0);
 	}
 	else {
 		fprintf(stderr, "Opened database successfully\n");
+		sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg);
 	}
 	sqlite3_close(db);
 
-	return 0;
-}*/
-	
-
-
-
+	return *result;
+}

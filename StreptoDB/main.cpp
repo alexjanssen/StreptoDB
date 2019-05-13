@@ -1,6 +1,7 @@
 #include "StreptoGUI.h"
 #include <QtWidgets/QApplication>
-#include <qlabel.h>
+//#include <qlabel.h>
+//#include <DBController.h>
 //#include <DBController.cpp>
 //#include <sqlite/sqlite3.h> 
 
