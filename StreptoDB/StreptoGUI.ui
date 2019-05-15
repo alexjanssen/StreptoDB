@@ -14,7 +14,7 @@
    <string>StreptoGUI</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="bttn_upload">
+   <widget class="QPushButton" name="bttn_uploadPic">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -96,7 +96,7 @@
      <string>Pfad...</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="bttn_dbtest">
+   <widget class="QPushButton" name="bttn_loadDB">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -149,14 +149,14 @@
  </resources>
  <connections>
   <connection>
-   <sender>bttn_upload</sender>
+   <sender>bttn_uploadPic</sender>
    <signal>clicked()</signal>
    <receiver>StreptoGUIClass</receiver>
-   <slot>test()</slot>
+   <slot>loadPic()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>162</x>
-     <y>142</y>
+     <x>480</x>
+     <y>383</y>
     </hint>
     <hint type="destinationlabel">
      <x>200</x>
@@ -165,10 +165,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>bttn_dbtest</sender>
+   <sender>bttn_loadDB</sender>
    <signal>clicked()</signal>
    <receiver>StreptoGUIClass</receiver>
-   <slot>test2()</slot>
+   <slot>loadDB()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>57</x>
@@ -182,7 +182,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>test()</slot>
-  <slot>test2()</slot>
+  <slot>loadPic()</slot>
+  <slot>loadDB()</slot>
  </slots>
 </ui>

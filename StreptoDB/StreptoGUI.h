@@ -19,5 +19,6 @@ public:
 	//void bttnPushed();
 public slots:
 	void test();
-	void test2();
+	void loadDB();
+	void fillTable(vector<Isolat>);
 };

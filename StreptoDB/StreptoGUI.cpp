@@ -2,6 +2,9 @@
 #include <QtWidgets\QFileDialog>
 #include <QtWidgets\QMessageBox>
 #include <QtWidgets\QGraphicsPixmapItem>
+#include <QtWidgets/qtablewidget.h>
+#include <QTableWidgetItem>
+#include <QHeaderView>
 //#include <string>
 //#include <sqlite/sqlite3.h> 
 
@@ -47,7 +50,7 @@ void StreptoGUI::test() {
 }
 
 
-void StreptoGUI::test2() {
+void StreptoGUI::loadDB() {
 	//####################################################
 	
 	DBController *dbcon = new DBController();
@@ -59,8 +62,35 @@ void StreptoGUI::test2() {
 	}
 	else {
 		ui.label_4->setText("Opened database successfully.");
-		ui.label_3->setText(QString::fromStdString(result2[0].name));
+		fillTable(result2);
 	}
 	//####################################################
 
+}
+
+
+
+void StreptoGUI::fillTable(vector<Isolat> result){
+	ui.tableWidget->setRowCount(10);
+	ui.tableWidget->setColumnCount(5);
+	ui.tableWidget->verticalHeader()->setVisible(false);
+	//ui.tableWidget->setShowGrid(false);
+	//->setStyleSheet("QTableView {selection-background-color: red;}");
+	//->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	
+	ui.tableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem("Bild"));
+	ui.tableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("id"));
+	ui.tableWidget->setHorizontalHeaderItem(2, new QTableWidgetItem("id_intern"));
+	ui.tableWidget->setHorizontalHeaderItem(3, new QTableWidgetItem("Nomenklatur"));
+	ui.tableWidget->setHorizontalHeaderItem(4, new QTableWidgetItem("Siderophore"));
+
+
+
+	QTableWidgetItem* twi = new QTableWidgetItem("test");
+	twi->setData(Qt::DecorationRole, QPixmap::fromImage(result[0].image_preview).scaled(100, 100));
+	ui.tableWidget->setItem(0, 0, new QTableWidgetItem(*twi));
+	ui.tableWidget->setItem(0, 1, new QTableWidgetItem(QString::fromStdString(to_string(result[0].id))));
+	ui.tableWidget->setItem(0, 2, new QTableWidgetItem(QString::fromStdString(to_string(result[0].id_intern))));
+	ui.tableWidget->setItem(0, 3, new QTableWidgetItem(QString::fromStdString(result[0].scientific_name)));
+	ui.tableWidget->setItem(0, 4, new QTableWidgetItem(QString::fromStdString(to_string(result[0].siderophore_bool))));
 }
