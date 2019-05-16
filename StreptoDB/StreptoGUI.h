@@ -18,7 +18,9 @@ public:
 	//StreptoGUI(QWidget* parent);
 	//void bttnPushed();
 public slots:
-	void test();
+	void uploadPic();
 	void loadDB();
+
+private slots:
 	void fillTable(vector<Isolat>);
 };

@@ -152,7 +152,7 @@
    <sender>bttn_uploadPic</sender>
    <signal>clicked()</signal>
    <receiver>StreptoGUIClass</receiver>
-   <slot>loadPic()</slot>
+   <slot>uploadPic()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>480</x>
@@ -182,7 +182,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>loadPic()</slot>
   <slot>loadDB()</slot>
+  <slot>uploadPic()</slot>
  </slots>
 </ui>

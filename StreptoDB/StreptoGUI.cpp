@@ -18,7 +18,7 @@ StreptoGUI::StreptoGUI(QMainWindow*parent)	: QMainWindow(parent)
 	//ui.label -> setText("blaa");
 }
 
-void StreptoGUI::test() {
+void StreptoGUI::uploadPic() {
 	QString fileName = QFileDialog::getOpenFileName(this, "Open Image File", QDir::currentPath());
 
 	if (!fileName.isEmpty())

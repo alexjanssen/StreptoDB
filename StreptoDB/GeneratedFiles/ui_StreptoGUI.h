@@ -89,7 +89,7 @@ public:
         StreptoGUIClass->setStatusBar(statusBar);
 
         retranslateUi(StreptoGUIClass);
-        QObject::connect(bttn_uploadPic, SIGNAL(clicked()), StreptoGUIClass, SLOT(loadPic()));
+        QObject::connect(bttn_uploadPic, SIGNAL(clicked()), StreptoGUIClass, SLOT(uploadPic()));
         QObject::connect(bttn_loadDB, SIGNAL(clicked()), StreptoGUIClass, SLOT(loadDB()));
 
         QMetaObject::connectSlotsByName(StreptoGUIClass);
