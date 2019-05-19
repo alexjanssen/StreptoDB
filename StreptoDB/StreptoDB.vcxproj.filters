@@ -54,6 +54,9 @@
     <ClCompile Include="StreptoGUI.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
+    <ClCompile Include="CVController.cpp">
+      <Filter>Source Files\Control</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="StreptoGUI.h">
@@ -75,6 +78,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="DBController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CVController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

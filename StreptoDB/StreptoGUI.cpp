@@ -5,11 +5,15 @@
 #include <QtWidgets/qtablewidget.h>
 #include <QTableWidgetItem>
 #include <QHeaderView>
+#include <CVController.h>
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
 //#include <string>
 //#include <sqlite/sqlite3.h> 
 
 
-using namespace std;
+using namespace std; 
+
 
 
 StreptoGUI::StreptoGUI(QMainWindow*parent)	: QMainWindow(parent)
@@ -31,10 +35,13 @@ void StreptoGUI::uploadPic() {
 			return;
 		}
 
-		QPixmap pixmap(fileName);
+		cv::Mat testbildM = cv::imread(fileName.toStdString());
+		QImage testbildQ = CVController::Mat2QImage(testbildM);
+		QPixmap pixmap;
+		pixmap.fromImage(testbildQ);
+		
 		QGraphicsScene* scene = new QGraphicsScene();
 		scene->addPixmap(pixmap.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-		
 		ui.graphicsView->setScene(scene);
 		ui.graphicsView->show();
 
