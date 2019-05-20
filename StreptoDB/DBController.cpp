@@ -27,15 +27,18 @@ static int callback(void* param, int numCols, char** col, char** colName)
 	iso2.scientific_name = col[5];
 	iso2.spore_color = col[6];
 	iso2.genome_link = col[7];
-	iso2.image_preview = (QImage)col[8];
+
+	QByteArray outByteArray = col[8];
+	QImage image;// = (QImage)col[8];
+	image.fromData(outByteArray);
+	//outPixmap.fromImage(outByteArray);
+
+	iso2.image_preview = image;// = (QImage)col[8];//= (QImage)col[8];
 	iso2.siderophore_bool = col[9];
 	iso2.broth_id = (int)col[10];
 	iso2.image_para_id = (int)col[11];
 	iso2.locality = col[12];
 	result->push_back(iso2);
-	//cout << " | " << setw(col_width[i]) << col[i];
-//}
-//cout << endl;
 
 	return 0;
 }

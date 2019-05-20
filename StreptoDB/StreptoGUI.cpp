@@ -35,15 +35,37 @@ void StreptoGUI::uploadPic() {
 			return;
 		}
 
-		cv::Mat testbildM = cv::imread(fileName.toStdString());
-		QImage testbildQ = CVController::Mat2QImage(testbildM);
-		QPixmap pixmap;
-		pixmap.fromImage(testbildQ);
 		
+		cv::Mat testbildM = cv::imread(fileName.toStdString());
+		QImage imageQ2 = CVController::Mat2QImage(testbildM);
+
+
+		//QPixmap pixmap(fileName);
+		//QImage imageQ = (QImage)pixmap.toImage();
+		//cv::Mat testbildM = CVController::QImage2Mat(imageQ);
+		//QImage imageQ2 = CVController::Mat2QImage(testbildM);
+
+
+		//cv::Mat testbildM = cv::imread(fileName.toStdString());
+		//QImage *testbildQ = new QImage(); 
+		//testbildQ = &CVController::Mat2QImage(testbildM);
+
+
+		QPixmap pixmap2;
+		pixmap2 = pixmap2.fromImage(imageQ2);
+
+
 		QGraphicsScene* scene = new QGraphicsScene();
-		scene->addPixmap(pixmap.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+		scene->addPixmap(pixmap2.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+
 		ui.graphicsView->setScene(scene);
 		ui.graphicsView->show();
+
+
+		QTableWidgetItem* twi = new QTableWidgetItem("test");
+		twi->setData(Qt::DecorationRole, pixmap2.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+		ui.tableWidget->setItem(0, 0, new QTableWidgetItem(*twi));
+		
 
 		//delete(&pixmap);
 		//delete(&scene);
@@ -79,6 +101,8 @@ void StreptoGUI::loadDB() {
 
 void StreptoGUI::fillTable(vector<Isolat> result){
 	ui.tableWidget->setRowCount(10);
+	ui.tableWidget->setRowHeight(0,100);
+	ui.tableWidget->setRowHeight(1, 100);
 	ui.tableWidget->setColumnCount(5);
 	ui.tableWidget->verticalHeader()->setVisible(false);
 	//ui.tableWidget->setShowGrid(false);
@@ -92,10 +116,11 @@ void StreptoGUI::fillTable(vector<Isolat> result){
 	ui.tableWidget->setHorizontalHeaderItem(4, new QTableWidgetItem("Siderophore"));
 
 
-
-	QTableWidgetItem* twi = new QTableWidgetItem("test");
-	twi->setData(Qt::DecorationRole, QPixmap::fromImage(result[0].image_preview).scaled(100, 100));
-	ui.tableWidget->setItem(0, 0, new QTableWidgetItem(*twi));
+	//QPixmap pixmap;
+	//pixmap = result[0].image_preview;
+	QTableWidgetItem *twi = new QTableWidgetItem();
+	twi->setData(Qt::DecorationRole, result[0].image_preview.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+	ui.tableWidget->setItem(0, 0, twi);
 	ui.tableWidget->setItem(0, 1, new QTableWidgetItem(QString::fromStdString(to_string(result[0].id))));
 	ui.tableWidget->setItem(0, 2, new QTableWidgetItem(QString::fromStdString(to_string(result[0].id_intern))));
 	ui.tableWidget->setItem(0, 3, new QTableWidgetItem(QString::fromStdString(result[0].scientific_name)));
