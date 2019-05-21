@@ -6,25 +6,21 @@
 using namespace std;
 
 
-class Isolat
+class Image
 {
 	
 	// Access specifier 
 public:
 	// Data Members 
-	int id;
-	int id_intern;
-	int id_group;
-	int multiple_counter;
-	string date;
-	string scientific_name;
-	string spore_color;
-	string genome_link;
+	int image_id;
 	QImage image_preview;
-	bool siderophore_bool;
+	string date;
+	double imagesize;
+	double resolution;
 	int broth_id;
-	int image_para_id;
-	string locality;
+	int group_id;
+
+	
 };
 
 

@@ -8,6 +8,7 @@
 #include <CVController.h>
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
+#include <UploadDialog.h>
 //#include <string>
 //#include <sqlite/sqlite3.h> 
 
@@ -23,60 +24,13 @@ StreptoGUI::StreptoGUI(QMainWindow*parent)	: QMainWindow(parent)
 }
 
 void StreptoGUI::uploadPic() {
-	QString fileName = QFileDialog::getOpenFileName(this, "Open Image File", QDir::currentPath());
+	uploadDialog* f = new uploadDialog();
+	f->show();
 
-	if (!fileName.isEmpty())
-	{
-		QImage image(fileName);
-
-		if (image.isNull())
-		{
-			QMessageBox::information(this, "Image Viewer", "Error Displaying image");
-			return;
-		}
-
-		
-		cv::Mat testbildM = cv::imread(fileName.toStdString());
-		QImage imageQ2 = CVController::Mat2QImage(testbildM);
-
-
-		//QPixmap pixmap(fileName);
-		//QImage imageQ = (QImage)pixmap.toImage();
-		//cv::Mat testbildM = CVController::QImage2Mat(imageQ);
-		//QImage imageQ2 = CVController::Mat2QImage(testbildM);
-
-
-		//cv::Mat testbildM = cv::imread(fileName.toStdString());
-		//QImage *testbildQ = new QImage(); 
-		//testbildQ = &CVController::Mat2QImage(testbildM);
-
-
-		QPixmap pixmap2;
-		pixmap2 = pixmap2.fromImage(imageQ2);
-
-
-		QGraphicsScene* scene = new QGraphicsScene();
-		scene->addPixmap(pixmap2.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-
-		ui.graphicsView->setScene(scene);
-		ui.graphicsView->show();
-
-
-		QTableWidgetItem* twi = new QTableWidgetItem("test");
-		twi->setData(Qt::DecorationRole, pixmap2.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-		ui.tableWidget->setItem(0, 0, new QTableWidgetItem(*twi));
-		
-
-		//delete(&pixmap);
-		//delete(&scene);
-		//delete(&image);
-		
-	}
-
-
-	ui.label_3->setText(fileName);
-	//delete(&fileName);
 }
+
+
+
 
 
 void StreptoGUI::loadDB() {
@@ -84,7 +38,7 @@ void StreptoGUI::loadDB() {
 	
 	DBController *dbcon = new DBController();
 	
-	vector<Isolat> result2;
+	vector<Image> result2;
 	result2 = dbcon->testCon();
 	if (result2.size() == 0) {
 		ui.label_4->setText("Can't open database.");
@@ -99,7 +53,7 @@ void StreptoGUI::loadDB() {
 
 
 
-void StreptoGUI::fillTable(vector<Isolat> result){
+void StreptoGUI::fillTable(vector<Image> result){
 	ui.tableWidget->setRowCount(10);
 	ui.tableWidget->setRowHeight(0,100);
 	ui.tableWidget->setRowHeight(1, 100);
@@ -109,20 +63,20 @@ void StreptoGUI::fillTable(vector<Isolat> result){
 	//->setStyleSheet("QTableView {selection-background-color: red;}");
 	//->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	
-	ui.tableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem("Bild"));
-	ui.tableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("id"));
-	ui.tableWidget->setHorizontalHeaderItem(2, new QTableWidgetItem("id_intern"));
-	ui.tableWidget->setHorizontalHeaderItem(3, new QTableWidgetItem("Nomenklatur"));
-	ui.tableWidget->setHorizontalHeaderItem(4, new QTableWidgetItem("Siderophore"));
+	ui.tableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem("Image-ID"));
+	ui.tableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("Image-Preview"));
+	ui.tableWidget->setHorizontalHeaderItem(2, new QTableWidgetItem("Timestamp"));
+	ui.tableWidget->setHorizontalHeaderItem(3, new QTableWidgetItem("Imagesize"));
+	ui.tableWidget->setHorizontalHeaderItem(4, new QTableWidgetItem("Resolution"));
 
 
 	//QPixmap pixmap;
 	//pixmap = result[0].image_preview;
 	QTableWidgetItem *twi = new QTableWidgetItem();
 	twi->setData(Qt::DecorationRole, result[0].image_preview.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-	ui.tableWidget->setItem(0, 0, twi);
-	ui.tableWidget->setItem(0, 1, new QTableWidgetItem(QString::fromStdString(to_string(result[0].id))));
-	ui.tableWidget->setItem(0, 2, new QTableWidgetItem(QString::fromStdString(to_string(result[0].id_intern))));
-	ui.tableWidget->setItem(0, 3, new QTableWidgetItem(QString::fromStdString(result[0].scientific_name)));
-	ui.tableWidget->setItem(0, 4, new QTableWidgetItem(QString::fromStdString(to_string(result[0].siderophore_bool))));
+	ui.tableWidget->setItem(0, 1, twi);
+	ui.tableWidget->setItem(0, 0, new QTableWidgetItem(QString::fromStdString(to_string(result[0].image_id))));
+	ui.tableWidget->setItem(0, 2, new QTableWidgetItem(QString::fromStdString(result[0].date)));
+	ui.tableWidget->setItem(0, 3, new QTableWidgetItem(QString::fromStdString(to_string(result[0].imagesize))));
+	ui.tableWidget->setItem(0, 4, new QTableWidgetItem(QString::fromStdString(to_string(result[0].resolution))));
 }

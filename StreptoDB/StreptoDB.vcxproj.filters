@@ -48,23 +48,32 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Isolat.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
     <ClCompile Include="StreptoGUI.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
     <ClCompile Include="CVController.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="UploadDialog.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="StreptoGUI.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="UploadDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="StreptoGUI.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UploadDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -82,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="CVController.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_UploadDialog.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,39 +12,33 @@ static int callback(void* param, int numCols, char** col, char** colName)
 	// int numCols: holds the number of results
 	// (array) colName: holds each column returned
 	// (array) col: holds each value
-	Isolat iso2 = Isolat();
+	Image img = Image();
 	int i;
 	int* col_width = (int*)param; // this isn't necessary, but it's convenient
 	
 	result->empty();
 	// print out the contents of the row
 	//for (i = 0; i < numCols; i++) {
-	iso2.id = (int)col[0];
-	iso2.id_intern = (int)col[1];
-	iso2.id_group = (int)col[2];
-	iso2.multiple_counter = (int)col[3];
-	iso2.date = col[4];
-	iso2.scientific_name = col[5];
-	iso2.spore_color = col[6];
-	iso2.genome_link = col[7];
+	img.image_id = (int)col[0];
+	img.image_preview = (QImage)col[1];
+	img.date = (string)col[2];
+	img.imagesize = (int)col[3];
+	img.resolution = (int)col[4];
+	img.broth_id = (int)col[5];
+	img.group_id = (int)col[6];
 
-	QByteArray outByteArray = col[8];
-	QImage image;// = (QImage)col[8];
-	image.fromData(outByteArray);
+	//QByteArray outByteArray = col[8];
+	//QImage image;// = (QImage)col[8];
+	//image.fromData(outByteArray);
 	//outPixmap.fromImage(outByteArray);
 
-	iso2.image_preview = image;// = (QImage)col[8];//= (QImage)col[8];
-	iso2.siderophore_bool = col[9];
-	iso2.broth_id = (int)col[10];
-	iso2.image_para_id = (int)col[11];
-	iso2.locality = col[12];
-	result->push_back(iso2);
+	result->push_back(img);
 
 	return 0;
 }
 
 
-vector<Isolat> DBController::testCon(void) {
+vector<Image> DBController::testCon(void) {
 	sqlite3* db;
 	char* zErrMsg = 0;
 	int rc;
