@@ -39,6 +39,8 @@ public:
     QLineEdit *lineEdit_broth_id;
     QLabel *label_7;
     QLineEdit *lineEdit_group_id;
+    QLabel *label_test;
+    QPushButton *pushButton_2;
 
     void setupUi(QDialog *uploadDialog)
     {
@@ -95,11 +97,18 @@ public:
         lineEdit_group_id = new QLineEdit(uploadDialog);
         lineEdit_group_id->setObjectName(QString::fromUtf8("lineEdit_group_id"));
         lineEdit_group_id->setGeometry(QRect(290, 130, 113, 20));
+        label_test = new QLabel(uploadDialog);
+        label_test->setObjectName(QString::fromUtf8("label_test"));
+        label_test->setGeometry(QRect(210, 170, 191, 16));
+        pushButton_2 = new QPushButton(uploadDialog);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(130, 210, 75, 23));
 
         retranslateUi(uploadDialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), uploadDialog, SLOT(accept()));
         QObject::connect(buttonBox, SIGNAL(rejected()), uploadDialog, SLOT(reject()));
         QObject::connect(pushButton, SIGNAL(clicked()), uploadDialog, SLOT(openFile()));
+        QObject::connect(pushButton_2, SIGNAL(clicked()), uploadDialog, SLOT(insertIntoDB()));
 
         QMetaObject::connectSlotsByName(uploadDialog);
     } // setupUi
@@ -115,6 +124,8 @@ public:
         label_5->setText(QApplication::translate("uploadDialog", "RESOLUTION:", nullptr));
         label_6->setText(QApplication::translate("uploadDialog", "BROTH_ID:", nullptr));
         label_7->setText(QApplication::translate("uploadDialog", "GROUP_ID:", nullptr));
+        label_test->setText(QApplication::translate("uploadDialog", "testing...", nullptr));
+        pushButton_2->setText(QApplication::translate("uploadDialog", "speichern", nullptr));
     } // retranslateUi
 
 };

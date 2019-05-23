@@ -38,7 +38,7 @@ void uploadDialog::openFile() {
 
 		cv::Mat testbildM = cv::imread(fileName.toStdString());
 		QImage imageQ2 = CVController::Mat2QImage(testbildM);
-
+		img2.image_preview = imageQ2.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
 		//QPixmap pixmap(fileName);
 		//QImage imageQ = (QImage)pixmap.toImage();
@@ -79,3 +79,15 @@ void uploadDialog::openFile() {
 }
 
 
+void uploadDialog::insertIntoDB() {
+	DBController *dbcon = new DBController();
+	img2.image_id = ui.lineEdit_image_id->text().toInt();
+	img2.date = ui.lineEdit_timestamp->text().toStdString();
+	img2.imagesize = ui.lineEdit_imagesize->text().toDouble();
+	img2.resolution = ui.lineEdit_resolution->text().toDouble();
+	img2.broth_id = ui.lineEdit_broth_id->text().toInt();
+	img2.image_id = ui.lineEdit_image_id->text().toInt();
+
+	dbcon->addImage2(img2);
+	ui.label_test->setText("insertIntoDB()");
+}

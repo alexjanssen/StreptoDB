@@ -39,7 +39,7 @@ void StreptoGUI::loadDB() {
 	DBController *dbcon = new DBController();
 	
 	vector<Image> result2;
-	result2 = dbcon->testCon();
+	result2 = dbcon->getImages();
 	if (result2.size() == 0) {
 		ui.label_4->setText("Can't open database.");
 	}

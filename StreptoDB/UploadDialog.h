@@ -20,8 +20,11 @@ public:
 	//void bttnPushed();
 public slots:
 	void openFile();
-	//void loadDB();
+	void insertIntoDB();
+
 
 //private slots:
 //	void fillTable(vector<Image>);
 };
+
+static Image img2;
