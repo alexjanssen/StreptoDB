@@ -75,7 +75,7 @@ void StreptoGUI::fillTable(vector<Image> result){
 	QTableWidgetItem *twi = new QTableWidgetItem();
 	twi->setData(Qt::DecorationRole, result[0].image_preview.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 	ui.tableWidget->setItem(0, 1, twi);
-	ui.tableWidget->setItem(0, 0, new QTableWidgetItem(QString::fromStdString(to_string(result[0].image_id))));
+	ui.tableWidget->setItem(0, 0, new QTableWidgetItem(QString::number(result[0].image_id)));
 	ui.tableWidget->setItem(0, 2, new QTableWidgetItem(QString::fromStdString(result[0].date)));
 	ui.tableWidget->setItem(0, 3, new QTableWidgetItem(QString::fromStdString(to_string(result[0].imagesize))));
 	ui.tableWidget->setItem(0, 4, new QTableWidgetItem(QString::fromStdString(to_string(result[0].resolution))));

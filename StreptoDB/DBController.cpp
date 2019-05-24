@@ -31,13 +31,14 @@ static int callback(void* param, int numCols, char** col, char** colName)
 	result->empty();
 	// print out the contents of the row
 	//for (i = 0; i < numCols; i++) {
-	img.image_id = (int)col[0];
+	img.image_id = atoi(col[0]);
 	img.image_preview = (QImage)col[1];
 	img.date = (string)col[2];
-	img.imagesize = (int)col[3];
-	img.resolution = (int)col[4];
-	img.broth_id = (int)col[5];
-	img.group_id = (int)col[6];
+	img.imagesize = atoi(col[3]);
+	img.resolution = atoi(col[4]);
+	img.broth_id = atoi(col[5]);
+	img.group_id = atoi(col[6]);
+
 
 	//QByteArray outByteArray = col[8];
 	//QImage image;// = (QImage)col[8];
@@ -153,12 +154,15 @@ vector<Image> DBController::getImages(void) {
 	 }
 	 else {
 		 sqlite3_stmt* stmt = NULL;
-		 rc = sqlite3_prepare_v2(db, \
-			 "INSERT INTO Image(IMAGE_ID, IMAGE_PREVIEW_BLOB, TIMESTAMP, IMAGESIZE, RESOLUTION, BROTH_ID, GROUP_ID)" \
-			 " VALUES(?,?,?,?,?,?,?)", \
+		 string err_str;
+		 rc = sqlite3_prepare(db, \
+			 "INSERT INTO Images(IMAGE_ID, IMAGE_PREVIEW_BLOB, TIMESTAMP, IMAGESIZE, RESOLUTION, BROTH_ID, GROUP_ID)" \
+			 " VALUES(?,?,?,?,?,?,?);", \
 			 -1, &stmt, NULL); 
 		 if (rc != SQLITE_OK) {
-			 DBOUT("prepare failed: DBController(162)");
+			 //DBOUT("prepare failed: DBController(162)");
+			 DBOUT("prepare failed: DBController(162)" , sqlite3_errmsg(db));//"prepare failed: DBController(162)" + string(sqlite3_errmsg(db)));
+			 
 			 return false;//cerr << "prepare failed: " << sqlite3_errmsg(db) << endl;
 		 }
 		 else {
