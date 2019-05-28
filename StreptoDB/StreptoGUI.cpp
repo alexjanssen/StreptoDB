@@ -17,12 +17,16 @@ using namespace std;
 
 
 
+//Todo comment
 StreptoGUI::StreptoGUI(QMainWindow*parent)	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 	//ui.label -> setText("blaa");
 }
 
+
+
+//Todo comment
 void StreptoGUI::uploadPic() {
 	uploadDialog* f = new uploadDialog();
 	f->show();
@@ -31,8 +35,7 @@ void StreptoGUI::uploadPic() {
 
 
 
-
-
+//Todo comment
 void StreptoGUI::loadDB() {
 	//####################################################
 	
@@ -48,11 +51,11 @@ void StreptoGUI::loadDB() {
 		fillTable(result2);
 	}
 	//####################################################
-
 }
 
 
 
+//Todo comment
 void StreptoGUI::fillTable(vector<Image> result){
 	ui.tableWidget->setRowCount(10);
 	ui.tableWidget->setRowHeight(0,100);
@@ -70,10 +73,11 @@ void StreptoGUI::fillTable(vector<Image> result){
 	ui.tableWidget->setHorizontalHeaderItem(4, new QTableWidgetItem("Resolution"));
 
 
-	//QPixmap pixmap;
-	//pixmap = result[0].image_preview;
+	QPixmap pixmap;
+	//pixmap.loadFromData(result[0].image_preview);
+	pixmap = pixmap.fromImage(result[0].image_preview);
 	QTableWidgetItem *twi = new QTableWidgetItem();
-	twi->setData(Qt::DecorationRole, result[0].image_preview.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+	twi->setData(Qt::DecorationRole, pixmap.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 	ui.tableWidget->setItem(0, 1, twi);
 	ui.tableWidget->setItem(0, 0, new QTableWidgetItem(QString::number(result[0].image_id)));
 	ui.tableWidget->setItem(0, 2, new QTableWidgetItem(QString::fromStdString(result[0].date)));

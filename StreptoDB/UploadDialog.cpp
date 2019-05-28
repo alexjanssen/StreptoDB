@@ -36,41 +36,35 @@ void uploadDialog::openFile() {
 		}
 
 
-		cv::Mat testbildM = cv::imread(fileName.toStdString());
-		QImage imageQ2 = CVController::Mat2QImage(testbildM);
-		img2.image_preview = imageQ2.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
+		//cv::Mat testbildM = cv::imread(fileName.toStdString());
+		//QImage imageQ2 = CVController::Mat2QImage(testbildM);
+		//imageQ2 = imageQ2.fromImage(CVController::Mat2QImage(testbildM));
+		img2.image_preview = image.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		//img2.image_preview = image
 		//QPixmap pixmap(fileName);
 		//QImage imageQ = (QImage)pixmap.toImage();
 		//cv::Mat testbildM = CVController::QImage2Mat(imageQ);
 		//QImage imageQ2 = CVController::Mat2QImage(testbildM);
 
-
 		//cv::Mat testbildM = cv::imread(fileName.toStdString());
 		//QImage *testbildQ = new QImage(); 
 		//testbildQ = &CVController::Mat2QImage(testbildM);
 
-
 		QPixmap pixmap2;
-		pixmap2 = pixmap2.fromImage(imageQ2);
-
+		pixmap2 = pixmap2.fromImage(image);
 
 		QGraphicsScene* scene = new QGraphicsScene();
-		scene->addPixmap(pixmap2.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-
+		scene->addPixmap(pixmap2.scaled(150, 150, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 		ui.graphicsView->setScene(scene);
 		ui.graphicsView->show();
 
-
-		QTableWidgetItem* twi = new QTableWidgetItem("test");
-		twi->setData(Qt::DecorationRole, pixmap2.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+		//QTableWidgetItem* twi = new QTableWidgetItem("test");
+		//twi->setData(Qt::DecorationRole, pixmap2.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 		//ui.tableWidget->setItem(0, 0, new QTableWidgetItem(*twi));
-
 
 		//delete(&pixmap);
 		//delete(&scene);
 		//delete(&image);
-
 	}
 
 
@@ -79,6 +73,7 @@ void uploadDialog::openFile() {
 }
 
 
+//Collects the user inputs and calls DBController::addImage(Image);
 void uploadDialog::insertIntoDB() {
 	DBController *dbcon = new DBController();
 	img2.image_id = ui.lineEdit_image_id->text().toInt();
@@ -87,7 +82,8 @@ void uploadDialog::insertIntoDB() {
 	img2.resolution = ui.lineEdit_resolution->text().toDouble();
 	img2.broth_id = ui.lineEdit_broth_id->text().toInt();
 	img2.image_id = ui.lineEdit_image_id->text().toInt();
+	img2.filePath = ui.label->text().toStdString();
 
 	dbcon->addImage2(img2);
-	ui.label_test->setText("insertIntoDB()");
+	ui.label_test->setText("successfully saved Image to DB.");
 }

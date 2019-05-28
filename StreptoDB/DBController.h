@@ -16,7 +16,7 @@ public:
 
 private:
 	bool openDB();
-	void closeDB();
+	//void closeDB();
 
 };
 static vector<Image> *result = new vector<Image>;
