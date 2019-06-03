@@ -81,7 +81,7 @@ void uploadDialog::insertIntoDB() {
 	img2.imagesize = ui.lineEdit_imagesize->text().toDouble();
 	img2.resolution = ui.lineEdit_resolution->text().toDouble();
 	img2.broth_id = ui.lineEdit_broth_id->text().toInt();
-	img2.image_id = ui.lineEdit_image_id->text().toInt();
+	img2.group_id = ui.lineEdit_group_id->text().toInt();
 	img2.filePath = ui.label->text().toStdString();
 
 	dbcon->addImage2(img2);

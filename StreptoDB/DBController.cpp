@@ -35,7 +35,6 @@ static int callback(void* param, int numCols, char** col, char** colName)
 	int i;
 	int* col_width = (int*)param; // this isn't necessary, but it's convenient
 
-	result->empty();
 
 	img.image_id = atoi(col[0]);
 	unsigned char* data = (unsigned char*)col[1];
@@ -45,6 +44,8 @@ static int callback(void* param, int numCols, char** col, char** colName)
 	img.resolution = atoi(col[4]);
 	img.broth_id = atoi(col[5]);
 	img.group_id = atoi(col[6]);
+	img.filePath = (string)col[7];
+
 
 	result->push_back(img);
 
@@ -77,6 +78,7 @@ vector<Image> DBController::getImages(void) {
 	string query = "SELECT * FROM Images;";
 	int rc = DBController::openDB();
 	if (rc) {
+		result->empty();
 		sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg);
 	}
 	else {
@@ -124,8 +126,8 @@ vector<Image> DBController::getImages(void) {
 		 sqlite3_stmt* stmt = NULL;
 		 string err_str;
 		 rc = sqlite3_prepare(db, \
-			 "INSERT INTO Images(IMAGE_ID, IMAGE_PREVIEW_BLOB, TIMESTAMP, IMAGESIZE, RESOLUTION, BROTH_ID, GROUP_ID)" \
-			 " VALUES(?,?,?,?,?,?,?);", \
+			 "INSERT INTO Images(IMAGE_ID, IMAGE_PREVIEW_BLOB, TIMESTAMP, IMAGESIZE, RESOLUTION, BROTH_ID, GROUP_ID, PATH)" \
+			 " VALUES(?,?,?,?,?,?,?,?);", \
 			 -1, &stmt, NULL); 
 		 if (rc != SQLITE_OK) {
 			 DBOUT("prepare failed: DBController(162)" , sqlite3_errmsg(db));
@@ -142,6 +144,7 @@ vector<Image> DBController::getImages(void) {
 			 sqlite3_bind_double(stmt, 5, img.resolution);
 			 sqlite3_bind_int(stmt, 6, img.broth_id);
 			 sqlite3_bind_int(stmt, 7, img.group_id);
+			 sqlite3_bind_text(stmt, 8, img.filePath.c_str(), -1, SQLITE_STATIC);
 
 			 if (rc != SQLITE_OK) {
 				 DBOUT("bind failed: DBController(176)", sqlite3_errmsg(db));
