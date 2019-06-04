@@ -41,16 +41,41 @@ void StreptoGUI::loadDB() {
 	
 	DBController *dbcon = new DBController();
 	
-	vector<Image> result2;
-	result2 = dbcon->getImages();
-	if (result2.size() == 0) {
+	vector<Image> result;
+	result = dbcon->getImages();
+	if (result.size() == 0) {
 		ui.label_4->setText("Can't open database.");
 	}
 	else {
 		ui.label_4->setText("Opened database successfully.");
-		fillTable(result2);
+		fillTable(result);
+		
+		resultGlob = result;
 	}
 	//####################################################
+}
+
+
+
+//is called when clicking on a QtableWidgetItem in the QTableWidget
+//and fills the right side of the gui with Details from the Image selected
+void StreptoGUI::itemSelected(int x, int y)
+{
+	int imgID = atoi(ui.tableWidget->item(x, y)->text().toStdString().c_str());
+	//ui.label->setText(ui.tableWidget->item(x, y)->text());
+	for (int i = 0; i < resultGlob.size(); i++) {
+		if (resultGlob[i].image_id == imgID) {
+			QPixmap pixmap2;
+			QImage image(resultGlob[i].filePath.c_str());
+			pixmap2 = pixmap2.fromImage(image);
+
+			QGraphicsScene* scene = new QGraphicsScene();
+			scene->addPixmap(pixmap2.scaled(150, 150, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+			ui.graphicsView->setScene(scene);
+			ui.graphicsView->show();
+		}
+	}
+	ui.label->setText("x: " + QString::number(x) + " | y: " + QString::number(y));
 }
 
 
@@ -100,6 +125,7 @@ void StreptoGUI::fillTable(vector<Image> result){
 				//pixmap.loadFromData(result[0].image_preview);
 				pixmap = pixmap.fromImage(result[x].image_preview);
 				twi->setData(Qt::DecorationRole, pixmap.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+				twi->setText(QString::number(result[x].image_id));
 				ui.tableWidget->setItem(z, result[x].broth_id-1, twi);
 				ui.label->setText(ui.label->text() + " / " + QString::number(result[x].broth_id));
 			}

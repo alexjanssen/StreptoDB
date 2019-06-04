@@ -20,7 +20,10 @@ public:
 public slots:
 	void uploadPic();
 	void loadDB();
+	void itemSelected(int x, int y);
 
 private slots:
 	void fillTable(vector<Image>);
 };
+
+static vector<Image> resultGlob;

@@ -175,6 +175,7 @@ public:
         retranslateUi(StreptoGUIClass);
         QObject::connect(bttn_uploadPic, SIGNAL(clicked()), StreptoGUIClass, SLOT(uploadPic()));
         QObject::connect(bttn_loadDB, SIGNAL(clicked()), StreptoGUIClass, SLOT(loadDB()));
+        QObject::connect(tableWidget, SIGNAL(cellClicked(int,int)), StreptoGUIClass, SLOT(itemSelected(int,int)));
 
         QMetaObject::connectSlotsByName(StreptoGUIClass);
     } // setupUi
