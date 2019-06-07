@@ -75,7 +75,7 @@ void uploadDialog::openFile() {
 
 //Collects the user inputs and calls DBController::addImage(Image);
 void uploadDialog::insertIntoDB() {
-	DBController *dbcon = new DBController();
+	DBController *dbcon2 = new DBController();
 	img2.image_id = ui.lineEdit_image_id->text().toInt();
 	img2.date = ui.lineEdit_timestamp->text().toStdString();
 	img2.imagesize = ui.lineEdit_imagesize->text().toDouble();
@@ -84,6 +84,6 @@ void uploadDialog::insertIntoDB() {
 	img2.group_id = ui.lineEdit_group_id->text().toInt();
 	img2.filePath = ui.label->text().toStdString();
 
-	dbcon->addImage2(img2);
+	dbcon2->addImage2(img2);
 	ui.label_test->setText("successfully saved Image to DB.");
 }

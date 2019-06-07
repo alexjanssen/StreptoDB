@@ -56,6 +56,12 @@ public:
     QLineEdit *line_brothID;
     QLabel *label_10;
     QLineEdit *line_groupID;
+    QTableWidget *tableWidget_2;
+    QLabel *label_11;
+    QLabel *label_12;
+    QPushButton *bttn_testCalc;
+    QLineEdit *line_path;
+    QLabel *label_13;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -81,7 +87,7 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         bttn_uploadPic = new QPushButton(centralWidget);
         bttn_uploadPic->setObjectName(QString::fromUtf8("bttn_uploadPic"));
-        bttn_uploadPic->setGeometry(QRect(680, 350, 75, 23));
+        bttn_uploadPic->setGeometry(QRect(680, 360, 75, 23));
         line_ID = new QLineEdit(centralWidget);
         line_ID->setObjectName(QString::fromUtf8("line_ID"));
         line_ID->setGeometry(QRect(1100, 40, 113, 20));
@@ -93,13 +99,13 @@ public:
         tableWidget->setGeometry(QRect(10, 40, 661, 621));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setGeometry(QRect(680, 40, 301, 301));
+        graphicsView->setGeometry(QRect(680, 40, 311, 311));
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(680, 20, 71, 16));
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(760, 350, 341, 21));
+        label_3->setGeometry(QRect(760, 360, 341, 21));
         bttn_loadDB = new QPushButton(centralWidget);
         bttn_loadDB->setObjectName(QString::fromUtf8("bttn_loadDB"));
         bttn_loadDB->setGeometry(QRect(10, 10, 75, 23));
@@ -139,6 +145,24 @@ public:
         line_groupID = new QLineEdit(centralWidget);
         line_groupID->setObjectName(QString::fromUtf8("line_groupID"));
         line_groupID->setGeometry(QRect(1100, 190, 113, 20));
+        tableWidget_2 = new QTableWidget(centralWidget);
+        tableWidget_2->setObjectName(QString::fromUtf8("tableWidget_2"));
+        tableWidget_2->setGeometry(QRect(680, 420, 511, 241));
+        label_11 = new QLabel(centralWidget);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+        label_11->setGeometry(QRect(770, 390, 111, 21));
+        label_12 = new QLabel(centralWidget);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setGeometry(QRect(890, 390, 301, 21));
+        bttn_testCalc = new QPushButton(centralWidget);
+        bttn_testCalc->setObjectName(QString::fromUtf8("bttn_testCalc"));
+        bttn_testCalc->setGeometry(QRect(680, 390, 75, 23));
+        line_path = new QLineEdit(centralWidget);
+        line_path->setObjectName(QString::fromUtf8("line_path"));
+        line_path->setGeometry(QRect(1100, 220, 113, 20));
+        label_13 = new QLabel(centralWidget);
+        label_13->setObjectName(QString::fromUtf8("label_13"));
+        label_13->setGeometry(QRect(1030, 220, 71, 21));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -176,6 +200,7 @@ public:
         QObject::connect(bttn_uploadPic, SIGNAL(clicked()), StreptoGUIClass, SLOT(uploadPic()));
         QObject::connect(bttn_loadDB, SIGNAL(clicked()), StreptoGUIClass, SLOT(loadDB()));
         QObject::connect(tableWidget, SIGNAL(cellClicked(int,int)), StreptoGUIClass, SLOT(itemSelected(int,int)));
+        QObject::connect(bttn_testCalc, SIGNAL(clicked()), StreptoGUIClass, SLOT(testCalc()));
 
         QMetaObject::connectSlotsByName(StreptoGUIClass);
     } // setupUi
@@ -200,6 +225,10 @@ public:
         label_8->setText(QApplication::translate("StreptoGUIClass", "Resolution:", nullptr));
         label_9->setText(QApplication::translate("StreptoGUIClass", "Broth-ID:", nullptr));
         label_10->setText(QApplication::translate("StreptoGUIClass", "Group-ID:", nullptr));
+        label_11->setText(QApplication::translate("StreptoGUIClass", "Berechnete Parameter:", nullptr));
+        label_12->setText(QApplication::translate("StreptoGUIClass", "...", nullptr));
+        bttn_testCalc->setText(QApplication::translate("StreptoGUIClass", "Test-Calc", nullptr));
+        label_13->setText(QApplication::translate("StreptoGUIClass", "Path:", nullptr));
         menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Datei", nullptr));
         menuInfo->setTitle(QApplication::translate("StreptoGUIClass", "Info", nullptr));
     } // retranslateUi

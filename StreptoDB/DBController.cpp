@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <sstream>
 #include <QtCore\QBuffer>
+
 using namespace std;
 
 
@@ -32,9 +33,7 @@ static int callback(void* param, int numCols, char** col, char** colName)
 	// (array) colName: holds each column returned
 	// (array) col: holds each value
 	Image img = Image();
-	int i;
 	int* col_width = (int*)param; // this isn't necessary, but it's convenient
-
 
 	img.image_id = atoi(col[0]);
 	unsigned char* data = (unsigned char*)col[1];
@@ -46,9 +45,64 @@ static int callback(void* param, int numCols, char** col, char** colName)
 	img.group_id = atoi(col[6]);
 	img.filePath = (string)col[7];
 
-
 	result->push_back(img);
 
+	return 0;
+}
+
+
+//This function is called to receive the query result of "DBController::getGroup()" and 
+//write that to the static vector "result".
+static int callback_group(void* param, int numCols, char** col, char** colName)
+{
+	// int numCols: holds the number of results
+	// (array) colName: holds each column returned
+	// (array) col: holds each value
+	//Group grp = Group();
+	int* col_width = (int*)param; // this isn't necessary, but it's convenient
+
+	grp.group_id = atoi(col[0]);
+	grp.intern_id = (string)(col[1]);
+	grp.date = (string)col[2];
+	grp.sci_name = (string)col[3];
+	grp.genome_lnk = (string)col[4];
+	grp.locality = (string)col[5];
+	grp.siderophore = (bool)col[6];
+	grp.spore_color = (string)col[7];
+
+	//result->push_back(grp);
+
+	return 0;
+}
+
+
+
+//same shit for Calculated-Paramaters
+static int callback_calcedParams(void* param, int numCols, char** col, char** colName)
+{
+	// int numCols: holds the number of results
+	// (array) colName: holds each column returned
+	// (array) col: holds each value
+	CalcedParams cp = CalcedParams();
+	int* col_width = (int*)param; // this isn't necessary, but it's convenient
+
+	cp.calc_id = atoi(col[0]);
+	cp.image_id = atoi(col[1]);
+	cp.class_id = atoi(col[2]);
+	cp.value = atof(col[3]);
+	cp.timestamp = (string)col[4];
+
+	result_calcedParams->push_back(cp);
+
+	return 0;
+}
+
+
+//still same shit
+static int callback_maxCalcParamID(void* param, int numCols, char** col, char** colName)
+{
+	int* col_width = (int*)param;
+	maxCalcParamID = atoi(col[0]);
 	return 0;
 }
 
@@ -91,16 +145,70 @@ vector<Image> DBController::getImages(void) {
 
 
 
+ //return Group for specific GROUP_ID
+ Group DBController::getGroup(int id) {
+	 char* zErrMsg = 0;
+	 string query = "SELECT * FROM Streptomyceten WHERE ID_GROUP = "+ std::to_string(id) +";";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 //result->empty();
+		 sqlite3_exec(db, query.c_str(), callback_group, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getGroup(int)):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return grp;
+ }
+
+
+
+ //return max ID from Calculated Parameters
+ int DBController::getMaxCalcParamID() {
+	 char* zErrMsg = 0;
+	 string query = "SELECT MAX(CalcP_ID) FROM CalculatedParameters;";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 //result->empty();
+		 sqlite3_exec(db, query.c_str(), callback_maxCalcParamID, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getMaxCalcParamID()):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return maxCalcParamID;
+ }
+
+
+
+ //returns calculated Parameters for specific IMAGE_ID
+ vector<CalcedParams> DBController::getCalcedParams(int id) {
+	 char* zErrMsg = 0;
+	 string query = "SELECT * FROM CalculatedParameters WHERE IMAGE_ID = " + std::to_string(id) + ";";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 result_calcedParams->clear();
+		 sqlite3_exec(db, query.c_str(), callback_calcedParams, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getCalcedParams(int)):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return *result_calcedParams;
+ }
 
 
 
  //Todo comment
  bool DBController::addImage2(Image img) {
-	 
+
 	 QImage image(QString::fromStdString(img.filePath));
 	 if (image.isNull())
 	 {
-		 DBOUT("Image file open failed: DBController(147)", sqlite3_errmsg(db));
+		 DBOUT("Image file open failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
 		 return false;
 	 }
 
@@ -119,7 +227,7 @@ vector<Image> DBController::getImages(void) {
 
 	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
 	 if (rc != SQLITE_OK) {
-		 DBOUT("db open failed: DBController(152)", sqlite3_errmsg(db));
+		 DBOUT("db open failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
 		 return false;
 	 }
 	 else {
@@ -128,10 +236,10 @@ vector<Image> DBController::getImages(void) {
 		 rc = sqlite3_prepare(db, \
 			 "INSERT INTO Images(IMAGE_ID, IMAGE_PREVIEW_BLOB, TIMESTAMP, IMAGESIZE, RESOLUTION, BROTH_ID, GROUP_ID, PATH)" \
 			 " VALUES(?,?,?,?,?,?,?,?);", \
-			 -1, &stmt, NULL); 
+			 - 1, &stmt, NULL);
 		 if (rc != SQLITE_OK) {
-			 DBOUT("prepare failed: DBController(162)" , sqlite3_errmsg(db));
-			 
+			 DBOUT("prepare failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
+
 			 return false;
 		 }
 		 else {
@@ -147,14 +255,14 @@ vector<Image> DBController::getImages(void) {
 			 sqlite3_bind_text(stmt, 8, img.filePath.c_str(), -1, SQLITE_STATIC);
 
 			 if (rc != SQLITE_OK) {
-				 DBOUT("bind failed: DBController(176)", sqlite3_errmsg(db));
+				 DBOUT("bind failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
 				 return false;
 			 }
 			 else {
 				 rc = sqlite3_step(stmt);
 				 if (rc != SQLITE_DONE)
-					 DBOUT("execution failed: DBController(183)", sqlite3_errmsg(db));
-					 return false;
+					 DBOUT("execution failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
+				 return false;
 			 }
 		 }
 		 sqlite3_finalize(stmt);
@@ -168,7 +276,51 @@ vector<Image> DBController::getImages(void) {
 
 
 
+ //Todo comment
+ bool DBController::addCalcedParams(CalcedParams cp) {
 
+	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
+	 if (rc != SQLITE_OK) {
+		 DBOUT("db open failed: DBController::addCalcedParams(CalcedParams)", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 else {
+		 sqlite3_stmt* stmt = NULL;
+		 string err_str;
+		 rc = sqlite3_prepare(db, \
+			 "INSERT INTO CalculatedParameters(CalcP_ID, IMAGE_ID, ClassP_ID, VALUE, TIMESTAMP)" \
+			 " VALUES(?,?,?,?,?);", \
+			 - 1, &stmt, NULL);
+		 if (rc != SQLITE_OK) {
+			 DBOUT("prepare failed: DBController::addCalcedParams(CalcedParams)", sqlite3_errmsg(db));
+
+			 return false;
+		 }
+		 else {
+			 // SQLITE_STATIC because the statement is finalized
+			 // before the buffer is freed:
+			 sqlite3_bind_int(stmt, 1, cp.calc_id);
+			 sqlite3_bind_int(stmt, 2, cp.image_id);
+			 sqlite3_bind_int(stmt, 3, cp.class_id);
+			 sqlite3_bind_double(stmt, 4, cp.value);
+			 sqlite3_bind_text(stmt, 5, cp.timestamp.c_str(), -1, SQLITE_STATIC);
+			 
+			 if (rc != SQLITE_OK) {
+				 DBOUT("bind failed: DBController::addCalcedParams(CalcedParams)", sqlite3_errmsg(db));
+				 return false;
+			 }
+			 else {
+				 rc = sqlite3_step(stmt);
+				 if (rc != SQLITE_DONE)
+					 DBOUT("execution failed: DBController::addCalcedParams(CalcedParams)", sqlite3_errmsg(db));
+				 return false;
+			 }
+		 }
+		 sqlite3_finalize(stmt);
+	 }
+	 sqlite3_close(db);
+	 return true;
+ }
 
  //Stuff I might need later idk
  /* bool DBController::addImage(Image img) {

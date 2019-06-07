@@ -1,5 +1,5 @@
-#ifndef Isolat_HEADER
-#define Isolat_HEADER
+#ifndef Image_HEADER
+#define Image_HEADER
 
 #include <string>
 #include <QtWidgets\QGraphicsPixmapItem>

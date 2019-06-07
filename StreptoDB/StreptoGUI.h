@@ -21,9 +21,12 @@ public slots:
 	void uploadPic();
 	void loadDB();
 	void itemSelected(int x, int y);
+	void testCalc();
 
 private slots:
 	void fillTable(vector<Image>);
+	void fillTable2(vector<CalcedParams>);
 };
 
 static vector<Image> resultGlob;
+static DBController *dbcon = new DBController();
