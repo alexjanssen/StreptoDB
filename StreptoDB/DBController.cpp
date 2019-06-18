@@ -107,6 +107,23 @@ static int callback_maxCalcParamID(void* param, int numCols, char** col, char** 
 }
 
 
+//same shit for Compare
+static int callback_compare(void* param, int numCols, char** col, char** colName)
+{
+	// int numCols: holds the number of results
+	// (array) colName: holds each column returned
+	// (array) col: holds each value
+	Compare com = Compare();
+	int* col_width = (int*)param; // this isn't necessary, but it's convenient
+
+	com.image_id = atoi(col[0]);
+	com.diff = atof(col[1]);
+
+	result_compare->push_back(com);
+
+	return 0;
+}
+
 
 //opens the database yds
 bool DBController::openDB() {
@@ -198,6 +215,40 @@ vector<Image> DBController::getImages(void) {
 	 sqlite3_close(db);
 
 	 return *result_calcedParams;
+ }
+
+
+ //returns Vector of Images with absolute difference for a specific Classification Parameter and a given Value
+ vector<Compare> DBController::getCompare(double val, int broth_id, int classP_ID) {
+	 char* zErrMsg = 0;
+	 string query =	 "SELECT" \
+					 "t1.IMAGE_ID," \
+					 "t1.diff" \
+					 "FROM" \
+						 "(SELECT" \
+						 "MAX(cp.TIMESTAMP)," \
+						 "cp.IMAGE_ID," \
+						 "cp.ClassP_ID," \
+						 "cp.VALUE," \
+						 "ABS(cp.VALUE - " + std::to_string(val) + ") as diff" \
+							 "FROM CalculatedParameters cp" \
+							 "LEFT JOIN Images i ON cp.IMAGE_ID = i.IMAGE_ID" \
+								 "WHERE" \
+								 "i.BROTH_ID = " + std::to_string(broth_id) +  \
+								 "AND cp.ClassP_ID = " + std::to_string(classP_ID) + \
+						 "GROUP BY cp.IMAGE_ID" \
+						 "ORDER BY diff ASC) t1";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 result_compare->clear();
+		 sqlite3_exec(db, query.c_str(), callback_compare, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getCalcedParams(int)):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return *result_compare;
  }
 
 

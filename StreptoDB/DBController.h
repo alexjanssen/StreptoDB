@@ -4,6 +4,7 @@
 #include <vector>
 #include <Group.cpp>
 #include <Image.cpp>
+#include <Compare.cpp>
 #include <CalcedParams.cpp>
 #include <sqlite/sqlite3.h> 
 
@@ -16,6 +17,7 @@ public:
 	Group getGroup(int);
 	int getMaxCalcParamID();
 	vector<CalcedParams> getCalcedParams(int);
+	vector<Compare> getCompare(double, int, int);
 
 	bool addImage2(Image);
 	bool addCalcedParams(CalcedParams cp);
@@ -31,3 +33,4 @@ static string& db_name = string("../Database/StreptoDB.db");
 static Group grp;
 static int maxCalcParamID;
 static vector<CalcedParams> *result_calcedParams = new vector<CalcedParams>;
+static vector<Compare>* result_compare = new vector<Compare>;

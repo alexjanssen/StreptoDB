@@ -219,6 +219,7 @@
   <ItemGroup>
     <ClCompile Include="Broth.cpp" />
     <ClCompile Include="CalcedParams.cpp" />
+    <ClCompile Include="Compare.cpp" />
     <ClCompile Include="CVController.cpp" />
     <ClCompile Include="DBController.cpp" />
     <ClCompile Include="GeneratedFiles\qrc_StreptoGUI.cpp">

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1247</width>
-    <height>803</height>
+    <width>1202</width>
+    <height>920</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    <widget class="QLineEdit" name="line_ID">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1070</x>
       <y>40</y>
       <width>113</width>
       <height>20</height>
@@ -41,7 +41,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>670</y>
+      <y>660</y>
       <width>251</width>
       <height>16</height>
      </rect>
@@ -80,7 +80,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Bilder Ansicht:</string>
+     <string>Imageview:</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
@@ -88,12 +88,12 @@
      <rect>
       <x>760</x>
       <y>360</y>
-      <width>341</width>
+      <width>431</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Pfad...</string>
+     <string>Path...</string>
     </property>
    </widget>
    <widget class="QPushButton" name="bttn_loadDB">
@@ -106,7 +106,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>DB-Test</string>
+     <string>refresh</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -125,7 +125,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>1030</x>
+      <x>1000</x>
       <y>43</y>
       <width>71</width>
       <height>20</height>
@@ -138,7 +138,7 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>1030</x>
+      <x>1000</x>
       <y>70</y>
       <width>71</width>
       <height>21</height>
@@ -151,7 +151,7 @@
    <widget class="QLineEdit" name="line_timestamp">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1070</x>
       <y>70</y>
       <width>113</width>
       <height>20</height>
@@ -161,7 +161,7 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>1030</x>
+      <x>1000</x>
       <y>100</y>
       <width>71</width>
       <height>21</height>
@@ -174,7 +174,7 @@
    <widget class="QLineEdit" name="line_imgSize">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1070</x>
       <y>100</y>
       <width>113</width>
       <height>20</height>
@@ -184,7 +184,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>1030</x>
+      <x>1000</x>
       <y>130</y>
       <width>71</width>
       <height>21</height>
@@ -197,7 +197,7 @@
    <widget class="QLineEdit" name="line_resolution">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1070</x>
       <y>130</y>
       <width>113</width>
       <height>20</height>
@@ -207,7 +207,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>1030</x>
+      <x>1000</x>
       <y>160</y>
       <width>71</width>
       <height>21</height>
@@ -220,7 +220,7 @@
    <widget class="QLineEdit" name="line_brothID">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1070</x>
       <y>160</y>
       <width>113</width>
       <height>20</height>
@@ -230,7 +230,7 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>1030</x>
+      <x>1000</x>
       <y>190</y>
       <width>71</width>
       <height>21</height>
@@ -243,7 +243,7 @@
    <widget class="QLineEdit" name="line_groupID">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1070</x>
       <y>190</y>
       <width>113</width>
       <height>20</height>
@@ -263,14 +263,14 @@
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>770</x>
+      <x>760</x>
       <y>390</y>
       <width>111</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Berechnete Parameter:</string>
+     <string>Calculated Parameter:</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_12">
@@ -302,7 +302,7 @@
    <widget class="QLineEdit" name="line_path">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1070</x>
       <y>220</y>
       <width>113</width>
       <height>20</height>
@@ -312,7 +312,7 @@
    <widget class="QLabel" name="label_13">
     <property name="geometry">
      <rect>
-      <x>1030</x>
+      <x>1000</x>
       <y>220</y>
       <width>71</width>
       <height>21</height>
@@ -322,13 +322,136 @@
      <string>Path:</string>
     </property>
    </widget>
+   <widget class="QTableWidget" name="tableWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>760</y>
+      <width>1181</width>
+      <height>101</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>690</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>- Select an Image</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>710</y>
+      <width>171</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>- Select attributes for comparison:</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_color">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>680</y>
+      <width>51</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>color</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_shape">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>700</y>
+      <width>61</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>shape</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_size">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>720</y>
+      <width>101</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>size</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_bgColor">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>740</y>
+      <width>111</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>background color</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>730</y>
+      <width>171</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>- find best matches:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bttn_compare">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>730</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>click here</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1247</width>
+     <width>1202</width>
      <height>21</height>
     </rect>
    </property>
@@ -469,12 +592,28 @@
    <slot>testCalc()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1037</x>
-     <y>434</y>
+     <x>754</x>
+     <y>445</y>
     </hint>
     <hint type="destinationlabel">
      <x>623</x>
      <y>401</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bttn_compare</sender>
+   <signal>clicked()</signal>
+   <receiver>StreptoGUIClass</receiver>
+   <slot>compare()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>157</x>
+     <y>774</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>459</y>
     </hint>
    </hints>
   </connection>
@@ -484,5 +623,6 @@
   <slot>uploadPic()</slot>
   <slot>itemSelected(int,int)</slot>
   <slot>testCalc()</slot>
+  <slot>compare()</slot>
  </slots>
 </ui>

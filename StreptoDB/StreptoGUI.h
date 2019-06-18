@@ -22,6 +22,7 @@ public slots:
 	void loadDB();
 	void itemSelected(int x, int y);
 	void testCalc();
+	void compare();
 
 private slots:
 	void fillTable(vector<Image>);

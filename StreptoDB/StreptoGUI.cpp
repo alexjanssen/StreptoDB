@@ -210,3 +210,10 @@ void StreptoGUI::testCalc() {
 	}
 
 }
+
+void StreptoGUI::compare(){
+
+
+
+
+}
