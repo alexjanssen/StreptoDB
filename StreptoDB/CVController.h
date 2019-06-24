@@ -6,7 +6,7 @@
 #include <QtWidgets\QGraphicsPixmapItem>
 #include <opencv2/imgproc.hpp>
 
-static class CVController
+class CVController
 {
 public:
 	CVController();

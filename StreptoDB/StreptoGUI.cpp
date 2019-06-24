@@ -92,6 +92,7 @@ void StreptoGUI::itemSelected(int x, int y)
 			}
 		}
 		ui.label->setText("x: " + QString::number(x) + " | y: " + QString::number(y));
+		column = y;
 	}else {
 		//Error message
 		ui.label->setText("Selected item not found.");
@@ -137,11 +138,11 @@ void StreptoGUI::fillTable(vector<Image> result){
 
 	//todo comment
 	ui.tableWidget->setRowCount(group.size());
-
+	ui.label->setText("Groups found: ");
 	for (int z = 0; z < group.size(); z++) {
 		ui.tableWidget->setRowHeight(z, 100);
 		ui.tableWidget->setVerticalHeaderItem(z, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup(group[z]).intern_id)));
-		ui.label->setText(ui.label->text() + " / " + QString::fromStdString(dbcon->getGroup(group[z]).intern_id));
+		ui.label->setText(ui.label->text() + QString::fromStdString(dbcon->getGroup(group[z]).intern_id) + " | ");
 		for (int x = 0; x < result.size(); x++) {
 			if(group[z] == result[x].group_id){
 				QPixmap pixmap;
@@ -211,9 +212,58 @@ void StreptoGUI::testCalc() {
 
 }
 
+
+
+//is called when clicking on a QtableWidgetItem in the QTableWidget
+//and fills the right side of the gui with Details from the Image selected
+void StreptoGUI::paramSelected(int x, int y)
+{	//first check if selected item exists
+	if (ui.tableWidget_2->item(x, y)) {
+		int imgID = ui.line_ID->text().toInt();
+
+		vector<Compare> comp = dbcon->getCompare(ui.tableWidget_2->item(x, 3)->text().toDouble(), ui.line_brothID->text().toInt(), ui.tableWidget_2->item(x, 2)->text().toInt());
+		//vector<Compare> comp = dbcon->getCompare(42, 1, 1);
+
+		ui.tableWidget_3->setRowCount(1);
+		ui.tableWidget_3->setColumnCount(comp.size());
+		//ui.tableWidget_3->verticalHeader()->setVisible(false);
+		//ui.tableWidget_3->horizontalHeader()->setVisible(false);
+		ui.tableWidget_3->setRowHeight(0, 100);
+		//ui.tableWidget_3->setVerticalHeaderItem(0, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup(ui.line_groupID->text().toInt()).intern_id)));
+		ui.tableWidget_3->setVerticalHeaderItem(0, new QTableWidgetItem(ui.tableWidget->horizontalHeaderItem(column)->text()));
+		for (int i = 0; i < comp.size(); i++) {
+			ui.tableWidget_3->setColumnWidth(i, 175);
+			for (int u = 0; u < resultGlob.size(); u++) {
+				//if found, set graphicsView with image
+				if (resultGlob[u].image_id == comp[i].image_id) {
+					QPixmap pixmap;
+					QTableWidgetItem* twi = new QTableWidgetItem();
+					//pixmap.loadFromData(result[0].image_preview);
+					pixmap = pixmap.fromImage(resultGlob[u].image_preview);
+					twi->setData(Qt::DecorationRole, pixmap.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+					twi->setText(QString::number(resultGlob[u].image_id)+"\n"+QString::number(comp[i].diff));
+					ui.tableWidget_3->setItem(0, i, twi);
+
+					//ui.tableWidget_3->setHorizontalHeaderItem(i, new QTableWidgetItem("ISP2"));
+					ui.tableWidget_3->setHorizontalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup(resultGlob[u].group_id).intern_id)));
+
+				}
+
+			}
+		}
+		ui.label_17->setText("Compare result count: " + QString::number(comp.size()));
+	}
+	else {
+		//Error message
+		ui.label_17->setText("Selected Param not found.");
+	}
+
+}
+
+
+//Todo
 void StreptoGUI::compare(){
-
-
+	//vector<Compare> comp = dbcon->getCompare(ui.line);
 
 
 }

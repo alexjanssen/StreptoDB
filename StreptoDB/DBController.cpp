@@ -220,26 +220,31 @@ vector<Image> DBController::getImages(void) {
 
  //returns Vector of Images with absolute difference for a specific Classification Parameter and a given Value
  vector<Compare> DBController::getCompare(double val, int broth_id, int classP_ID) {
+	 //returns vector<Compare>
+	 //double val		-> Value to compare
+	 //int broth_id		-> broth ID
+	 //int classP_ID	-> Classification Paramater ID
 	 char* zErrMsg = 0;
-	 string query =	 "SELECT" \
+	 string query =	 "SELECT " \
 					 "t1.IMAGE_ID," \
-					 "t1.diff" \
+					 "t1.diff " \
 					 "FROM" \
-						 "(SELECT" \
+						 "(SELECT " \
 						 "MAX(cp.TIMESTAMP)," \
 						 "cp.IMAGE_ID," \
 						 "cp.ClassP_ID," \
 						 "cp.VALUE," \
-						 "ABS(cp.VALUE - " + std::to_string(val) + ") as diff" \
-							 "FROM CalculatedParameters cp" \
-							 "LEFT JOIN Images i ON cp.IMAGE_ID = i.IMAGE_ID" \
-								 "WHERE" \
+						 "ABS(cp.VALUE - " + std::to_string(val) + ") as diff " \
+							 "FROM CalculatedParameters cp " \
+							 "LEFT JOIN Images i ON cp.IMAGE_ID = i.IMAGE_ID " \
+								 "WHERE " \
 								 "i.BROTH_ID = " + std::to_string(broth_id) +  \
-								 "AND cp.ClassP_ID = " + std::to_string(classP_ID) + \
-						 "GROUP BY cp.IMAGE_ID" \
-						 "ORDER BY diff ASC) t1";
+								 " AND cp.ClassP_ID = " + std::to_string(classP_ID) + \
+						 " GROUP BY cp.IMAGE_ID" \
+						 " ORDER BY diff ASC) t1;";
 	 int rc = DBController::openDB();
 	 if (rc) {
+		 DBOUT(query.c_str());
 		 result_compare->clear();
 		 sqlite3_exec(db, query.c_str(), callback_compare, NULL, &zErrMsg);
 	 }

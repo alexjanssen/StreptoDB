@@ -23,6 +23,7 @@ public slots:
 	void itemSelected(int x, int y);
 	void testCalc();
 	void compare();
+	void paramSelected(int x, int y);
 
 private slots:
 	void fillTable(vector<Image>);
@@ -31,3 +32,4 @@ private slots:
 
 static vector<Image> resultGlob;
 static DBController *dbcon = new DBController();
+static int column;

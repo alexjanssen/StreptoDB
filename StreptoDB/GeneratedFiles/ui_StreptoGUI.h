@@ -72,6 +72,7 @@ public:
     QCheckBox *checkBox_bgColor;
     QLabel *label_16;
     QPushButton *bttn_compare;
+    QLabel *label_17;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -175,34 +176,37 @@ public:
         label_13->setGeometry(QRect(1000, 220, 71, 21));
         tableWidget_3 = new QTableWidget(centralWidget);
         tableWidget_3->setObjectName(QString::fromUtf8("tableWidget_3"));
-        tableWidget_3->setGeometry(QRect(10, 760, 1181, 101));
+        tableWidget_3->setGeometry(QRect(10, 730, 1181, 131));
         label_14 = new QLabel(centralWidget);
         label_14->setObjectName(QString::fromUtf8("label_14"));
         label_14->setGeometry(QRect(10, 690, 91, 16));
         label_14->setLayoutDirection(Qt::LeftToRight);
         label_15 = new QLabel(centralWidget);
         label_15->setObjectName(QString::fromUtf8("label_15"));
-        label_15->setGeometry(QRect(10, 710, 171, 16));
+        label_15->setGeometry(QRect(10, 700, 171, 16));
         label_15->setLayoutDirection(Qt::LeftToRight);
         checkBox_color = new QCheckBox(centralWidget);
         checkBox_color->setObjectName(QString::fromUtf8("checkBox_color"));
-        checkBox_color->setGeometry(QRect(250, 680, 51, 17));
+        checkBox_color->setGeometry(QRect(200, 690, 51, 17));
         checkBox_shape = new QCheckBox(centralWidget);
         checkBox_shape->setObjectName(QString::fromUtf8("checkBox_shape"));
-        checkBox_shape->setGeometry(QRect(250, 700, 61, 17));
+        checkBox_shape->setGeometry(QRect(200, 710, 61, 17));
         checkBox_size = new QCheckBox(centralWidget);
         checkBox_size->setObjectName(QString::fromUtf8("checkBox_size"));
-        checkBox_size->setGeometry(QRect(250, 720, 101, 17));
+        checkBox_size->setGeometry(QRect(260, 690, 101, 17));
         checkBox_bgColor = new QCheckBox(centralWidget);
         checkBox_bgColor->setObjectName(QString::fromUtf8("checkBox_bgColor"));
-        checkBox_bgColor->setGeometry(QRect(250, 740, 111, 17));
+        checkBox_bgColor->setGeometry(QRect(260, 710, 111, 17));
         label_16 = new QLabel(centralWidget);
         label_16->setObjectName(QString::fromUtf8("label_16"));
-        label_16->setGeometry(QRect(10, 730, 171, 16));
+        label_16->setGeometry(QRect(10, 710, 171, 16));
         label_16->setLayoutDirection(Qt::LeftToRight);
         bttn_compare = new QPushButton(centralWidget);
         bttn_compare->setObjectName(QString::fromUtf8("bttn_compare"));
-        bttn_compare->setGeometry(QRect(120, 730, 75, 23));
+        bttn_compare->setGeometry(QRect(370, 700, 75, 23));
+        label_17 = new QLabel(centralWidget);
+        label_17->setObjectName(QString::fromUtf8("label_17"));
+        label_17->setGeometry(QRect(680, 710, 281, 16));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -242,6 +246,7 @@ public:
         QObject::connect(tableWidget, SIGNAL(cellClicked(int,int)), StreptoGUIClass, SLOT(itemSelected(int,int)));
         QObject::connect(bttn_testCalc, SIGNAL(clicked()), StreptoGUIClass, SLOT(testCalc()));
         QObject::connect(bttn_compare, SIGNAL(clicked()), StreptoGUIClass, SLOT(compare()));
+        QObject::connect(tableWidget_2, SIGNAL(cellClicked(int,int)), StreptoGUIClass, SLOT(paramSelected(int,int)));
 
         QMetaObject::connectSlotsByName(StreptoGUIClass);
     } // setupUi
@@ -278,6 +283,7 @@ public:
         checkBox_bgColor->setText(QApplication::translate("StreptoGUIClass", "background color", nullptr));
         label_16->setText(QApplication::translate("StreptoGUIClass", "- find best matches:", nullptr));
         bttn_compare->setText(QApplication::translate("StreptoGUIClass", "click here", nullptr));
+        label_17->setText(QApplication::translate("StreptoGUIClass", "Comparison: ", nullptr));
         menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Datei", nullptr));
         menuInfo->setTitle(QApplication::translate("StreptoGUIClass", "Info", nullptr));
     } // retranslateUi
