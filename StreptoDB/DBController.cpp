@@ -67,7 +67,7 @@ static int callback_group(void* param, int numCols, char** col, char** colName)
 	grp.sci_name = (string)col[3];
 	grp.genome_lnk = (string)col[4];
 	grp.locality = (string)col[5];
-	grp.siderophore = (bool)col[6];
+	grp.siderophore = (bool)atoi(col[6]);
 	grp.spore_color = (string)col[7];
 
 	//result->push_back(grp);

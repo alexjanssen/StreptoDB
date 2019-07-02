@@ -30,8 +30,8 @@
    <widget class="QLineEdit" name="line_ID">
     <property name="geometry">
      <rect>
-      <x>1070</x>
-      <y>40</y>
+      <x>1080</x>
+      <y>240</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -79,6 +79,12 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>Imageview:</string>
     </property>
@@ -88,7 +94,7 @@
      <rect>
       <x>760</x>
       <y>360</y>
-      <width>431</width>
+      <width>241</width>
       <height>21</height>
      </rect>
     </property>
@@ -126,7 +132,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>43</y>
+      <y>243</y>
       <width>71</width>
       <height>20</height>
      </rect>
@@ -139,7 +145,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>70</y>
+      <y>260</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -151,8 +157,8 @@
    <widget class="QLineEdit" name="line_timestamp">
     <property name="geometry">
      <rect>
-      <x>1070</x>
-      <y>70</y>
+      <x>1080</x>
+      <y>260</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -162,7 +168,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>100</y>
+      <y>280</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -174,8 +180,8 @@
    <widget class="QLineEdit" name="line_imgSize">
     <property name="geometry">
      <rect>
-      <x>1070</x>
-      <y>100</y>
+      <x>1080</x>
+      <y>280</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -185,7 +191,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>130</y>
+      <y>300</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -197,8 +203,8 @@
    <widget class="QLineEdit" name="line_resolution">
     <property name="geometry">
      <rect>
-      <x>1070</x>
-      <y>130</y>
+      <x>1080</x>
+      <y>300</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -208,7 +214,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>160</y>
+      <y>320</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -220,8 +226,8 @@
    <widget class="QLineEdit" name="line_brothID">
     <property name="geometry">
      <rect>
-      <x>1070</x>
-      <y>160</y>
+      <x>1080</x>
+      <y>320</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -231,7 +237,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>190</y>
+      <y>340</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -243,8 +249,8 @@
    <widget class="QLineEdit" name="line_groupID">
     <property name="geometry">
      <rect>
-      <x>1070</x>
-      <y>190</y>
+      <x>1080</x>
+      <y>340</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -302,8 +308,8 @@
    <widget class="QLineEdit" name="line_path">
     <property name="geometry">
      <rect>
-      <x>1070</x>
-      <y>220</y>
+      <x>1080</x>
+      <y>360</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -313,7 +319,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>220</y>
+      <y>360</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -456,6 +462,251 @@
     </property>
     <property name="text">
      <string>Comparison: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_18">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>20</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Group Info:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_19">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>220</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Picture Info:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_20">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>40</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Group-ID:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_groupID_group">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>40</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_internID">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>60</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_21">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>60</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Intern-ID:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_timestamp_group">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>80</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_22">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>80</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Timestamp:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_scientific">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>100</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_23">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>100</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Scientific-Name:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_genome">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>120</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_24">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>120</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Genome-Link:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_locality">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>140</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_25">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>140</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Locality:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_26">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>180</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Siderophore:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_spore_color">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>160</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_27">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>160</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Spore-Color:</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_siderophore">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>180</y>
+      <width>51</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>200</y>
+      <width>191</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>

@@ -22,6 +22,7 @@ uploadDialog::uploadDialog(QDialog* parent) : QDialog(parent)
 	//ui.label -> setText("blaa");
 }
 
+
 void uploadDialog::openFile() {
 	QString fileName = QFileDialog::getOpenFileName(this, "Open Image File", QDir::currentPath());
 

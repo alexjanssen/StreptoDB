@@ -76,7 +76,7 @@ void StreptoGUI::itemSelected(int x, int y)
 				scene->addPixmap(pixmap2.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 				ui.graphicsView->setScene(scene);
 				ui.graphicsView->show();
-
+				//fill image Parameters
 				ui.line_ID->setText(QString::number(resultGlob[i].image_id));
 				ui.line_timestamp->setText(QString::fromStdString(resultGlob[i].date));
 				ui.line_imgSize->setText(QString::number(resultGlob[i].imagesize));
@@ -84,6 +84,17 @@ void StreptoGUI::itemSelected(int x, int y)
 				ui.line_brothID->setText(QString::number(resultGlob[i].broth_id));
 				ui.line_groupID->setText(QString::number(resultGlob[i].group_id));
 				ui.line_path->setText(QString::fromStdString(resultGlob[i].filePath));
+				//fill group Parameters
+				Group grp = dbcon->getGroup(resultGlob[i].group_id);
+				ui.line_groupID_group->setText(QString::number(grp.group_id));
+				ui.line_internID->setText(QString::fromStdString(grp.intern_id));
+				ui.line_timestamp_group->setText(QString::fromStdString(grp.date));
+				ui.line_scientific->setText(QString::fromStdString(grp.sci_name));
+				ui.line_genome->setText(QString::fromStdString(grp.genome_lnk));
+				ui.line_locality->setText(QString::fromStdString(grp.locality));
+				ui.line_spore_color->setText(QString::fromStdString(grp.spore_color));
+				ui.checkBox_siderophore->setChecked(grp.siderophore);
+
 
 				vector<CalcedParams> result;
 				result = dbcon->getCalcedParams(resultGlob[i].image_id);
