@@ -840,7 +840,7 @@
    <slot>loadDB()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>57</x>
+     <x>107</x>
      <y>65</y>
     </hint>
     <hint type="destinationlabel">
@@ -888,8 +888,8 @@
    <slot>compare()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>157</x>
-     <y>774</y>
+     <x>370</x>
+     <y>755</y>
     </hint>
     <hint type="destinationlabel">
      <x>600</x>
