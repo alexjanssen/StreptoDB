@@ -93,6 +93,7 @@ public:
     QLabel *label_27;
     QCheckBox *checkBox_siderophore;
     QFrame *line;
+    QLineEdit *line_filter;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -140,13 +141,13 @@ public:
         label_2->setFont(font);
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(760, 360, 241, 21));
+        label_3->setGeometry(QRect(760, 360, 231, 21));
         bttn_loadDB = new QPushButton(centralWidget);
         bttn_loadDB->setObjectName(QString::fromUtf8("bttn_loadDB"));
-        bttn_loadDB->setGeometry(QRect(10, 10, 75, 23));
+        bttn_loadDB->setGeometry(QRect(60, 10, 75, 23));
         label_4 = new QLabel(centralWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(90, 5, 441, 31));
+        label_4->setGeometry(QRect(150, 10, 441, 20));
         label_5 = new QLabel(centralWidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(1000, 243, 71, 20));
@@ -188,7 +189,7 @@ public:
         label_11->setGeometry(QRect(760, 390, 111, 21));
         label_12 = new QLabel(centralWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setGeometry(QRect(890, 390, 301, 21));
+        label_12->setGeometry(QRect(880, 390, 311, 21));
         bttn_testCalc = new QPushButton(centralWidget);
         bttn_testCalc->setObjectName(QString::fromUtf8("bttn_testCalc"));
         bttn_testCalc->setGeometry(QRect(680, 390, 75, 23));
@@ -297,6 +298,9 @@ public:
         line->setFont(font1);
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
+        line_filter = new QLineEdit(centralWidget);
+        line_filter->setObjectName(QString::fromUtf8("line_filter"));
+        line_filter->setGeometry(QRect(10, 11, 41, 20));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -385,6 +389,10 @@ public:
         label_26->setText(QApplication::translate("StreptoGUIClass", "Siderophore:", nullptr));
         label_27->setText(QApplication::translate("StreptoGUIClass", "Spore-Color:", nullptr));
         checkBox_siderophore->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        line_filter->setToolTip(QApplication::translate("StreptoGUIClass", "Filter (intern-ID)", nullptr));
+#endif // QT_NO_TOOLTIP
+        line_filter->setText(QApplication::translate("StreptoGUIClass", "CS ", nullptr));
         menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Datei", nullptr));
         menuInfo->setTitle(QApplication::translate("StreptoGUIClass", "Info", nullptr));
     } // retranslateUi

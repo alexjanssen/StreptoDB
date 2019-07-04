@@ -94,7 +94,7 @@
      <rect>
       <x>760</x>
       <y>360</y>
-      <width>241</width>
+      <width>231</width>
       <height>21</height>
      </rect>
     </property>
@@ -105,7 +105,7 @@
    <widget class="QPushButton" name="bttn_loadDB">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>60</x>
       <y>10</y>
       <width>75</width>
       <height>23</height>
@@ -118,10 +118,10 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>5</y>
+      <x>150</x>
+      <y>10</y>
       <width>441</width>
-      <height>31</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -282,9 +282,9 @@
    <widget class="QLabel" name="label_12">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>880</x>
       <y>390</y>
-      <width>301</width>
+      <width>311</width>
       <height>21</height>
      </rect>
     </property>
@@ -707,6 +707,22 @@
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_filter">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>11</y>
+      <width>41</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Filter (intern-ID)</string>
+    </property>
+    <property name="text">
+     <string>CS </string>
     </property>
    </widget>
   </widget>

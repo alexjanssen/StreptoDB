@@ -144,12 +144,24 @@ bool DBController::openDB() {
 
 
 //returns all datasets from table Image
-vector<Image> DBController::getImages(void) {	
+vector<Image> DBController::getImages(string filt) {	
 	char* zErrMsg = 0;
-	string query = "SELECT * FROM Images;";
+	string query = "SELECT " \
+					"I.IMAGE_ID, " \
+					"I.IMAGE_PREVIEW_BLOB, " \
+					"I.TIMESTAMP, " \
+					"I.IMAGESIZE, " \
+					"I.RESOLUTION, " \
+					"I.BROTH_ID, " \
+					"I.GROUP_ID, " \
+					"I.PATH, " \
+					"S.ID_INTERN " \
+					"FROM Images I LEFT JOIN Streptomyceten S ON I.GROUP_ID = S.ID_GROUP " \
+					"WHERE S.ID_INTERN LIKE '" + filt + "%';";
+
 	int rc = DBController::openDB();
 	if (rc) {
-		result->empty();
+		result->clear();
 		sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg);
 	}
 	else {

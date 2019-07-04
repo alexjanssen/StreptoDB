@@ -23,7 +23,15 @@ public slots:
 	void itemSelected(int x, int y);
 	void testCalc();
 	void compare();
+	//void dragEnterEvent(QDragEnterEvent* event);
+	//void dropEvent(QDropEvent* event);
 	void paramSelected(int x, int y);
+
+protected:    
+	void dragMoveEvent(QDragMoveEvent* event);
+	void dropEvent(QDropEvent* event);
+	void dragEnterEvent(QDragEnterEvent* event);
+
 
 private slots:
 	void fillTable(vector<Image>);

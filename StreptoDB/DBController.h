@@ -13,7 +13,7 @@ using namespace std;
 class DBController {
 public:
 	DBController();
-	vector<Image> getImages(void);
+	vector<Image> getImages(string str);
 	Group getGroup(int);
 	int getMaxCalcParamID();
 	vector<CalcedParams> getCalcedParams(int);

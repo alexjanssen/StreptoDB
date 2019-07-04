@@ -10,6 +10,9 @@
 #include <opencv2/imgcodecs.hpp>
 #include <UploadDialog.h>
 #include <ctime>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 //#include <string>
 //#include <sqlite/sqlite3.h> 
 
@@ -21,6 +24,7 @@ using namespace std;
 //Todo comment
 StreptoGUI::StreptoGUI(QMainWindow*parent)	: QMainWindow(parent)
 {
+	setAcceptDrops(true);	//needed for drag & drop
 	ui.setupUi(this);
 	//ui.label -> setText("blaa");
 }
@@ -43,15 +47,17 @@ void StreptoGUI::loadDB() {
 	//DBController *dbcon = new DBController();
 	
 	vector<Image> result;
-	result = dbcon->getImages();
+	result = dbcon->getImages(ui.line_filter->text().toStdString());
+	resultGlob = dbcon->getImages("%");
 	if (result.size() == 0) {
 		ui.label_4->setText("Can't open database.");
 	}
 	else {
 		ui.label_4->setText("Opened database successfully.");
 		fillTable(result);
-		
-		resultGlob = result;
+		//resultGlob.clear();
+		//resultGlob = result;
+		result.clear();
 	}
 	//####################################################
 }
@@ -114,7 +120,7 @@ void StreptoGUI::itemSelected(int x, int y)
 
 //Todo comment
 void StreptoGUI::fillTable(vector<Image> result){
-	
+	ui.tableWidget->setRowCount(0);
 	ui.tableWidget->setColumnCount(4);
 	ui.tableWidget->verticalHeader()->setVisible(true);
 	ui.tableWidget->verticalHeader()->setFixedWidth(40);
@@ -167,6 +173,7 @@ void StreptoGUI::fillTable(vector<Image> result){
 			}
 		}
 	}
+	group.clear();
 }
 
 
@@ -277,4 +284,45 @@ void StreptoGUI::compare(){
 	//vector<Compare> comp = dbcon->getCompare(ui.line);
 
 
+}
+
+
+
+//needed so that StreptoGUI gets dropEvent
+void StreptoGUI::dragEnterEvent(QDragEnterEvent* event){
+	event->accept();
+	event->acceptProposedAction();
+}
+
+
+
+//needed so that StreptoGUI gets dropEvent
+void StreptoGUI::dragMoveEvent(QDragMoveEvent* event) {
+	event->accept();
+}
+
+
+
+//Drop Event
+void StreptoGUI::dropEvent(QDropEvent* event) {
+	const QMimeData* mimeData = event->mimeData();
+	ui.label_3->setText("");
+	for (int i = 0; i < mimeData->urls().size();i++) {
+		ui.label_3->setText(ui.label_3->text() + mimeData->urls().at(i).toString() + "\n");
+	}
+	// check for our needed mime type, here a file or a list of files
+	//if (mimeData->hasUrls())
+	//{
+		//QStringList pathList;
+		//QList<QUrl> urlList = mimeData->urls();
+
+		// extract the local paths of the files
+		//for (int i = 0; i < urlList.size() && i < 32; +i)
+		//{
+		//	pathList.append(urlList.at(i).toLocalFile());
+		//}
+
+		// call a function to open the files
+		//openFiles(pathList);
+	//}
 }
