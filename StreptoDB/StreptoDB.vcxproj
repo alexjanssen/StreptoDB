@@ -235,7 +235,9 @@
     <ClCompile Include="Group.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StrainInhibition.cpp" />
     <ClCompile Include="StreptoGUI.cpp" />
+    <ClCompile Include="TestStrain.cpp" />
     <ClCompile Include="UploadDialog.cpp" />
   </ItemGroup>
   <ItemGroup>

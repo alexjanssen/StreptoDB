@@ -22,6 +22,7 @@ public slots:
 	void loadDB();
 	void itemSelected(int x, int y);
 	void testCalc();
+	void addInhibition();
 	void compare();
 	//void dragEnterEvent(QDragEnterEvent* event);
 	//void dropEvent(QDropEvent* event);
@@ -36,6 +37,7 @@ protected:
 private slots:
 	void fillTable(vector<Image>);
 	void fillTable2(vector<CalcedParams>);
+	void fillTable3(vector<StrainInhibition> result);
 };
 
 static vector<Image> resultGlob;

@@ -25,6 +25,7 @@ DBController::DBController() {
 	
 
 
+
 //This function is called to receive the query result of "DBController::getImages()" and 
 //write that to the static vector "result".
 static int callback(void* param, int numCols, char** col, char** colName)
@@ -76,6 +77,25 @@ static int callback_group(void* param, int numCols, char** col, char** colName)
 }
 
 
+//This function is called to receive the query result of "DBController::getBroth()" and 
+//write that to the static Object broth.
+static int callback_broth(void* param, int numCols, char** col, char** colName)
+{
+	// int numCols: holds the number of results
+	// (array) colName: holds each column returned
+	// (array) col: holds each value
+	//Group grp = Group();
+	int* col_width = (int*)param; // this isn't necessary, but it's convenient
+
+	broth.broth_id = atoi(col[0]);
+	broth.name = (string)(col[1]);
+	broth.info = (string)col[2];
+
+	//result->push_back(grp);
+
+	return 0;
+}
+
 
 //same shit for Calculated-Paramaters
 static int callback_calcedParams(void* param, int numCols, char** col, char** colName)
@@ -107,6 +127,15 @@ static int callback_maxCalcParamID(void* param, int numCols, char** col, char** 
 }
 
 
+//still same shit
+static int callback_maxInhibitID(void* param, int numCols, char** col, char** colName)
+{
+	int* col_width = (int*)param;
+	maxInhibitID = atoi(col[0]);
+	return 0;
+}
+
+
 //same shit for Compare
 static int callback_compare(void* param, int numCols, char** col, char** colName)
 {
@@ -125,6 +154,51 @@ static int callback_compare(void* param, int numCols, char** col, char** colName
 }
 
 
+//This function is called to receive the query result of "DBController::getInhibition()" and 
+//write that to the static vector "result".
+static int callback_inhibition(void* param, int numCols, char** col, char** colName)
+{
+	// int numCols: holds the number of results
+	// (array) colName: holds each column returned
+	// (array) col: holds each value
+	StrainInhibition si = StrainInhibition();
+	int* col_width = (int*)param; // this isn't necessary, but it's convenient
+
+	si.id_intern = (string)(col[0]);
+	si.broth_name = (string)(col[1]);
+	si.strain_name = (string)col[2];
+	si.inhibition = (bool)atoi(col[3]);
+
+	result_inhibition->push_back(si);
+
+	return 0;
+}
+
+
+//same shit for testStrains
+static int callback_testStrains(void* param, int numCols, char** col, char** colName)
+{
+	// int numCols: holds the number of results
+	// (array) colName: holds each column returned
+	// (array) col: holds each value
+	TestStrain ts = TestStrain();
+	int* col_width = (int*)param; // this isn't necessary, but it's convenient
+
+	ts.strain_id = atoi(col[0]);
+	ts.strain_name = (string)(col[1]);
+	ts.broth_id = atoi(col[2]);
+	
+	result_testStrains->push_back(ts);
+
+	return 0;
+}
+
+
+
+
+
+
+
 //opens the database yds
 bool DBController::openDB() {
 	//return true if DB-Connection opened successfully
@@ -140,7 +214,6 @@ bool DBController::openDB() {
 		return true;
 	}
 }
-
 
 
 //returns all datasets from table Image
@@ -173,7 +246,6 @@ vector<Image> DBController::getImages(string filt) {
 }
 
 
-
  //return Group for specific GROUP_ID
  Group DBController::getGroup(int id) {
 	 char* zErrMsg = 0;
@@ -191,6 +263,23 @@ vector<Image> DBController::getImages(string filt) {
 	 return grp;
  }
 
+
+ //return Broth for specific BROTH_ID
+ Broth DBController::getBroth(int id) {
+	 char* zErrMsg = 0;
+	 string query = "SELECT * FROM Broth WHERE BROTH_ID = " + std::to_string(id) + ";";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 //result->empty();
+		 sqlite3_exec(db, query.c_str(), callback_broth, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getBroth(int)):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return broth;
+ }
 
 
  //return max ID from Calculated Parameters
@@ -210,6 +299,23 @@ vector<Image> DBController::getImages(string filt) {
 	 return maxCalcParamID;
  }
 
+
+ //return max ID from Strain-Inhibition
+ int DBController::getMaxInhibitionID() {
+	 char* zErrMsg = 0;
+	 string query = "SELECT MAX(\"STRAIN-INHIBITS_ID\") FROM 'Strain-Inhibits';";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 //result->empty();
+		 sqlite3_exec(db, query.c_str(), callback_maxInhibitID, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getInhibitID()):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return maxInhibitID;
+ }
 
 
  //returns calculated Parameters for specific IMAGE_ID
@@ -268,6 +374,53 @@ vector<Image> DBController::getImages(string filt) {
 	 return *result_compare;
  }
 
+
+ //returns all Test-Strains
+ vector<TestStrain> DBController::getTestStrains() {
+	 char* zErrMsg = 0;
+	 string query = "SELECT * FROM Test_Strains;";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 result_testStrains->clear();
+		 sqlite3_exec(db, query.c_str(), callback_testStrains, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getTestStrains(int)):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return *result_testStrains;
+ }
+
+
+ //returns Inhibitions for specific IMAGE_ID
+ vector<StrainInhibition> DBController::getInhibition(int id) {
+	 char* zErrMsg = 0;
+	 string query = "SELECT " \
+		 "S.ID_INTERN, " \
+		 "B.BROTH_NAME, " \
+		 "TS.STRAIN_NAME, " \
+		 "SI.INHIBITION_BOOL " \
+		 "FROM 'Strain-Inhibits' SI " \
+		 "LEFT JOIN Broth B ON B.BROTH_ID = SI.BROTH_ID " \
+		 "LEFT JOIN Test_Strains TS ON TS.STRAIN_ID = SI.STRAIN_ID " \
+		 "LEFT JOIN Images I ON I.IMAGE_ID = SI.IMAGE_ID " \
+		 "LEFT JOIN Streptomyceten S ON S.ID_GROUP = I.GROUP_ID " \
+		 "WHERE " \
+		 "SI.IMAGE_ID = " + std::to_string(id) + ";";
+
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 result_inhibition->clear();
+		 sqlite3_exec(db, query.c_str(), callback_inhibition, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getCalcedParams(int)):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return *result_inhibition;
+ }
 
 
  //Todo comment
@@ -343,7 +496,6 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
-
  //Todo comment
  bool DBController::addCalcedParams(CalcedParams cp) {
 
@@ -372,7 +524,7 @@ vector<Image> DBController::getImages(string filt) {
 			 sqlite3_bind_int(stmt, 3, cp.class_id);
 			 sqlite3_bind_double(stmt, 4, cp.value);
 			 sqlite3_bind_text(stmt, 5, cp.timestamp.c_str(), -1, SQLITE_STATIC);
-			 
+
 			 if (rc != SQLITE_OK) {
 				 DBOUT("bind failed: DBController::addCalcedParams(CalcedParams)", sqlite3_errmsg(db));
 				 return false;
@@ -390,7 +542,78 @@ vector<Image> DBController::getImages(string filt) {
 	 return true;
  }
 
+
+ //Todo comment
+ bool DBController::addStrainInhibition(int si_id, int img_id, int strain_id, int broth_id, bool inhibit) {
+
+	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
+	 if (rc != SQLITE_OK) {
+		 DBOUT("db open failed: DBController::addStrainInhibition(int img_id, int strain_id, int broth_id, bool inhibit)", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 else {
+		 sqlite3_stmt* stmt = NULL;
+		 string err_str;
+		 rc = sqlite3_prepare(db, \
+			 "INSERT INTO 'Strain-Inhibits'('STRAIN-INHIBITS_ID', IMAGE_ID, STRAIN_ID, BROTH_ID, INHIBITION_BOOL)" \
+			 " VALUES(?,?,?,?,?);", \
+			 - 1, &stmt, NULL);
+		 if (rc != SQLITE_OK) {
+			 DBOUT("prepare failed: DBController::addStrainInhibition(int img_id, int strain_id, int broth_id, bool inhibit)", sqlite3_errmsg(db));
+
+			 return false;
+		 }
+		 else {
+			 // SQLITE_STATIC because the statement is finalized
+			 // before the buffer is freed:
+			 sqlite3_bind_int(stmt, 1, si_id);
+			 sqlite3_bind_int(stmt, 2, img_id);
+			 sqlite3_bind_int(stmt, 3, strain_id);
+			 sqlite3_bind_int(stmt, 4, broth_id);
+			 sqlite3_bind_int(stmt, 5, inhibit);
+
+			 if (rc != SQLITE_OK) {
+				 DBOUT("bind failed: DBController::addStrainInhibition(int img_id, int strain_id, int broth_id, bool inhibit)", sqlite3_errmsg(db));
+				 return false;
+			 }
+			 else {
+				 rc = sqlite3_step(stmt);
+				 if (rc != SQLITE_DONE)
+					 DBOUT("execution failed: DBController::addStrainInhibition(int img_id, int strain_id, int broth_id, bool inhibit)", sqlite3_errmsg(db));
+					
+				 return false;
+			 }
+		 }
+		 sqlite3_finalize(stmt);
+	 }
+	 sqlite3_close(db);
+	 return true;
+ }
+
+
  //Stuff I might need later idk
+
+
+ /* Strain-Inhibition evaluation
+ //################################################################
+ SELECT 
+    S.ID_INTERN,
+    B.BROTH_NAME,
+    TS.STRAIN_NAME,
+    SI.INHIBITION_BOOL
+FROM "Strain-Inhibits" SI
+    LEFT JOIN Broth B ON B.BROTH_ID = SI.BROTH_ID
+    LEFT JOIN Test_Strains TS ON TS.STRAIN_ID = SI.STRAIN_ID
+    LEFT JOIN Images I ON I.IMAGE_ID = SI.IMAGE_ID
+    LEFT JOIN Streptomyceten S ON S.ID_GROUP = I.GROUP_ID
+WHERE
+    SI.IMAGE_ID = 2
+;
+//################################################################
+ */
+
+
+
  /* bool DBController::addImage(Image img) {
 	char* zErrMsg = 0;
 

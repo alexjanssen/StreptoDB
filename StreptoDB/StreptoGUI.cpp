@@ -31,13 +31,14 @@ StreptoGUI::StreptoGUI(QMainWindow*parent)	: QMainWindow(parent)
 
 
 
+
+
 //Todo comment
 void StreptoGUI::uploadPic() {
 	uploadDialog* f = new uploadDialog();
 	f->show();
 
 }
-
 
 
 //Todo comment
@@ -61,7 +62,6 @@ void StreptoGUI::loadDB() {
 	}
 	//####################################################
 }
-
 
 
 //is called when clicking on a QtableWidgetItem in the QTableWidget
@@ -101,11 +101,21 @@ void StreptoGUI::itemSelected(int x, int y)
 				ui.line_spore_color->setText(QString::fromStdString(grp.spore_color));
 				ui.checkBox_siderophore->setChecked(grp.siderophore);
 
+				//fill Strain-Inhibition
+				ui.line_inhibit_internID->setText(QString::fromStdString(grp.intern_id));
+				ui.line_inhibit_broth->setText(QString::fromStdString(dbcon->getBroth(resultGlob[i].broth_id).name));
+				vector<TestStrain> ts = dbcon->getTestStrains();
+				ui.comboBox_testStrain->clear();
+				for (int g = 0; g < ts.size(); g++) {
+					ui.comboBox_testStrain->addItem(QString::fromStdString(ts[g].strain_name));
+				}
 
-				vector<CalcedParams> result;
-				result = dbcon->getCalcedParams(resultGlob[i].image_id);
-				fillTable2(result);
-				ui.label_12->setText(QString::number(result.size()));
+				//vector<CalcedParams> result;
+				//result = dbcon->getCalcedParams(resultGlob[i].image_id);
+				fillTable2(dbcon->getCalcedParams(resultGlob[i].image_id));
+				ui.label_12->setText(QString::number(dbcon->getCalcedParams(resultGlob[i].image_id).size()));
+				fillTable3(dbcon->getInhibition(resultGlob[i].image_id));
+
 			}
 		}
 		ui.label->setText("x: " + QString::number(x) + " | y: " + QString::number(y));
@@ -177,7 +187,6 @@ void StreptoGUI::fillTable(vector<Image> result){
 }
 
 
-
 //Todo comment
 void StreptoGUI::fillTable2(vector<CalcedParams> result) {
 	ui.tableWidget_2->setColumnCount(5);
@@ -208,6 +217,33 @@ void StreptoGUI::fillTable2(vector<CalcedParams> result) {
 }
 
 
+//Todo comment
+void StreptoGUI::fillTable3(vector<StrainInhibition> result) {
+	ui.tableWidget_3->setColumnCount(4);
+	ui.tableWidget_3->verticalHeader()->setVisible(false);
+	ui.tableWidget_3->setColumnWidth(0, 125);
+	ui.tableWidget_3->setColumnWidth(1, 125);
+	ui.tableWidget_3->setColumnWidth(2, 125);
+	ui.tableWidget_3->setColumnWidth(3, 125);
+
+	ui.tableWidget_3->setHorizontalHeaderItem(0, new QTableWidgetItem("ID-Intern"));
+	ui.tableWidget_3->setHorizontalHeaderItem(1, new QTableWidgetItem("Broth"));
+	ui.tableWidget_3->setHorizontalHeaderItem(2, new QTableWidgetItem("Test-Strain"));
+	ui.tableWidget_3->setHorizontalHeaderItem(3, new QTableWidgetItem("Inhibition"));
+	//ui.tableWidget_3->setHorizontalHeaderItem(4, new QTableWidgetItem("Timestamp"));
+
+	ui.tableWidget_3->setRowCount(result.size());
+	for (int i = 0; i < result.size(); i++) {
+		ui.tableWidget_3->setRowHeight(i, 30);
+		ui.tableWidget_3->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(result[i].id_intern)));
+		ui.tableWidget_3->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(result[i].broth_name)));
+		ui.tableWidget_3->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(result[i].strain_name)));
+		ui.tableWidget_3->setItem(i, 3, new QTableWidgetItem(QString::number(result[i].inhibition)));
+	}
+	//ui.label_12->setText(QString::number(result.size()));
+
+}
+
 
 //for testing Calculations
 void StreptoGUI::testCalc() {
@@ -231,6 +267,30 @@ void StreptoGUI::testCalc() {
 }
 
 
+//for adding Strain-Inhibitions to DB
+void StreptoGUI::addInhibition() {
+	vector<TestStrain> ts = dbcon->getTestStrains();
+	int strainID = 0;
+	int maxID = dbcon->getMaxInhibitionID() + 1;
+	for (int i = 0; i < ts.size(); i++) {
+		if (ui.comboBox_testStrain->currentText().toStdString() == ts[i].strain_name) {
+			strainID = ts[i].strain_id;
+		}
+	}
+
+	if (strainID != 0) {
+		if (!dbcon->addStrainInhibition(maxID,ui.line_ID->text().toInt(), strainID, ui.line_brothID->text().toInt(), ui.checkBox_inhibition->isChecked())) {
+			ui.label_28->setText("Success!");
+		}
+		else {
+			ui.label_28->setText("Fail!");
+		}
+	}
+	else {
+		ui.label_28->setText("Fail! \nStrainID = 0)");
+	}
+}
+
 
 //is called when clicking on a QtableWidgetItem in the QTableWidget
 //and fills the right side of the gui with Details from the Image selected
@@ -242,15 +302,15 @@ void StreptoGUI::paramSelected(int x, int y)
 		vector<Compare> comp = dbcon->getCompare(ui.tableWidget_2->item(x, 3)->text().toDouble(), ui.line_brothID->text().toInt(), ui.tableWidget_2->item(x, 2)->text().toInt());
 		//vector<Compare> comp = dbcon->getCompare(42, 1, 1);
 
-		ui.tableWidget_3->setRowCount(1);
-		ui.tableWidget_3->setColumnCount(comp.size());
+		ui.tableWidget_4->setRowCount(1);
+		ui.tableWidget_4->setColumnCount(comp.size());
 		//ui.tableWidget_3->verticalHeader()->setVisible(false);
 		//ui.tableWidget_3->horizontalHeader()->setVisible(false);
-		ui.tableWidget_3->setRowHeight(0, 100);
+		ui.tableWidget_4->setRowHeight(0, 100);
 		//ui.tableWidget_3->setVerticalHeaderItem(0, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup(ui.line_groupID->text().toInt()).intern_id)));
-		ui.tableWidget_3->setVerticalHeaderItem(0, new QTableWidgetItem(ui.tableWidget->horizontalHeaderItem(column)->text()));
+		ui.tableWidget_4->setVerticalHeaderItem(0, new QTableWidgetItem(ui.tableWidget->horizontalHeaderItem(column)->text()));
 		for (int i = 0; i < comp.size(); i++) {
-			ui.tableWidget_3->setColumnWidth(i, 175);
+			ui.tableWidget_4->setColumnWidth(i, 175);
 			for (int u = 0; u < resultGlob.size(); u++) {
 				//if found, set graphicsView with image
 				if (resultGlob[u].image_id == comp[i].image_id) {
@@ -260,10 +320,10 @@ void StreptoGUI::paramSelected(int x, int y)
 					pixmap = pixmap.fromImage(resultGlob[u].image_preview);
 					twi->setData(Qt::DecorationRole, pixmap.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 					twi->setText(QString::number(resultGlob[u].image_id)+"\n"+QString::number(comp[i].diff));
-					ui.tableWidget_3->setItem(0, i, twi);
+					ui.tableWidget_4->setItem(0, i, twi);
 
 					//ui.tableWidget_3->setHorizontalHeaderItem(i, new QTableWidgetItem("ISP2"));
-					ui.tableWidget_3->setHorizontalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup(resultGlob[u].group_id).intern_id)));
+					ui.tableWidget_4->setHorizontalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup(resultGlob[u].group_id).intern_id)));
 
 				}
 
@@ -287,7 +347,6 @@ void StreptoGUI::compare(){
 }
 
 
-
 //needed so that StreptoGUI gets dropEvent
 void StreptoGUI::dragEnterEvent(QDragEnterEvent* event){
 	event->accept();
@@ -295,12 +354,10 @@ void StreptoGUI::dragEnterEvent(QDragEnterEvent* event){
 }
 
 
-
 //needed so that StreptoGUI gets dropEvent
 void StreptoGUI::dragMoveEvent(QDragMoveEvent* event) {
 	event->accept();
 }
-
 
 
 //Drop Event

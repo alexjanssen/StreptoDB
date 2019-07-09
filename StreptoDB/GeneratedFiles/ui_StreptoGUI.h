@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
@@ -23,6 +24,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -58,13 +60,12 @@ public:
     QLineEdit *line_brothID;
     QLabel *label_10;
     QLineEdit *line_groupID;
-    QTableWidget *tableWidget_2;
     QLabel *label_11;
     QLabel *label_12;
     QPushButton *bttn_testCalc;
     QLineEdit *line_path;
     QLabel *label_13;
-    QTableWidget *tableWidget_3;
+    QTableWidget *tableWidget_4;
     QLabel *label_14;
     QLabel *label_15;
     QCheckBox *checkBox_color;
@@ -94,6 +95,18 @@ public:
     QCheckBox *checkBox_siderophore;
     QFrame *line;
     QLineEdit *line_filter;
+    QPushButton *bttn_save;
+    QTabWidget *tabWidget;
+    QWidget *tab_Calculations;
+    QTableWidget *tableWidget_2;
+    QWidget *tab_2;
+    QTableWidget *tableWidget_3;
+    QLineEdit *line_inhibit_internID;
+    QLineEdit *line_inhibit_broth;
+    QComboBox *comboBox_testStrain;
+    QCheckBox *checkBox_inhibition;
+    QPushButton *bttn_add_inhibit;
+    QLabel *label_28;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -181,15 +194,12 @@ public:
         line_groupID = new QLineEdit(centralWidget);
         line_groupID->setObjectName(QString::fromUtf8("line_groupID"));
         line_groupID->setGeometry(QRect(1080, 340, 113, 20));
-        tableWidget_2 = new QTableWidget(centralWidget);
-        tableWidget_2->setObjectName(QString::fromUtf8("tableWidget_2"));
-        tableWidget_2->setGeometry(QRect(680, 420, 511, 241));
         label_11 = new QLabel(centralWidget);
         label_11->setObjectName(QString::fromUtf8("label_11"));
         label_11->setGeometry(QRect(760, 390, 111, 21));
         label_12 = new QLabel(centralWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setGeometry(QRect(880, 390, 311, 21));
+        label_12->setGeometry(QRect(880, 390, 221, 21));
         bttn_testCalc = new QPushButton(centralWidget);
         bttn_testCalc->setObjectName(QString::fromUtf8("bttn_testCalc"));
         bttn_testCalc->setGeometry(QRect(680, 390, 75, 23));
@@ -199,9 +209,9 @@ public:
         label_13 = new QLabel(centralWidget);
         label_13->setObjectName(QString::fromUtf8("label_13"));
         label_13->setGeometry(QRect(1000, 360, 71, 21));
-        tableWidget_3 = new QTableWidget(centralWidget);
-        tableWidget_3->setObjectName(QString::fromUtf8("tableWidget_3"));
-        tableWidget_3->setGeometry(QRect(10, 730, 1181, 131));
+        tableWidget_4 = new QTableWidget(centralWidget);
+        tableWidget_4->setObjectName(QString::fromUtf8("tableWidget_4"));
+        tableWidget_4->setGeometry(QRect(10, 730, 1181, 131));
         label_14 = new QLabel(centralWidget);
         label_14->setObjectName(QString::fromUtf8("label_14"));
         label_14->setGeometry(QRect(10, 690, 91, 16));
@@ -301,6 +311,47 @@ public:
         line_filter = new QLineEdit(centralWidget);
         line_filter->setObjectName(QString::fromUtf8("line_filter"));
         line_filter->setGeometry(QRect(10, 11, 41, 20));
+        bttn_save = new QPushButton(centralWidget);
+        bttn_save->setObjectName(QString::fromUtf8("bttn_save"));
+        bttn_save->setGeometry(QRect(1110, 390, 75, 23));
+        tabWidget = new QTabWidget(centralWidget);
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setGeometry(QRect(680, 420, 511, 241));
+        tab_Calculations = new QWidget();
+        tab_Calculations->setObjectName(QString::fromUtf8("tab_Calculations"));
+        tableWidget_2 = new QTableWidget(tab_Calculations);
+        tableWidget_2->setObjectName(QString::fromUtf8("tableWidget_2"));
+        tableWidget_2->setGeometry(QRect(0, 0, 511, 221));
+        tabWidget->addTab(tab_Calculations, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QString::fromUtf8("tab_2"));
+        tableWidget_3 = new QTableWidget(tab_2);
+        tableWidget_3->setObjectName(QString::fromUtf8("tableWidget_3"));
+        tableWidget_3->setGeometry(QRect(0, 0, 511, 221));
+        tabWidget->addTab(tab_2, QString());
+        line_inhibit_internID = new QLineEdit(centralWidget);
+        line_inhibit_internID->setObjectName(QString::fromUtf8("line_inhibit_internID"));
+        line_inhibit_internID->setEnabled(false);
+        line_inhibit_internID->setGeometry(QRect(680, 670, 113, 21));
+        line_inhibit_internID->setAcceptDrops(false);
+        line_inhibit_internID->setReadOnly(true);
+        line_inhibit_broth = new QLineEdit(centralWidget);
+        line_inhibit_broth->setObjectName(QString::fromUtf8("line_inhibit_broth"));
+        line_inhibit_broth->setEnabled(false);
+        line_inhibit_broth->setGeometry(QRect(800, 670, 113, 21));
+        line_inhibit_broth->setReadOnly(true);
+        comboBox_testStrain = new QComboBox(centralWidget);
+        comboBox_testStrain->setObjectName(QString::fromUtf8("comboBox_testStrain"));
+        comboBox_testStrain->setGeometry(QRect(920, 670, 121, 22));
+        checkBox_inhibition = new QCheckBox(centralWidget);
+        checkBox_inhibition->setObjectName(QString::fromUtf8("checkBox_inhibition"));
+        checkBox_inhibition->setGeometry(QRect(1050, 670, 71, 21));
+        bttn_add_inhibit = new QPushButton(centralWidget);
+        bttn_add_inhibit->setObjectName(QString::fromUtf8("bttn_add_inhibit"));
+        bttn_add_inhibit->setGeometry(QRect(1120, 670, 71, 23));
+        label_28 = new QLabel(centralWidget);
+        label_28->setObjectName(QString::fromUtf8("label_28"));
+        label_28->setGeometry(QRect(1120, 690, 71, 31));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -341,6 +392,10 @@ public:
         QObject::connect(bttn_testCalc, SIGNAL(clicked()), StreptoGUIClass, SLOT(testCalc()));
         QObject::connect(bttn_compare, SIGNAL(clicked()), StreptoGUIClass, SLOT(compare()));
         QObject::connect(tableWidget_2, SIGNAL(cellClicked(int,int)), StreptoGUIClass, SLOT(paramSelected(int,int)));
+        QObject::connect(bttn_add_inhibit, SIGNAL(clicked()), StreptoGUIClass, SLOT(addInhibition()));
+
+        tabWidget->setCurrentIndex(0);
+
 
         QMetaObject::connectSlotsByName(StreptoGUIClass);
     } // setupUi
@@ -393,6 +448,12 @@ public:
         line_filter->setToolTip(QApplication::translate("StreptoGUIClass", "Filter (intern-ID)", nullptr));
 #endif // QT_NO_TOOLTIP
         line_filter->setText(QApplication::translate("StreptoGUIClass", "CS ", nullptr));
+        bttn_save->setText(QApplication::translate("StreptoGUIClass", "Save", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_Calculations), QApplication::translate("StreptoGUIClass", "Calculations", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StreptoGUIClass", "Strain-Inhibition", nullptr));
+        checkBox_inhibition->setText(QApplication::translate("StreptoGUIClass", "Inhibition", nullptr));
+        bttn_add_inhibit->setText(QApplication::translate("StreptoGUIClass", "add", nullptr));
+        label_28->setText(QApplication::translate("StreptoGUIClass", "...", nullptr));
         menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Datei", nullptr));
         menuInfo->setTitle(QApplication::translate("StreptoGUIClass", "Info", nullptr));
     } // retranslateUi
