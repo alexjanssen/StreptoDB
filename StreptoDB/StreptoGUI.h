@@ -12,11 +12,7 @@ class StreptoGUI : public QMainWindow, public Ui::StreptoGUIClass
 public:
 	StreptoGUI(QMainWindow* parent = 0);
 	Ui::StreptoGUIClass ui;
-	//StreptoGUI(QMainWindow* parent, int t);
-	//private:
-	//Ui::StreptoGUIClass ui;
-	//StreptoGUI(QWidget* parent);
-	//void bttnPushed();
+
 public slots:
 	void uploadPic();
 	void loadDB();
@@ -24,9 +20,12 @@ public slots:
 	void testCalc();
 	void addInhibition();
 	void compare();
-	//void dragEnterEvent(QDragEnterEvent* event);
-	//void dropEvent(QDropEvent* event);
 	void paramSelected(int x, int y);
+	void imgSave();
+	void imgDelete();
+	void grpSave();
+	void grpDelete();
+	void subtableDelete();
 
 protected:    
 	void dragMoveEvent(QDragMoveEvent* event);

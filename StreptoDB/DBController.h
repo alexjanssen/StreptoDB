@@ -18,6 +18,8 @@ public:
 	DBController();
 	vector<Image> getImages(string str);
 	Group getGroup(int);
+	bool updateGroup(Group grp);
+	bool deleteGroup(int id_grp, vector<int> imgs);
 	Broth getBroth(int id);
 	int getMaxCalcParamID();
 	int getMaxInhibitionID();
@@ -27,7 +29,13 @@ public:
 	vector<StrainInhibition> getInhibition(int);
 
 
-	bool addImage2(Image);
+	bool addImage2(Image img);
+	bool updateImage(Image img);
+	bool deleteImage(int id);
+	bool deleteCalculatedParameters(int img_id);
+	bool deleteCalcedParam(int calcP_ID);
+	bool deleteStrainInhibits(int img_id);
+	bool deleteStrainInhibition(int SI_ID);
 	bool addCalcedParams(CalcedParams cp);
 
 	bool addStrainInhibition(int si_id, int img_id, int strain_id, int broth_id, bool inhibit);

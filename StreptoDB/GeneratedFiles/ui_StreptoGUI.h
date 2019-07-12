@@ -95,7 +95,7 @@ public:
     QCheckBox *checkBox_siderophore;
     QFrame *line;
     QLineEdit *line_filter;
-    QPushButton *bttn_save;
+    QPushButton *bttn_IMG_save;
     QTabWidget *tabWidget;
     QWidget *tab_Calculations;
     QTableWidget *tableWidget_2;
@@ -107,6 +107,10 @@ public:
     QCheckBox *checkBox_inhibition;
     QPushButton *bttn_add_inhibit;
     QLabel *label_28;
+    QPushButton *bttn_GRP_delete;
+    QPushButton *bttn_GRP_save;
+    QPushButton *bttn_IMG_delete;
+    QPushButton *bttn_subtable_delete;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -311,9 +315,9 @@ public:
         line_filter = new QLineEdit(centralWidget);
         line_filter->setObjectName(QString::fromUtf8("line_filter"));
         line_filter->setGeometry(QRect(10, 11, 41, 20));
-        bttn_save = new QPushButton(centralWidget);
-        bttn_save->setObjectName(QString::fromUtf8("bttn_save"));
-        bttn_save->setGeometry(QRect(1110, 390, 75, 23));
+        bttn_IMG_save = new QPushButton(centralWidget);
+        bttn_IMG_save->setObjectName(QString::fromUtf8("bttn_IMG_save"));
+        bttn_IMG_save->setGeometry(QRect(1110, 380, 41, 23));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setGeometry(QRect(680, 420, 511, 241));
@@ -332,26 +336,38 @@ public:
         line_inhibit_internID = new QLineEdit(centralWidget);
         line_inhibit_internID->setObjectName(QString::fromUtf8("line_inhibit_internID"));
         line_inhibit_internID->setEnabled(false);
-        line_inhibit_internID->setGeometry(QRect(680, 670, 113, 21));
+        line_inhibit_internID->setGeometry(QRect(680, 660, 113, 21));
         line_inhibit_internID->setAcceptDrops(false);
         line_inhibit_internID->setReadOnly(true);
         line_inhibit_broth = new QLineEdit(centralWidget);
         line_inhibit_broth->setObjectName(QString::fromUtf8("line_inhibit_broth"));
         line_inhibit_broth->setEnabled(false);
-        line_inhibit_broth->setGeometry(QRect(800, 670, 113, 21));
+        line_inhibit_broth->setGeometry(QRect(800, 660, 113, 21));
         line_inhibit_broth->setReadOnly(true);
         comboBox_testStrain = new QComboBox(centralWidget);
         comboBox_testStrain->setObjectName(QString::fromUtf8("comboBox_testStrain"));
-        comboBox_testStrain->setGeometry(QRect(920, 670, 121, 22));
+        comboBox_testStrain->setGeometry(QRect(920, 660, 121, 22));
         checkBox_inhibition = new QCheckBox(centralWidget);
         checkBox_inhibition->setObjectName(QString::fromUtf8("checkBox_inhibition"));
-        checkBox_inhibition->setGeometry(QRect(1050, 670, 71, 21));
+        checkBox_inhibition->setGeometry(QRect(1050, 660, 71, 21));
         bttn_add_inhibit = new QPushButton(centralWidget);
         bttn_add_inhibit->setObjectName(QString::fromUtf8("bttn_add_inhibit"));
-        bttn_add_inhibit->setGeometry(QRect(1120, 670, 71, 23));
+        bttn_add_inhibit->setGeometry(QRect(1120, 660, 71, 23));
         label_28 = new QLabel(centralWidget);
         label_28->setObjectName(QString::fromUtf8("label_28"));
-        label_28->setGeometry(QRect(1120, 690, 71, 31));
+        label_28->setGeometry(QRect(1120, 680, 71, 31));
+        bttn_GRP_delete = new QPushButton(centralWidget);
+        bttn_GRP_delete->setObjectName(QString::fromUtf8("bttn_GRP_delete"));
+        bttn_GRP_delete->setGeometry(QRect(1150, 180, 41, 23));
+        bttn_GRP_save = new QPushButton(centralWidget);
+        bttn_GRP_save->setObjectName(QString::fromUtf8("bttn_GRP_save"));
+        bttn_GRP_save->setGeometry(QRect(1110, 180, 41, 23));
+        bttn_IMG_delete = new QPushButton(centralWidget);
+        bttn_IMG_delete->setObjectName(QString::fromUtf8("bttn_IMG_delete"));
+        bttn_IMG_delete->setGeometry(QRect(1150, 380, 41, 23));
+        bttn_subtable_delete = new QPushButton(centralWidget);
+        bttn_subtable_delete->setObjectName(QString::fromUtf8("bttn_subtable_delete"));
+        bttn_subtable_delete->setGeometry(QRect(1120, 420, 71, 23));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -393,6 +409,11 @@ public:
         QObject::connect(bttn_compare, SIGNAL(clicked()), StreptoGUIClass, SLOT(compare()));
         QObject::connect(tableWidget_2, SIGNAL(cellClicked(int,int)), StreptoGUIClass, SLOT(paramSelected(int,int)));
         QObject::connect(bttn_add_inhibit, SIGNAL(clicked()), StreptoGUIClass, SLOT(addInhibition()));
+        QObject::connect(bttn_GRP_save, SIGNAL(clicked()), StreptoGUIClass, SLOT(grpSave()));
+        QObject::connect(bttn_GRP_delete, SIGNAL(clicked()), StreptoGUIClass, SLOT(grpDelete()));
+        QObject::connect(bttn_IMG_save, SIGNAL(clicked()), StreptoGUIClass, SLOT(imgSave()));
+        QObject::connect(bttn_IMG_delete, SIGNAL(clicked()), StreptoGUIClass, SLOT(imgDelete()));
+        QObject::connect(bttn_subtable_delete, SIGNAL(clicked()), StreptoGUIClass, SLOT(subtableDelete()));
 
         tabWidget->setCurrentIndex(0);
 
@@ -448,12 +469,16 @@ public:
         line_filter->setToolTip(QApplication::translate("StreptoGUIClass", "Filter (intern-ID)", nullptr));
 #endif // QT_NO_TOOLTIP
         line_filter->setText(QApplication::translate("StreptoGUIClass", "CS ", nullptr));
-        bttn_save->setText(QApplication::translate("StreptoGUIClass", "Save", nullptr));
+        bttn_IMG_save->setText(QApplication::translate("StreptoGUIClass", "Save", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_Calculations), QApplication::translate("StreptoGUIClass", "Calculations", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StreptoGUIClass", "Strain-Inhibition", nullptr));
         checkBox_inhibition->setText(QApplication::translate("StreptoGUIClass", "Inhibition", nullptr));
         bttn_add_inhibit->setText(QApplication::translate("StreptoGUIClass", "add", nullptr));
         label_28->setText(QApplication::translate("StreptoGUIClass", "...", nullptr));
+        bttn_GRP_delete->setText(QApplication::translate("StreptoGUIClass", "Delete", nullptr));
+        bttn_GRP_save->setText(QApplication::translate("StreptoGUIClass", "Save", nullptr));
+        bttn_IMG_delete->setText(QApplication::translate("StreptoGUIClass", "Delete", nullptr));
+        bttn_subtable_delete->setText(QApplication::translate("StreptoGUIClass", "Delete Entry", nullptr));
         menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Datei", nullptr));
         menuInfo->setTitle(QApplication::translate("StreptoGUIClass", "Info", nullptr));
     } // retranslateUi

@@ -25,10 +25,18 @@ DBController::DBController() {
 	
 
 
+//empty callback
+static int callback(void* param, int numCols, char** col, char** colName)
+{
+	// just an empty callback for deleting
+
+	return 0;
+}
+
 
 //This function is called to receive the query result of "DBController::getImages()" and 
 //write that to the static vector "result".
-static int callback(void* param, int numCols, char** col, char** colName)
+static int callback_img(void* param, int numCols, char** col, char** colName)
 {
 	// int numCols: holds the number of results
 	// (array) colName: holds each column returned
@@ -164,10 +172,11 @@ static int callback_inhibition(void* param, int numCols, char** col, char** colN
 	StrainInhibition si = StrainInhibition();
 	int* col_width = (int*)param; // this isn't necessary, but it's convenient
 
-	si.id_intern = (string)(col[0]);
-	si.broth_name = (string)(col[1]);
-	si.strain_name = (string)col[2];
-	si.inhibition = (bool)atoi(col[3]);
+	si.id = atoi(col[0]);
+	si.id_intern = (string)(col[1]);
+	si.broth_name = (string)(col[2]);
+	si.strain_name = (string)col[3];
+	si.inhibition = (bool)atoi(col[4]);
 
 	result_inhibition->push_back(si);
 
@@ -230,12 +239,13 @@ vector<Image> DBController::getImages(string filt) {
 					"I.PATH, " \
 					"S.ID_INTERN " \
 					"FROM Images I LEFT JOIN Streptomyceten S ON I.GROUP_ID = S.ID_GROUP " \
-					"WHERE S.ID_INTERN LIKE '" + filt + "%';";
+					"WHERE S.ID_INTERN LIKE '" + filt + "%' " \
+					"ORDER BY S.ID_INTERN ASC;";
 
 	int rc = DBController::openDB();
 	if (rc) {
 		result->clear();
-		sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg);
+		sqlite3_exec(db, query.c_str(), callback_img, NULL, &zErrMsg);
 	}
 	else {
 		DBOUT("Can't execute SQL-Statement(DBController::getImages()):(80)", sqlite3_errmsg(db));
@@ -261,6 +271,89 @@ vector<Image> DBController::getImages(string filt) {
 	 sqlite3_close(db);
 
 	 return grp;
+ }
+
+
+ //Todo comment
+ bool DBController::updateGroup(Group grp) {
+
+	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
+	 if (rc != SQLITE_OK) {
+		 DBOUT("db open failed: DBController::updateGroup(Group)", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 else {
+		 sqlite3_stmt* stmt = NULL;
+		 string err_str;
+		 rc = sqlite3_prepare(db, \
+			 "UPDATE Streptomyceten " \
+			 "SET " \
+			 "ID_GROUP = ?," \
+			 "ID_INTERN = ?," \
+			 "DATE = ?," \
+			 "SCIENTIFIC_NAME = ?," \
+			 "GENOME_LINK = ?," \
+			 "LOCALITY = ?," \
+			 "SIDEROPHORE_BOOL = ?," \
+			 "SPORE_COLOR = ?" \
+			 "WHERE ID_GROUP = ?;", \
+			 - 1, &stmt, NULL);
+		 if (rc != SQLITE_OK) {
+			 DBOUT("prepare failed: DBController::updateGroup(Group)", sqlite3_errmsg(db));
+
+			 return false;
+		 }
+		 else {
+			 // SQLITE_STATIC because the statement is finalized
+			 // before the buffer is freed:
+			 sqlite3_bind_int(stmt, 1, grp.group_id);
+			 sqlite3_bind_text(stmt, 2, grp.intern_id.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_text(stmt, 3, grp.date.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_text(stmt, 4, grp.sci_name.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_text(stmt, 5, grp.genome_lnk.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_text(stmt, 6, grp.locality.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_int(stmt, 7, grp.siderophore);
+			 sqlite3_bind_text(stmt, 8, grp.spore_color.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_int(stmt, 9, grp.group_id);
+			 //sqlite3_bind_double(stmt, 5, grp.locality);
+
+			 if (rc != SQLITE_OK) {
+				 DBOUT("bind failed: DBController::updateGroup(Group)", sqlite3_errmsg(db));
+				 return false;
+			 }
+			 else {
+				 rc = sqlite3_step(stmt);
+				 if (rc != SQLITE_DONE)
+					 DBOUT("execution failed: DBController::updateGroup(Group)", sqlite3_errmsg(db));
+				 return false;
+			 }
+		 }
+		 sqlite3_finalize(stmt);
+	 }
+	 sqlite3_close(db);
+	 return true;
+ }
+
+
+ //Todo comment
+ bool DBController::deleteGroup(int id_grp, vector<int> imgs) {
+	 char* zErrMsg = 0;
+	 string query = "DELETE FROM Streptomyceten " \
+		 "WHERE ID_GROUP = " + std::to_string(id_grp) + "; ";
+
+	 for (int i = 0; i < imgs.size(); i++) {
+		 DBController::deleteImage(imgs[i]);
+	 }
+
+	 int rc = DBController::openDB();
+	 if (rc && sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg) == SQLITE_OK) {
+		 return true;
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::deleteGroup()):", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 sqlite3_close(db);
  }
 
 
@@ -397,6 +490,7 @@ vector<Image> DBController::getImages(string filt) {
  vector<StrainInhibition> DBController::getInhibition(int id) {
 	 char* zErrMsg = 0;
 	 string query = "SELECT " \
+		 "SI.'STRAIN-INHIBITS_ID', " \
 		 "S.ID_INTERN, " \
 		 "B.BROTH_NAME, " \
 		 "TS.STRAIN_NAME, " \
@@ -415,7 +509,7 @@ vector<Image> DBController::getImages(string filt) {
 		 sqlite3_exec(db, query.c_str(), callback_inhibition, NULL, &zErrMsg);
 	 }
 	 else {
-		 DBOUT("Can't execute SQL-Statement(DBController::getCalcedParams(int)):", sqlite3_errmsg(db));
+		 DBOUT("Can't execute SQL-Statement(DBController::getInhibition(int)):", sqlite3_errmsg(db));
 	 }
 	 sqlite3_close(db);
 
@@ -493,6 +587,181 @@ vector<Image> DBController::getImages(string filt) {
 	 free(data);
 	 buffer.~QBuffer();
 	 return true;
+ }
+
+
+ //Todo comment
+ bool DBController::updateImage(Image img){
+
+	 QImage image(QString::fromStdString(img.filePath));
+	 if (image.isNull())
+	 {
+		 DBOUT("Image file open failed: DBController::updateImage(Image)", sqlite3_errmsg(db));
+		 return false;
+	 }
+
+	 //You can obtain a pointer to the pixels in the image (as unsigned char *)
+	 //using QImage::constBits() and QImage::byteCount()
+	 image = image.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+	 QByteArray bytes;
+	 QBuffer buffer(&bytes);
+	 buffer.open(QIODevice::WriteOnly);
+	 image.save(&buffer, "tif");
+	 buffer.close();
+
+	 unsigned char* data = (unsigned char*)malloc(bytes.size());
+	 memcpy(data, reinterpret_cast<unsigned char*>(bytes.data()), bytes.size());
+	 int size = bytes.size();
+
+	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
+	 if (rc != SQLITE_OK) {
+		 DBOUT("db open failed: DBController::updateImage(Image)", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 else {
+		 sqlite3_stmt* stmt = NULL;
+		 string err_str;
+		 rc = sqlite3_prepare(db, \
+			 "UPDATE Images " \
+			 "SET " \
+			 "IMAGE_ID = ?," \
+			 "IMAGE_PREVIEW_BLOB = ?," \
+			 "TIMESTAMP = ?," \
+			 "IMAGESIZE = ?," \
+			 "RESOLUTION = ?," \
+			 "BROTH_ID = ?," \
+			 "GROUP_ID = ?," \
+			 "PATH = ?" \
+			 "WHERE IMAGE_ID = ?;" , \
+			 - 1, &stmt, NULL);
+		 if (rc != SQLITE_OK) {
+			 DBOUT("prepare failed: DBController::updateImage(Image)", sqlite3_errmsg(db));
+
+			 return false;
+		 }
+		 else {
+			 // SQLITE_STATIC because the statement is finalized
+			 // before the buffer is freed:
+			 sqlite3_bind_int(stmt, 1, img.image_id);
+			 rc = sqlite3_bind_blob(stmt, 2, data, size, SQLITE_STATIC);
+			 sqlite3_bind_text(stmt, 3, img.date.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_double(stmt, 4, size);
+			 sqlite3_bind_double(stmt, 5, img.resolution);
+			 sqlite3_bind_int(stmt, 6, img.broth_id);
+			 sqlite3_bind_int(stmt, 7, img.group_id);
+			 sqlite3_bind_text(stmt, 8, img.filePath.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_int(stmt, 9, img.image_id);
+
+			 if (rc != SQLITE_OK) {
+				 DBOUT("bind failed: DBController::updateImage(Image)", sqlite3_errmsg(db));
+				 return false;
+			 }
+			 else {
+				 rc = sqlite3_step(stmt);
+				 if (rc != SQLITE_DONE)
+					 DBOUT("execution failed: DBController::updateImage(Image)", sqlite3_errmsg(db));
+				 return false;
+			 }
+		 }
+		 sqlite3_finalize(stmt);
+	 }
+	 sqlite3_close(db);
+	 //delete[] data;
+	 free(data);
+	 buffer.~QBuffer();
+	 return true;
+ }
+
+
+ //Todo comment
+ bool DBController::deleteImage(int id){
+	 char* zErrMsg = 0;
+	 string query = "DELETE FROM Images " \
+		 "WHERE IMAGE_ID = "+ std::to_string(id) +"; ";
+
+	 int rc = DBController::openDB();
+	 if (rc && sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg)==SQLITE_OK) {
+		 DBController::deleteCalculatedParameters(id);
+		 DBController::deleteStrainInhibits(id);
+		 return true;
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::deleteImage()):", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 sqlite3_close(db);
+ }
+
+
+ //Todo comment
+ bool DBController::deleteCalculatedParameters(int img_id) {
+	 char* zErrMsg = 0;
+	 string query = "DELETE FROM CalculatedParameters " \
+		 "WHERE IMAGE_ID = " + std::to_string(img_id) + "; ";
+
+	 int rc = DBController::openDB();
+	 if (rc && sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg) == SQLITE_OK) {
+		 return true;
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::deleteCalculatedParameters()):", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 sqlite3_close(db);
+ }
+
+
+ //Todo comment
+ bool DBController::deleteCalcedParam(int calcP_ID) {
+	 char* zErrMsg = 0;
+	 string query = "DELETE FROM CalculatedParameters " \
+		 "WHERE CalcP_ID = " + std::to_string(calcP_ID) + "; ";
+
+	 int rc = DBController::openDB();
+	 if (rc && sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg) == SQLITE_OK) {
+		 return true;
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::deleteCalcedParams()):", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 sqlite3_close(db);
+ }
+
+
+ //Todo comment
+ bool DBController::deleteStrainInhibits(int img_id) {
+	 char* zErrMsg = 0;
+	 string query = "DELETE FROM 'Strain-Inhibits' " \
+		 "WHERE IMAGE_ID = " + std::to_string(img_id) + "; ";
+
+	 int rc = DBController::openDB();
+	 if (rc && sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg) == SQLITE_OK) {
+		 return true;
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::deleteCalculatedParameters()):", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 sqlite3_close(db);
+ }
+
+
+ //Todo comment
+ bool DBController::deleteStrainInhibition(int SI_ID) {
+	 char* zErrMsg = 0;
+	 string query = "DELETE FROM \"Strain-Inhibits\" " \
+		 "WHERE \"STRAIN-INHIBITS_ID\" = " + std::to_string(SI_ID) + "; ";
+
+	 int rc = DBController::openDB();
+	 if (rc && sqlite3_exec(db, query.c_str(), callback, NULL, &zErrMsg) == SQLITE_OK) {
+		 return true;
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::deleteStrainInhibition()):", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 sqlite3_close(db);
  }
 
 

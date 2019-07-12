@@ -219,26 +219,29 @@ void StreptoGUI::fillTable2(vector<CalcedParams> result) {
 
 //Todo comment
 void StreptoGUI::fillTable3(vector<StrainInhibition> result) {
-	ui.tableWidget_3->setColumnCount(4);
+	ui.tableWidget_3->setColumnCount(5);
 	ui.tableWidget_3->verticalHeader()->setVisible(false);
-	ui.tableWidget_3->setColumnWidth(0, 125);
-	ui.tableWidget_3->setColumnWidth(1, 125);
-	ui.tableWidget_3->setColumnWidth(2, 125);
-	ui.tableWidget_3->setColumnWidth(3, 125);
+	ui.tableWidget_3->setColumnWidth(0, 100);
+	ui.tableWidget_3->setColumnWidth(1, 100);
+	ui.tableWidget_3->setColumnWidth(2, 100);
+	ui.tableWidget_3->setColumnWidth(3, 100);
+	ui.tableWidget_3->setColumnWidth(4, 100);
 
-	ui.tableWidget_3->setHorizontalHeaderItem(0, new QTableWidgetItem("ID-Intern"));
-	ui.tableWidget_3->setHorizontalHeaderItem(1, new QTableWidgetItem("Broth"));
-	ui.tableWidget_3->setHorizontalHeaderItem(2, new QTableWidgetItem("Test-Strain"));
-	ui.tableWidget_3->setHorizontalHeaderItem(3, new QTableWidgetItem("Inhibition"));
+	ui.tableWidget_3->setHorizontalHeaderItem(0, new QTableWidgetItem("SI-ID"));
+	ui.tableWidget_3->setHorizontalHeaderItem(1, new QTableWidgetItem("ID-Intern"));
+	ui.tableWidget_3->setHorizontalHeaderItem(2, new QTableWidgetItem("Broth"));
+	ui.tableWidget_3->setHorizontalHeaderItem(3, new QTableWidgetItem("Test-Strain"));
+	ui.tableWidget_3->setHorizontalHeaderItem(4, new QTableWidgetItem("Inhibition"));
 	//ui.tableWidget_3->setHorizontalHeaderItem(4, new QTableWidgetItem("Timestamp"));
 
 	ui.tableWidget_3->setRowCount(result.size());
 	for (int i = 0; i < result.size(); i++) {
 		ui.tableWidget_3->setRowHeight(i, 30);
-		ui.tableWidget_3->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(result[i].id_intern)));
-		ui.tableWidget_3->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(result[i].broth_name)));
-		ui.tableWidget_3->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(result[i].strain_name)));
-		ui.tableWidget_3->setItem(i, 3, new QTableWidgetItem(QString::number(result[i].inhibition)));
+		ui.tableWidget_3->setItem(i, 0, new QTableWidgetItem(QString::number(result[i].id)));
+		ui.tableWidget_3->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(result[i].id_intern)));
+		ui.tableWidget_3->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(result[i].broth_name)));
+		ui.tableWidget_3->setItem(i, 3, new QTableWidgetItem(QString::fromStdString(result[i].strain_name)));
+		ui.tableWidget_3->setItem(i, 4, new QTableWidgetItem(QString::number(result[i].inhibition)));
 	}
 	//ui.label_12->setText(QString::number(result.size()));
 
@@ -336,6 +339,89 @@ void StreptoGUI::paramSelected(int x, int y)
 		ui.label_17->setText("Selected Param not found.");
 	}
 
+}
+
+
+//Save Image Parameters to DB
+void StreptoGUI::imgSave(){
+	Image img2 = Image();
+	img2.image_id = ui.line_ID->text().toInt();
+	img2.date = ui.line_timestamp->text().toStdString();
+	img2.imagesize = ui.line_imgSize->text().toDouble();
+	img2.resolution = ui.line_resolution->text().toDouble();
+	img2.broth_id = ui.line_brothID->text().toInt();
+	img2.group_id = ui.line_groupID->text().toInt();
+	img2.filePath = ui.line_path->text().toStdString();
+
+	if (!dbcon->updateImage(img2)) {
+		ui.label_3->setText("successfully updated Image.");
+	}
+	else {
+		ui.label_3->setText("failed to update Image.");
+	}
+}
+
+
+//Arbeit Arbeit
+void StreptoGUI::imgDelete(){
+	if (dbcon->deleteImage(ui.line_ID->text().toInt())) {
+		ui.label_3->setText("successfully deleted Image.");
+	}
+	else {
+		ui.label_3->setText("failed to delete Image.");
+	}
+}
+
+void StreptoGUI::grpSave(){
+	Group grp2 = Group();
+	grp2.group_id = ui.line_groupID_group->text().toInt();
+	grp2.intern_id = ui.line_internID->text().toStdString();
+	grp2.date = ui.line_timestamp_group->text().toStdString();
+	grp2.sci_name = ui.line_scientific->text().toStdString();
+	grp2.genome_lnk = ui.line_genome->text().toStdString();
+	grp2.locality = ui.line_locality->text().toStdString();
+	grp2.spore_color = ui.line_spore_color->text().toStdString();
+	grp2.siderophore = ui.checkBox_siderophore->isChecked();
+
+	if (!dbcon->updateGroup(grp2)) {
+		ui.label_3->setText("successfully updated Group.");
+	}
+	else {
+		ui.label_3->setText("failed to update Group.");
+	}
+}
+
+void StreptoGUI::grpDelete(){
+	vector<int> imgs;
+	for (int i = 0; i < resultGlob.size(); i++) {
+		if (resultGlob[i].group_id == ui.line_groupID_group->text().toInt()) {
+			imgs.push_back(resultGlob[i].image_id);
+		}
+	}
+	if (dbcon->deleteGroup(ui.line_groupID_group->text().toInt(), imgs)) {
+		ui.label_3->setText("successfully deleted Group.");
+	}
+	else {
+		ui.label_3->setText("failed to delete Group.");
+	}
+}
+
+void StreptoGUI::subtableDelete(){	
+	if (ui.tabWidget->currentIndex() == 0) {	//Calculations
+		//ui.label_12->setText(QString::number(ui.tableWidget_2->currentRow()));
+		//ui.tableWidget_2->item(ui.tableWidget_2->currentRow(), 0)->text().toDouble();
+		if (dbcon->deleteCalcedParam(ui.tableWidget_2->item(ui.tableWidget_2->currentRow(), 0)->text().toDouble())) {
+			ui.label_3->setText("Successfully deleted entry in Calculations");
+		}else { ui.label_3->setText("Failed to delete entry in Calculations"); }
+	}
+	else {	//Strain-Inhibition
+		//ui.label_12->setText(QString::number(ui.tableWidget_3->currentRow()));
+		if (dbcon->deleteStrainInhibition(ui.tableWidget_3->item(ui.tableWidget_3->currentRow(), 0)->text().toDouble())) {
+			ui.label_3->setText("Successfully deleted entry in Strain-Inhibition");
+		}
+		else { ui.label_3->setText("Failed to delete entry in Strain-Inhibition"); }
+	}
+		//ui.tableWidget_2->currentRow();
 }
 
 

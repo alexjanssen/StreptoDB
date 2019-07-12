@@ -11,6 +11,7 @@ class StrainInhibition
 	// Access specifier 
 public:
 	// Data Members 
+	int id;
 	string id_intern;
 	string broth_name;
 	string strain_name;
