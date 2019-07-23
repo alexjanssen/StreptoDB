@@ -49,10 +49,11 @@ static int callback_img(void* param, int numCols, char** col, char** colName)
 	img.image_preview = QImage::fromData(data, atoi(col[3]),nullptr);
 	img.date = (string)col[2];
 	img.imagesize = atoi(col[3]);
-	img.resolution = atoi(col[4]);
-	img.broth_id = atoi(col[5]);
-	img.group_id = atoi(col[6]);
-	img.filePath = (string)col[7];
+	img.resolution_x = atoi(col[4]);
+	img.resolution_y = atoi(col[5]);
+	img.broth_id = atoi(col[6]);
+	img.group_id = atoi(col[7]);
+	img.filePath = (string)col[8];
 
 	result->push_back(img);
 
@@ -233,7 +234,8 @@ vector<Image> DBController::getImages(string filt) {
 					"I.IMAGE_PREVIEW_BLOB, " \
 					"I.TIMESTAMP, " \
 					"I.IMAGESIZE, " \
-					"I.RESOLUTION, " \
+					"I.RESOLUTION_X, " \
+					"I.RESOLUTION_Y, " \
 					"I.BROTH_ID, " \
 					"I.GROUP_ID, " \
 					"I.PATH, " \
@@ -549,8 +551,8 @@ vector<Image> DBController::getImages(string filt) {
 		 sqlite3_stmt* stmt = NULL;
 		 string err_str;
 		 rc = sqlite3_prepare(db, \
-			 "INSERT INTO Images(IMAGE_ID, IMAGE_PREVIEW_BLOB, TIMESTAMP, IMAGESIZE, RESOLUTION, BROTH_ID, GROUP_ID, PATH)" \
-			 " VALUES(?,?,?,?,?,?,?,?);", \
+			 "INSERT INTO Images(IMAGE_ID, IMAGE_PREVIEW_BLOB, TIMESTAMP, IMAGESIZE, RESOLUTION_X, RESOLUTION_Y, BROTH_ID, GROUP_ID, PATH)" \
+			 " VALUES(?,?,?,?,?,?,?,?,?);", \
 			 - 1, &stmt, NULL);
 		 if (rc != SQLITE_OK) {
 			 DBOUT("prepare failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
@@ -564,10 +566,11 @@ vector<Image> DBController::getImages(string filt) {
 			 rc = sqlite3_bind_blob(stmt, 2, data, size, SQLITE_STATIC);
 			 sqlite3_bind_text(stmt, 3, img.date.c_str(), -1, SQLITE_STATIC);
 			 sqlite3_bind_double(stmt, 4, (double)size);
-			 sqlite3_bind_double(stmt, 5, img.resolution);
-			 sqlite3_bind_int(stmt, 6, img.broth_id);
-			 sqlite3_bind_int(stmt, 7, img.group_id);
-			 sqlite3_bind_text(stmt, 8, img.filePath.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_double(stmt, 5, img.resolution_x);
+			 sqlite3_bind_double(stmt, 6, img.resolution_y);
+			 sqlite3_bind_int(stmt, 7, img.broth_id);
+			 sqlite3_bind_int(stmt, 8, img.group_id);
+			 sqlite3_bind_text(stmt, 9, img.filePath.c_str(), -1, SQLITE_STATIC);
 
 			 if (rc != SQLITE_OK) {
 				 DBOUT("bind failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
@@ -628,7 +631,8 @@ vector<Image> DBController::getImages(string filt) {
 			 "IMAGE_PREVIEW_BLOB = ?," \
 			 "TIMESTAMP = ?," \
 			 "IMAGESIZE = ?," \
-			 "RESOLUTION = ?," \
+			 "RESOLUTION_X = ?," \
+			 "RESOLUTION_Y = ?," \
 			 "BROTH_ID = ?," \
 			 "GROUP_ID = ?," \
 			 "PATH = ?" \
@@ -646,11 +650,12 @@ vector<Image> DBController::getImages(string filt) {
 			 rc = sqlite3_bind_blob(stmt, 2, data, size, SQLITE_STATIC);
 			 sqlite3_bind_text(stmt, 3, img.date.c_str(), -1, SQLITE_STATIC);
 			 sqlite3_bind_double(stmt, 4, size);
-			 sqlite3_bind_double(stmt, 5, img.resolution);
-			 sqlite3_bind_int(stmt, 6, img.broth_id);
-			 sqlite3_bind_int(stmt, 7, img.group_id);
-			 sqlite3_bind_text(stmt, 8, img.filePath.c_str(), -1, SQLITE_STATIC);
-			 sqlite3_bind_int(stmt, 9, img.image_id);
+			 sqlite3_bind_double(stmt, 5, img.resolution_x);
+			 sqlite3_bind_double(stmt, 6, img.resolution_y);
+			 sqlite3_bind_int(stmt, 7, img.broth_id);
+			 sqlite3_bind_int(stmt, 8, img.group_id);
+			 sqlite3_bind_text(stmt, 9, img.filePath.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_int(stmt, 10, img.image_id);
 
 			 if (rc != SQLITE_OK) {
 				 DBOUT("bind failed: DBController::updateImage(Image)", sqlite3_errmsg(db));

@@ -80,7 +80,8 @@ void uploadDialog::insertIntoDB() {
 	img2.image_id = ui.lineEdit_image_id->text().toInt();
 	img2.date = ui.lineEdit_timestamp->text().toStdString();
 	img2.imagesize = ui.lineEdit_imagesize->text().toDouble();
-	img2.resolution = ui.lineEdit_resolution->text().toDouble();
+	img2.resolution_x = ui.lineEdit_resolution_x->text().toDouble();
+	img2.resolution_y = ui.lineEdit_resolution_y->text().toDouble();
 	img2.broth_id = ui.lineEdit_broth_id->text().toInt();
 	img2.group_id = ui.lineEdit_group_id->text().toInt();
 	img2.filePath = ui.label->text().toStdString();

@@ -55,7 +55,7 @@ public:
     QLabel *label_7;
     QLineEdit *line_imgSize;
     QLabel *label_8;
-    QLineEdit *line_resolution;
+    QLineEdit *line_resolution_x;
     QLabel *label_9;
     QLineEdit *line_brothID;
     QLabel *label_10;
@@ -111,6 +111,7 @@ public:
     QPushButton *bttn_GRP_save;
     QPushButton *bttn_IMG_delete;
     QPushButton *bttn_subtable_delete;
+    QLineEdit *line_resolution_y;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -182,10 +183,10 @@ public:
         line_imgSize->setGeometry(QRect(1080, 280, 113, 20));
         label_8 = new QLabel(centralWidget);
         label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setGeometry(QRect(1000, 300, 71, 21));
-        line_resolution = new QLineEdit(centralWidget);
-        line_resolution->setObjectName(QString::fromUtf8("line_resolution"));
-        line_resolution->setGeometry(QRect(1080, 300, 113, 20));
+        label_8->setGeometry(QRect(1000, 300, 81, 21));
+        line_resolution_x = new QLineEdit(centralWidget);
+        line_resolution_x->setObjectName(QString::fromUtf8("line_resolution_x"));
+        line_resolution_x->setGeometry(QRect(1080, 300, 53, 20));
         label_9 = new QLabel(centralWidget);
         label_9->setObjectName(QString::fromUtf8("label_9"));
         label_9->setGeometry(QRect(1000, 320, 71, 21));
@@ -203,7 +204,7 @@ public:
         label_11->setGeometry(QRect(760, 390, 111, 21));
         label_12 = new QLabel(centralWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setGeometry(QRect(880, 390, 221, 21));
+        label_12->setGeometry(QRect(880, 390, 201, 21));
         bttn_testCalc = new QPushButton(centralWidget);
         bttn_testCalc->setObjectName(QString::fromUtf8("bttn_testCalc"));
         bttn_testCalc->setGeometry(QRect(680, 390, 75, 23));
@@ -368,6 +369,9 @@ public:
         bttn_subtable_delete = new QPushButton(centralWidget);
         bttn_subtable_delete->setObjectName(QString::fromUtf8("bttn_subtable_delete"));
         bttn_subtable_delete->setGeometry(QRect(1120, 420, 71, 23));
+        line_resolution_y = new QLineEdit(centralWidget);
+        line_resolution_y->setObjectName(QString::fromUtf8("line_resolution_y"));
+        line_resolution_y->setGeometry(QRect(1140, 300, 53, 20));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -415,7 +419,7 @@ public:
         QObject::connect(bttn_IMG_delete, SIGNAL(clicked()), StreptoGUIClass, SLOT(imgDelete()));
         QObject::connect(bttn_subtable_delete, SIGNAL(clicked()), StreptoGUIClass, SLOT(subtableDelete()));
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(StreptoGUIClass);
@@ -438,7 +442,7 @@ public:
         label_5->setText(QApplication::translate("StreptoGUIClass", "ID:", nullptr));
         label_6->setText(QApplication::translate("StreptoGUIClass", "Timestamp:", nullptr));
         label_7->setText(QApplication::translate("StreptoGUIClass", "Imagesize:", nullptr));
-        label_8->setText(QApplication::translate("StreptoGUIClass", "Resolution:", nullptr));
+        label_8->setText(QApplication::translate("StreptoGUIClass", "Resolution_x/y:", nullptr));
         label_9->setText(QApplication::translate("StreptoGUIClass", "Broth-ID:", nullptr));
         label_10->setText(QApplication::translate("StreptoGUIClass", "Group-ID:", nullptr));
         label_11->setText(QApplication::translate("StreptoGUIClass", "Calculated Parameter:", nullptr));

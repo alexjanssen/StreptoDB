@@ -192,20 +192,20 @@
      <rect>
       <x>1000</x>
       <y>300</y>
-      <width>71</width>
+      <width>81</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Resolution:</string>
+     <string>Resolution_x/y:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="line_resolution">
+   <widget class="QLineEdit" name="line_resolution_x">
     <property name="geometry">
      <rect>
       <x>1080</x>
       <y>300</y>
-      <width>113</width>
+      <width>53</width>
       <height>20</height>
      </rect>
     </property>
@@ -274,7 +274,7 @@
      <rect>
       <x>880</x>
       <y>390</y>
-      <width>221</width>
+      <width>201</width>
       <height>21</height>
      </rect>
     </property>
@@ -905,6 +905,16 @@
     </property>
     <property name="text">
      <string>Delete Entry</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_resolution_y">
+    <property name="geometry">
+     <rect>
+      <x>1140</x>
+      <y>300</y>
+      <width>53</width>
+      <height>20</height>
+     </rect>
     </property>
    </widget>
   </widget>

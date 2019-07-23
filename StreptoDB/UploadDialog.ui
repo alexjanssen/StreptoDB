@@ -49,7 +49,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Auswählen...</string>
+    <string>Select...</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -62,7 +62,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>neuer Datensatz:</string>
+    <string>New Image:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -147,12 +147,12 @@
     <string>RESOLUTION:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_resolution">
+  <widget class="QLineEdit" name="lineEdit_resolution_x">
    <property name="geometry">
     <rect>
      <x>290</x>
      <y>90</y>
-     <width>113</width>
+     <width>53</width>
      <height>20</height>
     </rect>
    </property>
@@ -226,7 +226,17 @@
     </rect>
    </property>
    <property name="text">
-    <string>speichern</string>
+    <string>Save</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_resolution_y">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>90</y>
+     <width>53</width>
+     <height>20</height>
+    </rect>
    </property>
   </widget>
  </widget>

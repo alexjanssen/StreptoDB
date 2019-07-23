@@ -86,7 +86,8 @@ void StreptoGUI::itemSelected(int x, int y)
 				ui.line_ID->setText(QString::number(resultGlob[i].image_id));
 				ui.line_timestamp->setText(QString::fromStdString(resultGlob[i].date));
 				ui.line_imgSize->setText(QString::number(resultGlob[i].imagesize));
-				ui.line_resolution->setText(QString::number(resultGlob[i].resolution));
+				ui.line_resolution_x->setText(QString::number(resultGlob[i].resolution_x));
+				ui.line_resolution_y->setText(QString::number(resultGlob[i].resolution_y));
 				ui.line_brothID->setText(QString::number(resultGlob[i].broth_id));
 				ui.line_groupID->setText(QString::number(resultGlob[i].group_id));
 				ui.line_path->setText(QString::fromStdString(resultGlob[i].filePath));
@@ -348,7 +349,8 @@ void StreptoGUI::imgSave(){
 	img2.image_id = ui.line_ID->text().toInt();
 	img2.date = ui.line_timestamp->text().toStdString();
 	img2.imagesize = ui.line_imgSize->text().toDouble();
-	img2.resolution = ui.line_resolution->text().toDouble();
+	img2.resolution_x = ui.line_resolution_x->text().toDouble();
+	img2.resolution_y = ui.line_resolution_y->text().toDouble();
 	img2.broth_id = ui.line_brothID->text().toInt();
 	img2.group_id = ui.line_groupID->text().toInt();
 	img2.filePath = ui.line_path->text().toStdString();

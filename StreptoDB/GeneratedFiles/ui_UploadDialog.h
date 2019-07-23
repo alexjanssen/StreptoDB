@@ -34,13 +34,14 @@ public:
     QLabel *label_4;
     QLineEdit *lineEdit_imagesize;
     QLabel *label_5;
-    QLineEdit *lineEdit_resolution;
+    QLineEdit *lineEdit_resolution_x;
     QLabel *label_6;
     QLineEdit *lineEdit_broth_id;
     QLabel *label_7;
     QLineEdit *lineEdit_group_id;
     QLabel *label_test;
     QPushButton *pushButton_2;
+    QLineEdit *lineEdit_resolution_y;
 
     void setupUi(QDialog *uploadDialog)
     {
@@ -82,9 +83,9 @@ public:
         label_5 = new QLabel(uploadDialog);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(210, 90, 81, 16));
-        lineEdit_resolution = new QLineEdit(uploadDialog);
-        lineEdit_resolution->setObjectName(QString::fromUtf8("lineEdit_resolution"));
-        lineEdit_resolution->setGeometry(QRect(290, 90, 113, 20));
+        lineEdit_resolution_x = new QLineEdit(uploadDialog);
+        lineEdit_resolution_x->setObjectName(QString::fromUtf8("lineEdit_resolution_x"));
+        lineEdit_resolution_x->setGeometry(QRect(290, 90, 53, 20));
         label_6 = new QLabel(uploadDialog);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(210, 110, 81, 16));
@@ -103,6 +104,9 @@ public:
         pushButton_2 = new QPushButton(uploadDialog);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
         pushButton_2->setGeometry(QRect(130, 210, 75, 23));
+        lineEdit_resolution_y = new QLineEdit(uploadDialog);
+        lineEdit_resolution_y->setObjectName(QString::fromUtf8("lineEdit_resolution_y"));
+        lineEdit_resolution_y->setGeometry(QRect(350, 90, 53, 20));
 
         retranslateUi(uploadDialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), uploadDialog, SLOT(accept()));
@@ -116,8 +120,8 @@ public:
     void retranslateUi(QDialog *uploadDialog)
     {
         uploadDialog->setWindowTitle(QApplication::translate("uploadDialog", "StreptoDB - Bilder Upload", nullptr));
-        pushButton->setText(QApplication::translate("uploadDialog", "Ausw\303\244hlen...", nullptr));
-        label->setText(QApplication::translate("uploadDialog", "neuer Datensatz:", nullptr));
+        pushButton->setText(QApplication::translate("uploadDialog", "Select...", nullptr));
+        label->setText(QApplication::translate("uploadDialog", "New Image:", nullptr));
         label_2->setText(QApplication::translate("uploadDialog", "IMAGE_ID", nullptr));
         label_3->setText(QApplication::translate("uploadDialog", "TIMESTAMP:", nullptr));
         label_4->setText(QApplication::translate("uploadDialog", "IMAGESIZE:", nullptr));
@@ -125,7 +129,7 @@ public:
         label_6->setText(QApplication::translate("uploadDialog", "BROTH_ID:", nullptr));
         label_7->setText(QApplication::translate("uploadDialog", "GROUP_ID:", nullptr));
         label_test->setText(QApplication::translate("uploadDialog", "testing...", nullptr));
-        pushButton_2->setText(QApplication::translate("uploadDialog", "speichern", nullptr));
+        pushButton_2->setText(QApplication::translate("uploadDialog", "Save", nullptr));
     } // retranslateUi
 
 };

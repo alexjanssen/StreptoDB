@@ -16,7 +16,8 @@ public:
 	QImage image_preview;
 	string date;
 	double imagesize;
-	double resolution;
+	double resolution_x;
+	double resolution_y;
 	int broth_id;
 	int group_id;
 	string filePath;
