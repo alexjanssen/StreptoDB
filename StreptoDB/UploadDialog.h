@@ -27,4 +27,4 @@ public slots:
 //	void fillTable(vector<Image>);
 };
 
-static Image img2;
+static Image img;

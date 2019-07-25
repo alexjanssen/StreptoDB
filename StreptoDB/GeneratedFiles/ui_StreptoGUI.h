@@ -112,6 +112,7 @@ public:
     QPushButton *bttn_IMG_delete;
     QPushButton *bttn_subtable_delete;
     QLineEdit *line_resolution_y;
+    QPushButton *bttn_newGroup;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -372,6 +373,9 @@ public:
         line_resolution_y = new QLineEdit(centralWidget);
         line_resolution_y->setObjectName(QString::fromUtf8("line_resolution_y"));
         line_resolution_y->setGeometry(QRect(1140, 300, 53, 20));
+        bttn_newGroup = new QPushButton(centralWidget);
+        bttn_newGroup->setObjectName(QString::fromUtf8("bttn_newGroup"));
+        bttn_newGroup->setGeometry(QRect(590, 10, 75, 23));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -418,6 +422,7 @@ public:
         QObject::connect(bttn_IMG_save, SIGNAL(clicked()), StreptoGUIClass, SLOT(imgSave()));
         QObject::connect(bttn_IMG_delete, SIGNAL(clicked()), StreptoGUIClass, SLOT(imgDelete()));
         QObject::connect(bttn_subtable_delete, SIGNAL(clicked()), StreptoGUIClass, SLOT(subtableDelete()));
+        QObject::connect(bttn_newGroup, SIGNAL(clicked()), StreptoGUIClass, SLOT(newGroup()));
 
         tabWidget->setCurrentIndex(1);
 
@@ -483,6 +488,7 @@ public:
         bttn_GRP_save->setText(QApplication::translate("StreptoGUIClass", "Save", nullptr));
         bttn_IMG_delete->setText(QApplication::translate("StreptoGUIClass", "Delete", nullptr));
         bttn_subtable_delete->setText(QApplication::translate("StreptoGUIClass", "Delete Entry", nullptr));
+        bttn_newGroup->setText(QApplication::translate("StreptoGUIClass", "new Group", nullptr));
         menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Datei", nullptr));
         menuInfo->setTitle(QApplication::translate("StreptoGUIClass", "Info", nullptr));
     } // retranslateUi

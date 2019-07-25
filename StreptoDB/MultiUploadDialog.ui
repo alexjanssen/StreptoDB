@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
-    <height>523</height>
+    <width>813</width>
+    <height>535</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1100,6 +1100,19 @@
     </rect>
    </property>
   </widget>
+  <widget class="QLabel" name="label_out">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>500</y>
+     <width>241</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>...</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
@@ -1135,5 +1148,92 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>multiUpload</receiver>
+   <slot>selectFile1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>135</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>multiUpload</receiver>
+   <slot>selectFile2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>405</x>
+     <y>261</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>multiUpload</receiver>
+   <slot>selectFile3()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>560</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>multiUpload</receiver>
+   <slot>selectFile4()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>760</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_save</sender>
+   <signal>clicked()</signal>
+   <receiver>multiUpload</receiver>
+   <slot>saveAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>587</x>
+     <y>480</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>selectFile1()</slot>
+  <slot>selectFile2()</slot>
+  <slot>selectFile3()</slot>
+  <slot>selectFile4()</slot>
+  <slot>saveAll()</slot>
+ </slots>
 </ui>

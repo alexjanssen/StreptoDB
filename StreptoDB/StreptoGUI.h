@@ -26,6 +26,7 @@ public slots:
 	void grpSave();
 	void grpDelete();
 	void subtableDelete();
+	void newGroup();
 
 protected:    
 	void dragMoveEvent(QDragMoveEvent* event);

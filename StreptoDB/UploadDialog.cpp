@@ -40,7 +40,7 @@ void uploadDialog::openFile() {
 		//cv::Mat testbildM = cv::imread(fileName.toStdString());
 		//QImage imageQ2 = CVController::Mat2QImage(testbildM);
 		//imageQ2 = imageQ2.fromImage(CVController::Mat2QImage(testbildM));
-		img2.image_preview = image.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		img.image_preview = image.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 		//img2.image_preview = image
 		//QPixmap pixmap(fileName);
 		//QImage imageQ = (QImage)pixmap.toImage();
@@ -77,15 +77,15 @@ void uploadDialog::openFile() {
 //Collects the user inputs and calls DBController::addImage(Image);
 void uploadDialog::insertIntoDB() {
 	DBController *dbcon2 = new DBController();
-	img2.image_id = ui.lineEdit_image_id->text().toInt();
-	img2.date = ui.lineEdit_timestamp->text().toStdString();
-	img2.imagesize = ui.lineEdit_imagesize->text().toDouble();
-	img2.resolution_x = ui.lineEdit_resolution_x->text().toDouble();
-	img2.resolution_y = ui.lineEdit_resolution_y->text().toDouble();
-	img2.broth_id = ui.lineEdit_broth_id->text().toInt();
-	img2.group_id = ui.lineEdit_group_id->text().toInt();
-	img2.filePath = ui.label->text().toStdString();
+	img.image_id = ui.lineEdit_image_id->text().toInt();
+	img.date = ui.lineEdit_timestamp->text().toStdString();
+	img.imagesize = ui.lineEdit_imagesize->text().toDouble();
+	img.resolution_x = ui.lineEdit_resolution_x->text().toDouble();
+	img.resolution_y = ui.lineEdit_resolution_y->text().toDouble();
+	img.broth_id = ui.lineEdit_broth_id->text().toInt();
+	img.group_id = ui.lineEdit_group_id->text().toInt();
+	img.filePath = ui.label->text().toStdString();
 
-	dbcon2->addImage2(img2);
+	dbcon2->addImage2(img);
 	ui.label_test->setText("successfully saved Image to DB.");
 }

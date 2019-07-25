@@ -9,6 +9,7 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <UploadDialog.h>
+#include <MultiUploadDialog.h>
 #include <ctime>
 #include <QDragEnterEvent>
 #include <QDropEvent>
@@ -424,6 +425,11 @@ void StreptoGUI::subtableDelete(){
 		else { ui.label_3->setText("Failed to delete entry in Strain-Inhibition"); }
 	}
 		//ui.tableWidget_2->currentRow();
+}
+
+void StreptoGUI::newGroup(){
+	multiUploadDialog* f = new multiUploadDialog();
+	f->show();
 }
 
 

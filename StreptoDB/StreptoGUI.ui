@@ -917,6 +917,19 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="bttn_newGroup">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>10</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>new Group</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -1201,6 +1214,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>bttn_newGroup</sender>
+   <signal>clicked()</signal>
+   <receiver>StreptoGUIClass</receiver>
+   <slot>newGroup()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>627</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadDB()</slot>
@@ -1215,5 +1244,6 @@
   <slot>imgSave()</slot>
   <slot>imgDelete()</slot>
   <slot>subtableDelete()</slot>
+  <slot>newGroup()</slot>
  </slots>
 </ui>

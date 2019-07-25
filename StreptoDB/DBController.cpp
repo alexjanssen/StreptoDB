@@ -128,19 +128,10 @@ static int callback_calcedParams(void* param, int numCols, char** col, char** co
 
 
 //still same shit
-static int callback_maxCalcParamID(void* param, int numCols, char** col, char** colName)
+static int callback_maxID(void* param, int numCols, char** col, char** colName)
 {
 	int* col_width = (int*)param;
-	maxCalcParamID = atoi(col[0]);
-	return 0;
-}
-
-
-//still same shit
-static int callback_maxInhibitID(void* param, int numCols, char** col, char** colName)
-{
-	int* col_width = (int*)param;
-	maxInhibitID = atoi(col[0]);
+	maxID = atoi(col[0]);
 	return 0;
 }
 
@@ -359,6 +350,56 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
+ //Todo comment
+ bool DBController::addGroup(Group grp) {
+
+	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
+	 if (rc != SQLITE_OK) {
+		 DBOUT("db open failed: DBController::addGroup(Group)", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 else {
+		 sqlite3_stmt* stmt = NULL;
+		 string err_str;
+		 rc = sqlite3_prepare(db, \
+			 "INSERT INTO Streptomyceten(ID_GROUP, ID_INTERN, DATE, SCIENTIFIC_NAME, GENOME_LINK, LOCALITY, SIDEROPHORE_BOOL, SPORE_COLOR)" \
+			 " VALUES(?,?,?,?,?,?,?,?);", \
+			 - 1, &stmt, NULL);
+		 if (rc != SQLITE_OK) {
+			 DBOUT("prepare failed: DBController::addGroup(Group)", sqlite3_errmsg(db));
+
+			 return false;
+		 }
+		 else {
+			 // SQLITE_STATIC because the statement is finalized
+			 // before the buffer is freed:
+			 sqlite3_bind_int(stmt, 1, grp.group_id);
+			 sqlite3_bind_text(stmt, 2, grp.intern_id.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_text(stmt, 3, grp.date.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_text(stmt, 4, grp.sci_name.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_text(stmt, 5, grp.genome_lnk.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_text(stmt, 6, grp.locality.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_int(stmt, 7, grp.siderophore);
+			 sqlite3_bind_text(stmt, 8, grp.spore_color.c_str(), -1, SQLITE_STATIC);
+
+			 if (rc != SQLITE_OK) {
+				 DBOUT("bind failed: DBController::addGroup(Group)", sqlite3_errmsg(db));
+				 return false;
+			 }
+			 else {
+				 rc = sqlite3_step(stmt);
+				 if (rc != SQLITE_DONE)
+					 DBOUT("execution failed: DBController::addGroup(Group)", sqlite3_errmsg(db));
+				 return false;
+			 }
+		 }
+		 sqlite3_finalize(stmt);
+	 }
+	 sqlite3_close(db);
+	 return true;
+ }
+
+
  //return Broth for specific BROTH_ID
  Broth DBController::getBroth(int id) {
 	 char* zErrMsg = 0;
@@ -384,14 +425,14 @@ vector<Image> DBController::getImages(string filt) {
 	 int rc = DBController::openDB();
 	 if (rc) {
 		 //result->empty();
-		 sqlite3_exec(db, query.c_str(), callback_maxCalcParamID, NULL, &zErrMsg);
+		 sqlite3_exec(db, query.c_str(), callback_maxID, NULL, &zErrMsg);
 	 }
 	 else {
 		 DBOUT("Can't execute SQL-Statement(DBController::getMaxCalcParamID()):", sqlite3_errmsg(db));
 	 }
 	 sqlite3_close(db);
 
-	 return maxCalcParamID;
+	 return maxID;
  }
 
 
@@ -402,14 +443,50 @@ vector<Image> DBController::getImages(string filt) {
 	 int rc = DBController::openDB();
 	 if (rc) {
 		 //result->empty();
-		 sqlite3_exec(db, query.c_str(), callback_maxInhibitID, NULL, &zErrMsg);
+		 sqlite3_exec(db, query.c_str(), callback_maxID, NULL, &zErrMsg);
 	 }
 	 else {
 		 DBOUT("Can't execute SQL-Statement(DBController::getInhibitID()):", sqlite3_errmsg(db));
 	 }
 	 sqlite3_close(db);
 
-	 return maxInhibitID;
+	 return maxID;
+ }
+
+
+ //return max ID from Image
+ int DBController::getMaxImageID() {
+	 char* zErrMsg = 0;
+	 string query = "SELECT MAX(IMAGE_ID) FROM Images;";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 //result->empty();
+		 sqlite3_exec(db, query.c_str(), callback_maxID, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getMaxCalcParamID()):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return maxID;
+ }
+
+
+ //return max ID from Group
+ int DBController::getMaxGroupID() {
+	 char* zErrMsg = 0;
+	 string query = "SELECT MAX(ID_GROUP) FROM Streptomyceten;";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 //result->empty();
+		 sqlite3_exec(db, query.c_str(), callback_maxID, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getMaxGroupID()):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return maxID;
  }
 
 
