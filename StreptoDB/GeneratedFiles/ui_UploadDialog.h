@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QGraphicsView>
@@ -36,12 +37,14 @@ public:
     QLabel *label_5;
     QLineEdit *lineEdit_resolution_x;
     QLabel *label_6;
-    QLineEdit *lineEdit_broth_id;
     QLabel *label_7;
-    QLineEdit *lineEdit_group_id;
     QLabel *label_test;
     QPushButton *pushButton_2;
     QLineEdit *lineEdit_resolution_y;
+    QComboBox *comboBox_broth;
+    QComboBox *comboBox_group;
+    QLabel *label_13;
+    QLineEdit *line_path;
 
     void setupUi(QDialog *uploadDialog)
     {
@@ -89,24 +92,30 @@ public:
         label_6 = new QLabel(uploadDialog);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(210, 110, 81, 16));
-        lineEdit_broth_id = new QLineEdit(uploadDialog);
-        lineEdit_broth_id->setObjectName(QString::fromUtf8("lineEdit_broth_id"));
-        lineEdit_broth_id->setGeometry(QRect(290, 110, 113, 20));
         label_7 = new QLabel(uploadDialog);
         label_7->setObjectName(QString::fromUtf8("label_7"));
         label_7->setGeometry(QRect(210, 130, 81, 16));
-        lineEdit_group_id = new QLineEdit(uploadDialog);
-        lineEdit_group_id->setObjectName(QString::fromUtf8("lineEdit_group_id"));
-        lineEdit_group_id->setGeometry(QRect(290, 130, 113, 20));
         label_test = new QLabel(uploadDialog);
         label_test->setObjectName(QString::fromUtf8("label_test"));
-        label_test->setGeometry(QRect(210, 170, 191, 16));
+        label_test->setGeometry(QRect(210, 180, 191, 16));
         pushButton_2 = new QPushButton(uploadDialog);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
         pushButton_2->setGeometry(QRect(130, 210, 75, 23));
         lineEdit_resolution_y = new QLineEdit(uploadDialog);
         lineEdit_resolution_y->setObjectName(QString::fromUtf8("lineEdit_resolution_y"));
         lineEdit_resolution_y->setGeometry(QRect(350, 90, 53, 20));
+        comboBox_broth = new QComboBox(uploadDialog);
+        comboBox_broth->setObjectName(QString::fromUtf8("comboBox_broth"));
+        comboBox_broth->setGeometry(QRect(290, 110, 113, 22));
+        comboBox_group = new QComboBox(uploadDialog);
+        comboBox_group->setObjectName(QString::fromUtf8("comboBox_group"));
+        comboBox_group->setGeometry(QRect(290, 130, 113, 22));
+        label_13 = new QLabel(uploadDialog);
+        label_13->setObjectName(QString::fromUtf8("label_13"));
+        label_13->setGeometry(QRect(210, 150, 71, 21));
+        line_path = new QLineEdit(uploadDialog);
+        line_path->setObjectName(QString::fromUtf8("line_path"));
+        line_path->setGeometry(QRect(290, 150, 113, 20));
 
         retranslateUi(uploadDialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), uploadDialog, SLOT(accept()));
@@ -122,14 +131,15 @@ public:
         uploadDialog->setWindowTitle(QApplication::translate("uploadDialog", "StreptoDB - Bilder Upload", nullptr));
         pushButton->setText(QApplication::translate("uploadDialog", "Select...", nullptr));
         label->setText(QApplication::translate("uploadDialog", "New Image:", nullptr));
-        label_2->setText(QApplication::translate("uploadDialog", "IMAGE_ID", nullptr));
-        label_3->setText(QApplication::translate("uploadDialog", "TIMESTAMP:", nullptr));
-        label_4->setText(QApplication::translate("uploadDialog", "IMAGESIZE:", nullptr));
-        label_5->setText(QApplication::translate("uploadDialog", "RESOLUTION:", nullptr));
-        label_6->setText(QApplication::translate("uploadDialog", "BROTH_ID:", nullptr));
-        label_7->setText(QApplication::translate("uploadDialog", "GROUP_ID:", nullptr));
+        label_2->setText(QApplication::translate("uploadDialog", "ImageID:", nullptr));
+        label_3->setText(QApplication::translate("uploadDialog", "Timestamp:", nullptr));
+        label_4->setText(QApplication::translate("uploadDialog", "Imagesize:", nullptr));
+        label_5->setText(QApplication::translate("uploadDialog", "Resolution:", nullptr));
+        label_6->setText(QApplication::translate("uploadDialog", "Broth:", nullptr));
+        label_7->setText(QApplication::translate("uploadDialog", "Group:", nullptr));
         label_test->setText(QApplication::translate("uploadDialog", "testing...", nullptr));
         pushButton_2->setText(QApplication::translate("uploadDialog", "Save", nullptr));
+        label_13->setText(QApplication::translate("uploadDialog", "Path:", nullptr));
     } // retranslateUi
 
 };

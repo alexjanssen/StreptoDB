@@ -75,7 +75,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>IMAGE_ID</string>
+    <string>ImageID:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_image_id">
@@ -98,7 +98,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>TIMESTAMP:</string>
+    <string>Timestamp:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_timestamp">
@@ -121,7 +121,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>IMAGESIZE:</string>
+    <string>Imagesize:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_imagesize">
@@ -144,7 +144,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>RESOLUTION:</string>
+    <string>Resolution:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_resolution_x">
@@ -167,17 +167,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>BROTH_ID:</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit_broth_id">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>110</y>
-     <width>113</width>
-     <height>20</height>
-    </rect>
+    <string>Broth:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_7">
@@ -190,24 +180,14 @@
     </rect>
    </property>
    <property name="text">
-    <string>GROUP_ID:</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit_group_id">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>130</y>
-     <width>113</width>
-     <height>20</height>
-    </rect>
+    <string>Group:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_test">
    <property name="geometry">
     <rect>
      <x>210</x>
-     <y>170</y>
+     <y>180</y>
      <width>191</width>
      <height>16</height>
     </rect>
@@ -235,6 +215,49 @@
      <x>350</x>
      <y>90</y>
      <width>53</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_broth">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>110</y>
+     <width>113</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_group">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>130</y>
+     <width>113</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_13">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>150</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Path:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="line_path">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>150</y>
+     <width>113</width>
      <height>20</height>
     </rect>
    </property>

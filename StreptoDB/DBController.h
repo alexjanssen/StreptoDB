@@ -17,11 +17,11 @@ class DBController {
 public:
 	DBController();
 	vector<Image> getImages(string str);
-	Group getGroup(int);
+	vector<Group> getGroup(string);
 	bool updateGroup(Group grp);
 	bool deleteGroup(int id_grp, vector<int> imgs);
 	bool addGroup(Group grp);
-	Broth getBroth(int id);
+	vector<Broth> getBroth(string id);
 	int getMaxCalcParamID();
 	int getMaxInhibitionID();
 	int getMaxImageID();
@@ -51,8 +51,8 @@ private:
 static vector<Image> *result = new vector<Image>;
 static sqlite3 *db;
 static string& db_name = string("../Database/StreptoDB.db");
-static Group grp;
-static Broth broth;
+static vector<Group> *grp = new vector<Group>;
+static vector<Broth> *broth = new vector<Broth>;
 static int maxID;
 static vector<CalcedParams> *result_calcedParams = new vector<CalcedParams>;
 static vector<Compare>* result_compare = new vector<Compare>;

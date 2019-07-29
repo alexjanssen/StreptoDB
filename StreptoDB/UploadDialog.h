@@ -5,6 +5,17 @@
 #include <QtWidgets\QLabel>
 #include <DBController.h>
 #include <ui_UploadDialog.h>
+#include <QtWidgets\QFileDialog>
+#include <QtWidgets\QMessageBox>
+#include <QtWidgets\QGraphicsPixmapItem>
+#include <QtWidgets/qtablewidget.h>
+#include <QTableWidgetItem>
+#include <QHeaderView>
+#include <CVController.h>
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <ctime>
+//#include <string>
 
 class uploadDialog : public QDialog, public Ui::StreptoGUIClass
 {
@@ -13,18 +24,13 @@ class uploadDialog : public QDialog, public Ui::StreptoGUIClass
 public:
 	uploadDialog(QDialog* parent = 0);
 	Ui::uploadDialog ui;
-	//StreptoGUI(QMainWindow* parent, int t);
-	//private:
-	//Ui::StreptoGUIClass ui;
-	//StreptoGUI(QWidget* parent);
-	//void bttnPushed();
+	int grpID;
 public slots:
 	void openFile();
 	void insertIntoDB();
 
+	void dragOpenFile(QString path);
 
-//private slots:
-//	void fillTable(vector<Image>);
 };
 
 static Image img;

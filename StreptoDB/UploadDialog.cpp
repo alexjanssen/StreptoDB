@@ -1,16 +1,4 @@
 #include "UploadDialog.h"
-#include <QtWidgets\QFileDialog>
-#include <QtWidgets\QMessageBox>
-#include <QtWidgets\QGraphicsPixmapItem>
-#include <QtWidgets/qtablewidget.h>
-#include <QTableWidgetItem>
-#include <QHeaderView>
-#include <CVController.h>
-#include <opencv2/core.hpp>
-#include <opencv2/imgcodecs.hpp>
-//#include <string>
-//#include <sqlite/sqlite3.h> 
-
 
 using namespace std;
 
@@ -19,6 +7,7 @@ using namespace std;
 uploadDialog::uploadDialog(QDialog* parent) : QDialog(parent)
 {
 	ui.setupUi(this);
+	grpID = 1;
 	//ui.label -> setText("blaa");
 }
 
@@ -28,48 +17,11 @@ void uploadDialog::openFile() {
 
 	if (!fileName.isEmpty())
 	{
-		QImage image(fileName);
-
-		if (image.isNull())
-		{
-			QMessageBox::information(this, "Image Viewer", "Error Displaying image");
-			return;
-		}
-
-
-		//cv::Mat testbildM = cv::imread(fileName.toStdString());
-		//QImage imageQ2 = CVController::Mat2QImage(testbildM);
-		//imageQ2 = imageQ2.fromImage(CVController::Mat2QImage(testbildM));
-		img.image_preview = image.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-		//img2.image_preview = image
-		//QPixmap pixmap(fileName);
-		//QImage imageQ = (QImage)pixmap.toImage();
-		//cv::Mat testbildM = CVController::QImage2Mat(imageQ);
-		//QImage imageQ2 = CVController::Mat2QImage(testbildM);
-
-		//cv::Mat testbildM = cv::imread(fileName.toStdString());
-		//QImage *testbildQ = new QImage(); 
-		//testbildQ = &CVController::Mat2QImage(testbildM);
-
-		QPixmap pixmap2;
-		pixmap2 = pixmap2.fromImage(image);
-
-		QGraphicsScene* scene = new QGraphicsScene();
-		scene->addPixmap(pixmap2.scaled(150, 150, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-		ui.graphicsView->setScene(scene);
-		ui.graphicsView->show();
-
-		//QTableWidgetItem* twi = new QTableWidgetItem("test");
-		//twi->setData(Qt::DecorationRole, pixmap2.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-		//ui.tableWidget->setItem(0, 0, new QTableWidgetItem(*twi));
-
-		//delete(&pixmap);
-		//delete(&scene);
-		//delete(&image);
+		uploadDialog::dragOpenFile(fileName);
 	}
 
 
-	ui.label->setText(fileName);
+	//ui.label->setText(fileName);
 	//delete(&fileName);
 }
 
@@ -82,10 +34,80 @@ void uploadDialog::insertIntoDB() {
 	img.imagesize = ui.lineEdit_imagesize->text().toDouble();
 	img.resolution_x = ui.lineEdit_resolution_x->text().toDouble();
 	img.resolution_y = ui.lineEdit_resolution_y->text().toDouble();
-	img.broth_id = ui.lineEdit_broth_id->text().toInt();
-	img.group_id = ui.lineEdit_group_id->text().toInt();
-	img.filePath = ui.label->text().toStdString();
+	img.broth_id = atoi(ui.comboBox_broth->currentText().toStdString().substr(ui.comboBox_broth->currentText().toStdString().find("-") + 1).c_str());
+	img.group_id = atoi(ui.comboBox_group->currentText().toStdString().substr(ui.comboBox_group->currentText().toStdString().find("-") + 1).c_str());
+	//ui.label_test->setText(QString::number(atoi(ui.comboBox_broth->currentText().toStdString().substr(ui.comboBox_broth->currentText().toStdString().find("-")+1).c_str())));
+	img.filePath = ui.line_path->text().toStdString();
 
-	dbcon2->addImage2(img);
-	ui.label_test->setText("successfully saved Image to DB.");
+	if (dbcon2->addImage2(img)) {
+		ui.label_test->setText("successfully saved Image to DB.");
+	}
+	else {
+		ui.label_test->setText("ups, something went wrong :(");
+	}
+}
+
+
+
+void uploadDialog::dragOpenFile(QString fileName) {
+	QImage image(fileName);
+
+		if (image.isNull())
+		{
+			QMessageBox::information(this, "Image Viewer", "Error Displaying image");
+			return;
+		}
+
+		img.image_preview = image.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+		QPixmap pixmap2;
+		pixmap2 = pixmap2.fromImage(image);
+
+		QGraphicsScene* scene = new QGraphicsScene();
+		scene->addPixmap(pixmap2.scaled(150, 150, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+		ui.graphicsView->setScene(scene);
+		ui.graphicsView->show();
+
+		DBController* dbcon2 = new DBController();
+		int id = dbcon2->getMaxImageID();
+		int newGrpID = dbcon2->getMaxGroupID() + 1;
+
+		std::time_t rawtime;
+		std::tm* timeinfo;
+		char buffer2[80];
+
+		std::time(&rawtime);
+		timeinfo = std::localtime(&rawtime);
+
+		std::strftime(buffer2, 80, "%Y-%m-%d", timeinfo);
+		std::puts(buffer2);
+
+			ui.lineEdit_image_id->setText(QString::number(id + 1));
+			ui.lineEdit_timestamp->setText(buffer2);
+			ui.lineEdit_imagesize->setText("auto fill");
+			ui.lineEdit_resolution_x->setText(QString::number(image.width()));
+			ui.lineEdit_resolution_y->setText(QString::number(image.height()));
+
+			ui.comboBox_broth->clear();
+			vector<Broth> vbroth = dbcon2->getBroth("NOT NULL");
+			int temp = 0;
+			for (int g = 0; g < vbroth.size(); g++) {
+				ui.comboBox_broth->addItem(QString::fromStdString(vbroth[g].name + "\t   -" + std::to_string(vbroth[g].broth_id)));
+				if (fileName.toStdString().find(vbroth[g].name, fileName.size() - 10) != string::npos) {
+					temp = g;
+				}
+			}
+			ui.comboBox_broth->setCurrentIndex(temp);
+
+			ui.comboBox_group->clear();
+			vector<Group> vGroup = dbcon2->getGroup("NOT NULL");
+			for (int g = 0; g < vGroup.size(); g++) {
+				ui.comboBox_group->addItem(QString::fromStdString(vGroup[g].intern_id + "\t   -" + std::to_string(vGroup[g].group_id)));
+				
+			}
+			ui.comboBox_group->setCurrentIndex(grpID-1);
+
+			ui.line_path->setText(fileName);
+	
+
 }

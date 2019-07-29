@@ -70,17 +70,18 @@ static int callback_group(void* param, int numCols, char** col, char** colName)
 	// (array) col: holds each value
 	//Group grp = Group();
 	int* col_width = (int*)param; // this isn't necessary, but it's convenient
+	Group group = Group();
+	group.group_id = atoi(col[0]);
+	group.intern_id = (string)(col[1]);
+	group.date = (string)col[2];
+	group.sci_name = (string)col[3];
+	group.genome_lnk = (string)col[4];
+	group.latitude = atoi(col[5]);
+	group.longitude = atoi(col[6]);
+	group.siderophore = (bool)atoi(col[7]);
+	group.spore_color = (string)col[8];
 
-	grp.group_id = atoi(col[0]);
-	grp.intern_id = (string)(col[1]);
-	grp.date = (string)col[2];
-	grp.sci_name = (string)col[3];
-	grp.genome_lnk = (string)col[4];
-	grp.locality = (string)col[5];
-	grp.siderophore = (bool)atoi(col[6]);
-	grp.spore_color = (string)col[7];
-
-	//result->push_back(grp);
+	grp->push_back(group);
 
 	return 0;
 }
@@ -93,20 +94,20 @@ static int callback_broth(void* param, int numCols, char** col, char** colName)
 	// int numCols: holds the number of results
 	// (array) colName: holds each column returned
 	// (array) col: holds each value
-	//Group grp = Group();
+	Broth bro = Broth();
 	int* col_width = (int*)param; // this isn't necessary, but it's convenient
 
-	broth.broth_id = atoi(col[0]);
-	broth.name = (string)(col[1]);
-	broth.info = (string)col[2];
+	bro.broth_id = atoi(col[0]);
+	bro.name = (string)(col[1]);
+	bro.info = (string)col[2];
 
-	//result->push_back(grp);
+	broth->push_back(bro);
 
 	return 0;
 }
 
 
-//same shit for Calculated-Paramaters
+//same for Calculated-Paramaters
 static int callback_calcedParams(void* param, int numCols, char** col, char** colName)
 {
 	// int numCols: holds the number of results
@@ -127,7 +128,7 @@ static int callback_calcedParams(void* param, int numCols, char** col, char** co
 }
 
 
-//still same shit
+//still same apeshit
 static int callback_maxID(void* param, int numCols, char** col, char** colName)
 {
 	int* col_width = (int*)param;
@@ -136,7 +137,7 @@ static int callback_maxID(void* param, int numCols, char** col, char** colName)
 }
 
 
-//same shit for Compare
+//same for Compare
 static int callback_compare(void* param, int numCols, char** col, char** colName)
 {
 	// int numCols: holds the number of results
@@ -176,7 +177,7 @@ static int callback_inhibition(void* param, int numCols, char** col, char** colN
 }
 
 
-//same shit for testStrains
+//same for testStrains
 static int callback_testStrains(void* param, int numCols, char** col, char** colName)
 {
 	// int numCols: holds the number of results
@@ -193,6 +194,9 @@ static int callback_testStrains(void* param, int numCols, char** col, char** col
 
 	return 0;
 }
+
+
+
 
 
 
@@ -241,7 +245,7 @@ vector<Image> DBController::getImages(string filt) {
 		sqlite3_exec(db, query.c_str(), callback_img, NULL, &zErrMsg);
 	}
 	else {
-		DBOUT("Can't execute SQL-Statement(DBController::getImages()):(80)", sqlite3_errmsg(db));
+		DBOUT("Can't execute SQL-Statement(DBController::getImages()):", sqlite3_errmsg(db));
 	}
 	sqlite3_close(db);
 
@@ -250,12 +254,12 @@ vector<Image> DBController::getImages(string filt) {
 
 
  //return Group for specific GROUP_ID
- Group DBController::getGroup(int id) {
+ vector<Group> DBController::getGroup(string id) {
 	 char* zErrMsg = 0;
-	 string query = "SELECT * FROM Streptomyceten WHERE ID_GROUP = "+ std::to_string(id) +";";
+	 string query = "SELECT * FROM Streptomyceten WHERE ID_GROUP "+ id +" ORDER BY ID_GROUP ASC;";
 	 int rc = DBController::openDB();
 	 if (rc) {
-		 //result->empty();
+		 grp->clear();
 		 sqlite3_exec(db, query.c_str(), callback_group, NULL, &zErrMsg);
 	 }
 	 else {
@@ -263,11 +267,11 @@ vector<Image> DBController::getImages(string filt) {
 	 }
 	 sqlite3_close(db);
 
-	 return grp;
+	 return *grp;
  }
 
 
- //Todo comment
+ //UPDATE Streptomyceten
  bool DBController::updateGroup(Group grp) {
 
 	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
@@ -286,7 +290,8 @@ vector<Image> DBController::getImages(string filt) {
 			 "DATE = ?," \
 			 "SCIENTIFIC_NAME = ?," \
 			 "GENOME_LINK = ?," \
-			 "LOCALITY = ?," \
+			 "LATITUDE = ?," \
+			 "LONGITUDE = ?," \
 			 "SIDEROPHORE_BOOL = ?," \
 			 "SPORE_COLOR = ?" \
 			 "WHERE ID_GROUP = ?;", \
@@ -304,10 +309,11 @@ vector<Image> DBController::getImages(string filt) {
 			 sqlite3_bind_text(stmt, 3, grp.date.c_str(), -1, SQLITE_STATIC);
 			 sqlite3_bind_text(stmt, 4, grp.sci_name.c_str(), -1, SQLITE_STATIC);
 			 sqlite3_bind_text(stmt, 5, grp.genome_lnk.c_str(), -1, SQLITE_STATIC);
-			 sqlite3_bind_text(stmt, 6, grp.locality.c_str(), -1, SQLITE_STATIC);
-			 sqlite3_bind_int(stmt, 7, grp.siderophore);
-			 sqlite3_bind_text(stmt, 8, grp.spore_color.c_str(), -1, SQLITE_STATIC);
-			 sqlite3_bind_int(stmt, 9, grp.group_id);
+			 sqlite3_bind_double(stmt, 6, grp.latitude);
+			 sqlite3_bind_double(stmt, 7, grp.longitude);
+			 sqlite3_bind_int(stmt, 8, grp.siderophore);
+			 sqlite3_bind_text(stmt, 9, grp.spore_color.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_int(stmt, 10, grp.group_id);
 			 //sqlite3_bind_double(stmt, 5, grp.locality);
 
 			 if (rc != SQLITE_OK) {
@@ -328,7 +334,7 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //DELETE FROM Streptomyceten WHERE ID_GROUP = ?
  bool DBController::deleteGroup(int id_grp, vector<int> imgs) {
 	 char* zErrMsg = 0;
 	 string query = "DELETE FROM Streptomyceten " \
@@ -350,7 +356,7 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //INSERT INTO Streptomyceten
  bool DBController::addGroup(Group grp) {
 
 	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
@@ -362,8 +368,8 @@ vector<Image> DBController::getImages(string filt) {
 		 sqlite3_stmt* stmt = NULL;
 		 string err_str;
 		 rc = sqlite3_prepare(db, \
-			 "INSERT INTO Streptomyceten(ID_GROUP, ID_INTERN, DATE, SCIENTIFIC_NAME, GENOME_LINK, LOCALITY, SIDEROPHORE_BOOL, SPORE_COLOR)" \
-			 " VALUES(?,?,?,?,?,?,?,?);", \
+			 "INSERT INTO Streptomyceten(ID_GROUP, ID_INTERN, DATE, SCIENTIFIC_NAME, GENOME_LINK, LATITUDE, LONGITUDE, SIDEROPHORE_BOOL, SPORE_COLOR)" \
+			 " VALUES(?,?,?,?,?,?,?,?,?);", \
 			 - 1, &stmt, NULL);
 		 if (rc != SQLITE_OK) {
 			 DBOUT("prepare failed: DBController::addGroup(Group)", sqlite3_errmsg(db));
@@ -378,9 +384,10 @@ vector<Image> DBController::getImages(string filt) {
 			 sqlite3_bind_text(stmt, 3, grp.date.c_str(), -1, SQLITE_STATIC);
 			 sqlite3_bind_text(stmt, 4, grp.sci_name.c_str(), -1, SQLITE_STATIC);
 			 sqlite3_bind_text(stmt, 5, grp.genome_lnk.c_str(), -1, SQLITE_STATIC);
-			 sqlite3_bind_text(stmt, 6, grp.locality.c_str(), -1, SQLITE_STATIC);
-			 sqlite3_bind_int(stmt, 7, grp.siderophore);
-			 sqlite3_bind_text(stmt, 8, grp.spore_color.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_double(stmt, 6, grp.latitude);
+			 sqlite3_bind_double(stmt, 7, grp.longitude);
+			 sqlite3_bind_int(stmt, 8, grp.siderophore);
+			 sqlite3_bind_text(stmt, 9, grp.spore_color.c_str(), -1, SQLITE_STATIC);
 
 			 if (rc != SQLITE_OK) {
 				 DBOUT("bind failed: DBController::addGroup(Group)", sqlite3_errmsg(db));
@@ -388,9 +395,10 @@ vector<Image> DBController::getImages(string filt) {
 			 }
 			 else {
 				 rc = sqlite3_step(stmt);
-				 if (rc != SQLITE_DONE)
+				 if (rc != SQLITE_DONE) {
 					 DBOUT("execution failed: DBController::addGroup(Group)", sqlite3_errmsg(db));
-				 return false;
+					 return false;
+				 }
 			 }
 		 }
 		 sqlite3_finalize(stmt);
@@ -401,12 +409,12 @@ vector<Image> DBController::getImages(string filt) {
 
 
  //return Broth for specific BROTH_ID
- Broth DBController::getBroth(int id) {
+ vector<Broth> DBController::getBroth(string id) {
 	 char* zErrMsg = 0;
-	 string query = "SELECT * FROM Broth WHERE BROTH_ID = " + std::to_string(id) + ";";
+	 string query = "SELECT * FROM Broth WHERE BROTH_ID " + id + " ORDER BY BROTH_ID ASC;";
 	 int rc = DBController::openDB();
 	 if (rc) {
-		 //result->empty();
+		 broth->clear();
 		 sqlite3_exec(db, query.c_str(), callback_broth, NULL, &zErrMsg);
 	 }
 	 else {
@@ -414,7 +422,7 @@ vector<Image> DBController::getImages(string filt) {
 	 }
 	 sqlite3_close(db);
 
-	 return broth;
+	 return *broth;
  }
 
 
@@ -596,7 +604,7 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //INSERT INTO Images
  bool DBController::addImage2(Image img) {
 
 	 QImage image(QString::fromStdString(img.filePath));
@@ -655,9 +663,10 @@ vector<Image> DBController::getImages(string filt) {
 			 }
 			 else {
 				 rc = sqlite3_step(stmt);
-				 if (rc != SQLITE_DONE)
+				 if (rc != SQLITE_DONE) {
 					 DBOUT("execution failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
-				 return false;
+					 return false;
+				 }
 			 }
 		 }
 		 sqlite3_finalize(stmt);
@@ -665,12 +674,12 @@ vector<Image> DBController::getImages(string filt) {
 	 sqlite3_close(db);
 	 //delete[] data;
 	 free(data);
-	 buffer.~QBuffer();
+	 //buffer.~QBuffer();
 	 return true;
  }
 
 
- //Todo comment
+ //UPDATE Images
  bool DBController::updateImage(Image img){
 
 	 QImage image(QString::fromStdString(img.filePath));
@@ -755,7 +764,9 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //DELETE FROM Images WHERE IMAGE_ID = ?
+ //DBController::deleteCalculatedParameters(?);
+ //DBController::deleteStrainInhibits(?);
  bool DBController::deleteImage(int id){
 	 char* zErrMsg = 0;
 	 string query = "DELETE FROM Images " \
@@ -775,7 +786,7 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //DELETE FROM CalculatedParameters WHERE IMAGE_ID = ?
  bool DBController::deleteCalculatedParameters(int img_id) {
 	 char* zErrMsg = 0;
 	 string query = "DELETE FROM CalculatedParameters " \
@@ -793,7 +804,7 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //DELETE FROM CalculatedParameters WHERE CalcP_ID = ?
  bool DBController::deleteCalcedParam(int calcP_ID) {
 	 char* zErrMsg = 0;
 	 string query = "DELETE FROM CalculatedParameters " \
@@ -811,7 +822,7 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //DELETE FROM 'Strain-Inhibits' WHERE IMAGE_ID = ?
  bool DBController::deleteStrainInhibits(int img_id) {
 	 char* zErrMsg = 0;
 	 string query = "DELETE FROM 'Strain-Inhibits' " \
@@ -829,7 +840,7 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //DELETE FROM \"Strain-Inhibits\" WHERE \"STRAIN-INHIBITS_ID\" = ?
  bool DBController::deleteStrainInhibition(int SI_ID) {
 	 char* zErrMsg = 0;
 	 string query = "DELETE FROM \"Strain-Inhibits\" " \
@@ -847,7 +858,7 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //INSERT INTO CalculatedParameters
  bool DBController::addCalcedParams(CalcedParams cp) {
 
 	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
@@ -894,7 +905,7 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
- //Todo comment
+ //INSERT INTO 'Strain-Inhibits'
  bool DBController::addStrainInhibition(int si_id, int img_id, int strain_id, int broth_id, bool inhibit) {
 
 	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);

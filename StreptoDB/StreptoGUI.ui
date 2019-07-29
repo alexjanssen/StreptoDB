@@ -612,7 +612,7 @@
      <rect>
       <x>1080</x>
       <y>140</y>
-      <width>113</width>
+      <width>53</width>
       <height>20</height>
      </rect>
     </property>
@@ -622,12 +622,12 @@
      <rect>
       <x>1000</x>
       <y>140</y>
-      <width>71</width>
+      <width>81</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Locality:</string>
+     <string>Position_lat/lon:</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_26">
@@ -930,6 +930,16 @@
      <string>new Group</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="line_locality_2">
+    <property name="geometry">
+     <rect>
+      <x>1140</x>
+      <y>140</y>
+      <width>53</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -947,19 +957,31 @@
     <bool>true</bool>
    </property>
    <widget class="QMenu" name="menuDatei">
-    <property name="title">
-     <string>Datei</string>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
-    <addaction name="actionNeu"/>
-    <addaction name="action_ffnen"/>
-    <addaction name="actionSpeichern"/>
-    <addaction name="action_Beenden"/>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="title">
+     <string>Options</string>
+    </property>
+    <addaction name="actionAnalys"/>
+    <addaction name="action_settings"/>
+    <addaction name="actionSave"/>
+    <addaction name="action_Close"/>
    </widget>
    <widget class="QMenu" name="menuInfo">
     <property name="title">
      <string>Info</string>
     </property>
-    <addaction name="action_ber_StreptoDB"/>
+    <addaction name="action_bout_StreptoDB"/>
    </widget>
    <addaction name="menuDatei"/>
    <addaction name="menuInfo"/>
@@ -991,29 +1013,29 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionNeu">
+  <action name="actionAnalys">
    <property name="text">
-    <string>Neu...</string>
+    <string>Evaluations</string>
    </property>
   </action>
-  <action name="action_ffnen">
+  <action name="action_settings">
    <property name="text">
-    <string>Öffnen...</string>
+    <string>Settings</string>
    </property>
   </action>
-  <action name="actionSpeichern">
+  <action name="actionSave">
    <property name="text">
-    <string>Speichern</string>
+    <string>Save All</string>
    </property>
   </action>
-  <action name="action_Beenden">
+  <action name="action_Close">
    <property name="text">
-    <string> Beenden</string>
+    <string>Close</string>
    </property>
   </action>
-  <action name="action_ber_StreptoDB">
+  <action name="action_bout_StreptoDB">
    <property name="text">
-    <string>über StreptoDB...</string>
+    <string>About StreptoDB...</string>
    </property>
   </action>
  </widget>
@@ -1230,6 +1252,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_settings</sender>
+   <signal>triggered()</signal>
+   <receiver>StreptoGUIClass</receiver>
+   <slot>act_settings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>600</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadDB()</slot>
@@ -1245,5 +1283,6 @@
   <slot>imgDelete()</slot>
   <slot>subtableDelete()</slot>
   <slot>newGroup()</slot>
+  <slot>act_settings()</slot>
  </slots>
 </ui>

@@ -16,9 +16,11 @@ public:
 	string date;
 	string sci_name;
 	string genome_lnk;
-	string locality;
+	double latitude;
+	double longitude;
 	bool siderophore;
 	string spore_color;
+
 };
 
 

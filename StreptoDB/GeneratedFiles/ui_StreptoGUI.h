@@ -34,11 +34,11 @@ QT_BEGIN_NAMESPACE
 class Ui_StreptoGUIClass
 {
 public:
-    QAction *actionNeu;
-    QAction *action_ffnen;
-    QAction *actionSpeichern;
-    QAction *action_Beenden;
-    QAction *action_ber_StreptoDB;
+    QAction *actionAnalys;
+    QAction *action_settings;
+    QAction *actionSave;
+    QAction *action_Close;
+    QAction *action_bout_StreptoDB;
     QWidget *centralWidget;
     QPushButton *bttn_uploadPic;
     QLineEdit *line_ID;
@@ -113,6 +113,7 @@ public:
     QPushButton *bttn_subtable_delete;
     QLineEdit *line_resolution_y;
     QPushButton *bttn_newGroup;
+    QLineEdit *line_locality_2;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -124,16 +125,16 @@ public:
         if (StreptoGUIClass->objectName().isEmpty())
             StreptoGUIClass->setObjectName(QString::fromUtf8("StreptoGUIClass"));
         StreptoGUIClass->resize(1202, 920);
-        actionNeu = new QAction(StreptoGUIClass);
-        actionNeu->setObjectName(QString::fromUtf8("actionNeu"));
-        action_ffnen = new QAction(StreptoGUIClass);
-        action_ffnen->setObjectName(QString::fromUtf8("action_ffnen"));
-        actionSpeichern = new QAction(StreptoGUIClass);
-        actionSpeichern->setObjectName(QString::fromUtf8("actionSpeichern"));
-        action_Beenden = new QAction(StreptoGUIClass);
-        action_Beenden->setObjectName(QString::fromUtf8("action_Beenden"));
-        action_ber_StreptoDB = new QAction(StreptoGUIClass);
-        action_ber_StreptoDB->setObjectName(QString::fromUtf8("action_ber_StreptoDB"));
+        actionAnalys = new QAction(StreptoGUIClass);
+        actionAnalys->setObjectName(QString::fromUtf8("actionAnalys"));
+        action_settings = new QAction(StreptoGUIClass);
+        action_settings->setObjectName(QString::fromUtf8("action_settings"));
+        actionSave = new QAction(StreptoGUIClass);
+        actionSave->setObjectName(QString::fromUtf8("actionSave"));
+        action_Close = new QAction(StreptoGUIClass);
+        action_Close->setObjectName(QString::fromUtf8("action_Close"));
+        action_bout_StreptoDB = new QAction(StreptoGUIClass);
+        action_bout_StreptoDB->setObjectName(QString::fromUtf8("action_bout_StreptoDB"));
         centralWidget = new QWidget(StreptoGUIClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         bttn_uploadPic = new QPushButton(centralWidget);
@@ -288,10 +289,10 @@ public:
         label_24->setGeometry(QRect(1000, 120, 71, 20));
         line_locality = new QLineEdit(centralWidget);
         line_locality->setObjectName(QString::fromUtf8("line_locality"));
-        line_locality->setGeometry(QRect(1080, 140, 113, 20));
+        line_locality->setGeometry(QRect(1080, 140, 53, 20));
         label_25 = new QLabel(centralWidget);
         label_25->setObjectName(QString::fromUtf8("label_25"));
-        label_25->setGeometry(QRect(1000, 140, 71, 20));
+        label_25->setGeometry(QRect(1000, 140, 81, 20));
         label_26 = new QLabel(centralWidget);
         label_26->setObjectName(QString::fromUtf8("label_26"));
         label_26->setGeometry(QRect(1000, 180, 71, 20));
@@ -376,6 +377,9 @@ public:
         bttn_newGroup = new QPushButton(centralWidget);
         bttn_newGroup->setObjectName(QString::fromUtf8("bttn_newGroup"));
         bttn_newGroup->setGeometry(QRect(590, 10, 75, 23));
+        line_locality_2 = new QLineEdit(centralWidget);
+        line_locality_2->setObjectName(QString::fromUtf8("line_locality_2"));
+        line_locality_2->setGeometry(QRect(1140, 140, 53, 20));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -384,16 +388,23 @@ public:
         menuBar->setNativeMenuBar(true);
         menuDatei = new QMenu(menuBar);
         menuDatei->setObjectName(QString::fromUtf8("menuDatei"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(menuDatei->sizePolicy().hasHeightForWidth());
+        menuDatei->setSizePolicy(sizePolicy);
+        menuDatei->setContextMenuPolicy(Qt::NoContextMenu);
+        menuDatei->setLayoutDirection(Qt::LeftToRight);
         menuInfo = new QMenu(menuBar);
         menuInfo->setObjectName(QString::fromUtf8("menuInfo"));
         StreptoGUIClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(StreptoGUIClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(1);
-        sizePolicy.setVerticalStretch(1);
-        sizePolicy.setHeightForWidth(mainToolBar->sizePolicy().hasHeightForWidth());
-        mainToolBar->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(1);
+        sizePolicy1.setVerticalStretch(1);
+        sizePolicy1.setHeightForWidth(mainToolBar->sizePolicy().hasHeightForWidth());
+        mainToolBar->setSizePolicy(sizePolicy1);
         mainToolBar->setBaseSize(QSize(1, 1));
         mainToolBar->setIconSize(QSize(48, 48));
         StreptoGUIClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
@@ -403,11 +414,11 @@ public:
 
         menuBar->addAction(menuDatei->menuAction());
         menuBar->addAction(menuInfo->menuAction());
-        menuDatei->addAction(actionNeu);
-        menuDatei->addAction(action_ffnen);
-        menuDatei->addAction(actionSpeichern);
-        menuDatei->addAction(action_Beenden);
-        menuInfo->addAction(action_ber_StreptoDB);
+        menuDatei->addAction(actionAnalys);
+        menuDatei->addAction(action_settings);
+        menuDatei->addAction(actionSave);
+        menuDatei->addAction(action_Close);
+        menuInfo->addAction(action_bout_StreptoDB);
 
         retranslateUi(StreptoGUIClass);
         QObject::connect(bttn_uploadPic, SIGNAL(clicked()), StreptoGUIClass, SLOT(uploadPic()));
@@ -423,6 +434,7 @@ public:
         QObject::connect(bttn_IMG_delete, SIGNAL(clicked()), StreptoGUIClass, SLOT(imgDelete()));
         QObject::connect(bttn_subtable_delete, SIGNAL(clicked()), StreptoGUIClass, SLOT(subtableDelete()));
         QObject::connect(bttn_newGroup, SIGNAL(clicked()), StreptoGUIClass, SLOT(newGroup()));
+        QObject::connect(action_settings, SIGNAL(triggered()), StreptoGUIClass, SLOT(act_settings()));
 
         tabWidget->setCurrentIndex(1);
 
@@ -433,11 +445,11 @@ public:
     void retranslateUi(QMainWindow *StreptoGUIClass)
     {
         StreptoGUIClass->setWindowTitle(QApplication::translate("StreptoGUIClass", "StreptoGUI", nullptr));
-        actionNeu->setText(QApplication::translate("StreptoGUIClass", "Neu...", nullptr));
-        action_ffnen->setText(QApplication::translate("StreptoGUIClass", "\303\226ffnen...", nullptr));
-        actionSpeichern->setText(QApplication::translate("StreptoGUIClass", "Speichern", nullptr));
-        action_Beenden->setText(QApplication::translate("StreptoGUIClass", " Beenden", nullptr));
-        action_ber_StreptoDB->setText(QApplication::translate("StreptoGUIClass", "\303\274ber StreptoDB...", nullptr));
+        actionAnalys->setText(QApplication::translate("StreptoGUIClass", "Evaluations", nullptr));
+        action_settings->setText(QApplication::translate("StreptoGUIClass", "Settings", nullptr));
+        actionSave->setText(QApplication::translate("StreptoGUIClass", "Save All", nullptr));
+        action_Close->setText(QApplication::translate("StreptoGUIClass", "Close", nullptr));
+        action_bout_StreptoDB->setText(QApplication::translate("StreptoGUIClass", "About StreptoDB...", nullptr));
         bttn_uploadPic->setText(QApplication::translate("StreptoGUIClass", "Upload", nullptr));
         label->setText(QApplication::translate("StreptoGUIClass", "StreptoDB", nullptr));
         label_2->setText(QApplication::translate("StreptoGUIClass", "Imageview:", nullptr));
@@ -470,7 +482,7 @@ public:
         label_22->setText(QApplication::translate("StreptoGUIClass", "Timestamp:", nullptr));
         label_23->setText(QApplication::translate("StreptoGUIClass", "Scientific-Name:", nullptr));
         label_24->setText(QApplication::translate("StreptoGUIClass", "Genome-Link:", nullptr));
-        label_25->setText(QApplication::translate("StreptoGUIClass", "Locality:", nullptr));
+        label_25->setText(QApplication::translate("StreptoGUIClass", "Position_lat/lon:", nullptr));
         label_26->setText(QApplication::translate("StreptoGUIClass", "Siderophore:", nullptr));
         label_27->setText(QApplication::translate("StreptoGUIClass", "Spore-Color:", nullptr));
         checkBox_siderophore->setText(QString());
@@ -489,7 +501,7 @@ public:
         bttn_IMG_delete->setText(QApplication::translate("StreptoGUIClass", "Delete", nullptr));
         bttn_subtable_delete->setText(QApplication::translate("StreptoGUIClass", "Delete Entry", nullptr));
         bttn_newGroup->setText(QApplication::translate("StreptoGUIClass", "new Group", nullptr));
-        menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Datei", nullptr));
+        menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Options", nullptr));
         menuInfo->setTitle(QApplication::translate("StreptoGUIClass", "Info", nullptr));
     } // retranslateUi
 

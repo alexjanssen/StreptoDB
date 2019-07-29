@@ -14,15 +14,16 @@ class multiUploadDialog : public QDialog, public Ui::StreptoGUIClass
 public:
 	multiUploadDialog(QDialog* parent = 0);
 	Ui::multiUpload ui;
-	//StreptoGUI(QMainWindow* parent, int t);
-	//private:
-	//Ui::StreptoGUIClass ui;
-	//StreptoGUI(QWidget* parent);
-	//void bttnPushed();
+	//QMimeData* mimeData;
+
 public slots:
 	void selectFile1();
-	void loadFile(string path, int broth);
+	void selectFile2();
+	void selectFile3();
+	void selectFile4();
+	void loadFile(QString path, int bid);
 	void saveAll();
+	void dragOpenFiles(vector<string> urls);
 
 
 	//private slots:
@@ -30,7 +31,4 @@ public slots:
 };
 
 static Group group;
-static Image img1;
-static Image img2;
-static Image img3;
-static Image img4;
+static vector<Image> *vImg = new vector<Image>;

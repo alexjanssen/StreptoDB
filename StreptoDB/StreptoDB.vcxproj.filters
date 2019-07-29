@@ -81,6 +81,9 @@
     <ClCompile Include="MultiUploadDialog.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsDialog.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="StreptoGUI.h">
@@ -92,6 +95,9 @@
     <QtMoc Include="MultiUploadDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="SettingsDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="StreptoGUI.ui">
@@ -101,6 +107,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="MultiUploadDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="SettingsDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -123,6 +132,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_MultiUploadDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_SettingsDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

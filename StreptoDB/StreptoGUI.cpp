@@ -1,19 +1,5 @@
 #include "StreptoGUI.h"
-#include <QtWidgets\QFileDialog>
-#include <QtWidgets\QMessageBox>
-#include <QtWidgets\QGraphicsPixmapItem>
-#include <QtWidgets/qtablewidget.h>
-#include <QTableWidgetItem>
-#include <QHeaderView>
-#include <CVController.h>
-#include <opencv2/core.hpp>
-#include <opencv2/imgcodecs.hpp>
-#include <UploadDialog.h>
-#include <MultiUploadDialog.h>
-#include <ctime>
-#include <QDragEnterEvent>
-#include <QDropEvent>
-#include <QMimeData>
+
 //#include <string>
 //#include <sqlite/sqlite3.h> 
 
@@ -33,10 +19,13 @@ StreptoGUI::StreptoGUI(QMainWindow*parent)	: QMainWindow(parent)
 
 
 
-
 //Todo comment
 void StreptoGUI::uploadPic() {
 	uploadDialog* f = new uploadDialog();
+	if (!ui.line_groupID_group->text().isEmpty()) {
+		f->grpID = ui.line_groupID_group->text().toInt();
+	}
+	
 	f->show();
 
 }
@@ -93,19 +82,20 @@ void StreptoGUI::itemSelected(int x, int y)
 				ui.line_groupID->setText(QString::number(resultGlob[i].group_id));
 				ui.line_path->setText(QString::fromStdString(resultGlob[i].filePath));
 				//fill group Parameters
-				Group grp = dbcon->getGroup(resultGlob[i].group_id);
+				Group grp = dbcon->getGroup("=" + std::to_string(resultGlob[i].group_id))[0];
 				ui.line_groupID_group->setText(QString::number(grp.group_id));
 				ui.line_internID->setText(QString::fromStdString(grp.intern_id));
 				ui.line_timestamp_group->setText(QString::fromStdString(grp.date));
 				ui.line_scientific->setText(QString::fromStdString(grp.sci_name));
 				ui.line_genome->setText(QString::fromStdString(grp.genome_lnk));
-				ui.line_locality->setText(QString::fromStdString(grp.locality));
+				ui.line_locality->setText(QString::number(grp.latitude));
+				ui.line_locality_2->setText(QString::number(grp.longitude));
 				ui.line_spore_color->setText(QString::fromStdString(grp.spore_color));
 				ui.checkBox_siderophore->setChecked(grp.siderophore);
 
 				//fill Strain-Inhibition
 				ui.line_inhibit_internID->setText(QString::fromStdString(grp.intern_id));
-				ui.line_inhibit_broth->setText(QString::fromStdString(dbcon->getBroth(resultGlob[i].broth_id).name));
+				ui.line_inhibit_broth->setText(QString::fromStdString(dbcon->getBroth("=" + std::to_string(resultGlob[i].broth_id))[0].name));
 				vector<TestStrain> ts = dbcon->getTestStrains();
 				ui.comboBox_testStrain->clear();
 				for (int g = 0; g < ts.size(); g++) {
@@ -125,6 +115,35 @@ void StreptoGUI::itemSelected(int x, int y)
 	}else {
 		//Error message
 		ui.label->setText("Selected item not found.");
+		vector<Group> vGrp = dbcon->getGroup("NOT NULL");
+		for (int k = 0; k < vGrp.size(); k++) {
+			if (ui.tableWidget->verticalHeaderItem(x)->text().toStdString() == vGrp[k].intern_id) {
+				//GROUP
+				ui.line_groupID_group->setText(QString::number(vGrp[k].group_id));
+				ui.line_internID->setText(QString::fromStdString(vGrp[k].intern_id));
+				ui.line_timestamp_group->setText(QString::fromStdString(vGrp[k].date));
+				ui.line_scientific->setText(QString::fromStdString(vGrp[k].sci_name));
+				ui.line_genome->setText(QString::fromStdString(vGrp[k].genome_lnk));
+				ui.line_locality->setText(QString::number(vGrp[k].latitude));
+				ui.line_locality_2->setText(QString::number(vGrp[k].longitude));
+				ui.line_spore_color->setText(QString::fromStdString(vGrp[k].spore_color));
+				ui.checkBox_siderophore->setChecked(vGrp[k].siderophore);
+				//IMAGE
+				ui.line_ID->setText("");
+				ui.line_timestamp->setText("");
+				ui.line_imgSize->setText("");
+				ui.line_resolution_x->setText("");
+				ui.line_resolution_y->setText("");
+				ui.line_brothID->setText("");
+				ui.line_groupID->setText("");
+				ui.line_path->setText("");
+
+				vector<CalcedParams> what;
+				vector<StrainInhibition> dubious_val;
+				fillTable2(what);
+				fillTable3(dubious_val);
+			}
+		}
 	}
 	
 }
@@ -170,8 +189,8 @@ void StreptoGUI::fillTable(vector<Image> result){
 	ui.label->setText("Groups found: ");
 	for (int z = 0; z < group.size(); z++) {
 		ui.tableWidget->setRowHeight(z, 100);
-		ui.tableWidget->setVerticalHeaderItem(z, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup(group[z]).intern_id)));
-		ui.label->setText(ui.label->text() + QString::fromStdString(dbcon->getGroup(group[z]).intern_id) + " | ");
+		ui.tableWidget->setVerticalHeaderItem(z, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup("=" + std::to_string(group[z]))[0].intern_id)));
+		ui.label->setText(ui.label->text() + QString::fromStdString(dbcon->getGroup("=" + std::to_string(group[z]))[0].intern_id) + " | ");
 		for (int x = 0; x < result.size(); x++) {
 			if(group[z] == result[x].group_id){
 				QPixmap pixmap;
@@ -328,7 +347,7 @@ void StreptoGUI::paramSelected(int x, int y)
 					ui.tableWidget_4->setItem(0, i, twi);
 
 					//ui.tableWidget_3->setHorizontalHeaderItem(i, new QTableWidgetItem("ISP2"));
-					ui.tableWidget_4->setHorizontalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup(resultGlob[u].group_id).intern_id)));
+					ui.tableWidget_4->setHorizontalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup("=" + std::to_string(resultGlob[u].group_id))[0].intern_id)));
 
 				}
 
@@ -382,7 +401,8 @@ void StreptoGUI::grpSave(){
 	grp2.date = ui.line_timestamp_group->text().toStdString();
 	grp2.sci_name = ui.line_scientific->text().toStdString();
 	grp2.genome_lnk = ui.line_genome->text().toStdString();
-	grp2.locality = ui.line_locality->text().toStdString();
+	grp2.latitude = ui.line_locality->text().toDouble();
+	grp2.longitude = ui.line_locality_2->text().toDouble();
 	grp2.spore_color = ui.line_spore_color->text().toStdString();
 	grp2.siderophore = ui.checkBox_siderophore->isChecked();
 
@@ -432,6 +452,12 @@ void StreptoGUI::newGroup(){
 	f->show();
 }
 
+void StreptoGUI::act_settings()
+{
+	settingsDialog* f = new settingsDialog();
+	f->show();
+}
+
 
 //Todo
 void StreptoGUI::compare(){
@@ -456,10 +482,31 @@ void StreptoGUI::dragMoveEvent(QDragMoveEvent* event) {
 
 //Drop Event
 void StreptoGUI::dropEvent(QDropEvent* event) {
-	const QMimeData* mimeData = event->mimeData();
+	const QMimeData* mimeData;
+	mimeData = event->mimeData();
+	urls->clear();
 	ui.label_3->setText("");
+	if (mimeData->urls().size() == 1) {
+		//uploadDialog* f = new uploadDialog();
+		if (!ui.line_groupID_group->text().isEmpty()) {
+			ud->grpID = ui.line_groupID_group->text().toInt();
+		}
+
+		ud->show();
+	}
+	else if (mimeData->urls().size() > 1) {
+		
+		for (int i = 0; i < mimeData->urls().size(); i++) {
+			urls->push_back(mimeData->urls().at(i).toString().toStdString().substr(8));
+			ui.label_3->setText(QString::fromStdString(mimeData->urls().at(i).toString().toStdString().substr(8)));
+		}
+		mud->dragOpenFiles(*urls);
+		mud->show();
+	}
+
+	//ui.label_3->setText(QString::number(mimeData->urls().size()));
 	for (int i = 0; i < mimeData->urls().size();i++) {
-		ui.label_3->setText(ui.label_3->text() + mimeData->urls().at(i).toString() + "\n");
+		//ui.label_3->setText(ui.label_3->text() + mimeData->urls().at(i).toString() + " ; "+ QString::number(mimeData->urls().size()) +"\n");
 	}
 	// check for our needed mime type, here a file or a list of files
 	//if (mimeData->hasUrls())

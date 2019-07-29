@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QGraphicsView>
@@ -52,8 +53,6 @@ public:
     QLabel *label_8;
     QLabel *label_7;
     QLabel *label_6;
-    QLineEdit *line_brothID;
-    QLineEdit *line_groupID;
     QLineEdit *line_resolution_x;
     QLabel *label_9;
     QLineEdit *line_imgSize;
@@ -65,40 +64,34 @@ public:
     QLabel *label_11;
     QLabel *label_12;
     QLabel *label_15;
-    QLineEdit *line_brothID_2;
     QLineEdit *line_imgSize_2;
     QLineEdit *line_timestamp_2;
     QLineEdit *line_path_2;
     QLabel *label_16;
     QLabel *label_17;
     QLabel *label_19;
-    QLineEdit *line_groupID_2;
     QLabel *label_28;
     QLineEdit *line_ID_3;
     QLabel *label_29;
     QLabel *label_30;
     QLabel *label_31;
-    QLineEdit *line_brothID_3;
     QLineEdit *line_imgSize_3;
     QLineEdit *line_timestamp_3;
     QLineEdit *line_path_3;
     QLabel *label_32;
     QLabel *label_33;
     QLabel *label_34;
-    QLineEdit *line_groupID_3;
     QLabel *label_35;
     QLineEdit *line_ID_4;
     QLabel *label_36;
     QLabel *label_37;
     QLabel *label_38;
-    QLineEdit *line_brothID_4;
     QLineEdit *line_imgSize_4;
     QLineEdit *line_timestamp_4;
     QLineEdit *line_path_4;
     QLabel *label_39;
     QLabel *label_40;
     QLabel *label_41;
-    QLineEdit *line_groupID_4;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QPushButton *pushButton_3;
@@ -116,6 +109,16 @@ public:
     QLineEdit *line_resolution_y_4;
     QLineEdit *line_resolution_x_4;
     QLabel *label_out;
+    QLabel *label_46;
+    QLineEdit *line_locality_2;
+    QComboBox *comboBox_broth;
+    QComboBox *comboBox_broth_2;
+    QComboBox *comboBox_broth_3;
+    QComboBox *comboBox_broth_4;
+    QLineEdit *line_groupID;
+    QLineEdit *line_groupID_2;
+    QLineEdit *line_groupID_3;
+    QLineEdit *line_groupID_4;
 
     void setupUi(QDialog *multiUpload)
     {
@@ -190,7 +193,7 @@ public:
         label_23->setGeometry(QRect(10, 90, 81, 20));
         line_locality = new QLineEdit(multiUpload);
         line_locality->setObjectName(QString::fromUtf8("line_locality"));
-        line_locality->setGeometry(QRect(300, 50, 113, 20));
+        line_locality->setGeometry(QRect(300, 50, 53, 20));
         line_scientific = new QLineEdit(multiUpload);
         line_scientific->setObjectName(QString::fromUtf8("line_scientific"));
         line_scientific->setGeometry(QRect(90, 90, 113, 20));
@@ -212,12 +215,6 @@ public:
         label_6 = new QLabel(multiUpload);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(10, 340, 71, 21));
-        line_brothID = new QLineEdit(multiUpload);
-        line_brothID->setObjectName(QString::fromUtf8("line_brothID"));
-        line_brothID->setGeometry(QRect(80, 400, 113, 20));
-        line_groupID = new QLineEdit(multiUpload);
-        line_groupID->setObjectName(QString::fromUtf8("line_groupID"));
-        line_groupID->setGeometry(QRect(80, 420, 113, 20));
         line_resolution_x = new QLineEdit(multiUpload);
         line_resolution_x->setObjectName(QString::fromUtf8("line_resolution_x"));
         line_resolution_x->setGeometry(QRect(80, 380, 53, 20));
@@ -251,9 +248,6 @@ public:
         label_15 = new QLabel(multiUpload);
         label_15->setObjectName(QString::fromUtf8("label_15"));
         label_15->setGeometry(QRect(210, 323, 71, 20));
-        line_brothID_2 = new QLineEdit(multiUpload);
-        line_brothID_2->setObjectName(QString::fromUtf8("line_brothID_2"));
-        line_brothID_2->setGeometry(QRect(280, 400, 113, 20));
         line_imgSize_2 = new QLineEdit(multiUpload);
         line_imgSize_2->setObjectName(QString::fromUtf8("line_imgSize_2"));
         line_imgSize_2->setGeometry(QRect(280, 360, 113, 20));
@@ -272,9 +266,6 @@ public:
         label_19 = new QLabel(multiUpload);
         label_19->setObjectName(QString::fromUtf8("label_19"));
         label_19->setGeometry(QRect(210, 380, 71, 21));
-        line_groupID_2 = new QLineEdit(multiUpload);
-        line_groupID_2->setObjectName(QString::fromUtf8("line_groupID_2"));
-        line_groupID_2->setGeometry(QRect(280, 420, 113, 20));
         label_28 = new QLabel(multiUpload);
         label_28->setObjectName(QString::fromUtf8("label_28"));
         label_28->setGeometry(QRect(410, 440, 71, 21));
@@ -290,9 +281,6 @@ public:
         label_31 = new QLabel(multiUpload);
         label_31->setObjectName(QString::fromUtf8("label_31"));
         label_31->setGeometry(QRect(410, 323, 71, 20));
-        line_brothID_3 = new QLineEdit(multiUpload);
-        line_brothID_3->setObjectName(QString::fromUtf8("line_brothID_3"));
-        line_brothID_3->setGeometry(QRect(480, 400, 113, 20));
         line_imgSize_3 = new QLineEdit(multiUpload);
         line_imgSize_3->setObjectName(QString::fromUtf8("line_imgSize_3"));
         line_imgSize_3->setGeometry(QRect(480, 360, 113, 20));
@@ -311,9 +299,6 @@ public:
         label_34 = new QLabel(multiUpload);
         label_34->setObjectName(QString::fromUtf8("label_34"));
         label_34->setGeometry(QRect(410, 380, 71, 21));
-        line_groupID_3 = new QLineEdit(multiUpload);
-        line_groupID_3->setObjectName(QString::fromUtf8("line_groupID_3"));
-        line_groupID_3->setGeometry(QRect(480, 420, 113, 20));
         label_35 = new QLabel(multiUpload);
         label_35->setObjectName(QString::fromUtf8("label_35"));
         label_35->setGeometry(QRect(610, 440, 71, 21));
@@ -329,9 +314,6 @@ public:
         label_38 = new QLabel(multiUpload);
         label_38->setObjectName(QString::fromUtf8("label_38"));
         label_38->setGeometry(QRect(610, 323, 71, 20));
-        line_brothID_4 = new QLineEdit(multiUpload);
-        line_brothID_4->setObjectName(QString::fromUtf8("line_brothID_4"));
-        line_brothID_4->setGeometry(QRect(680, 400, 113, 20));
         line_imgSize_4 = new QLineEdit(multiUpload);
         line_imgSize_4->setObjectName(QString::fromUtf8("line_imgSize_4"));
         line_imgSize_4->setGeometry(QRect(680, 360, 113, 20));
@@ -350,9 +332,6 @@ public:
         label_41 = new QLabel(multiUpload);
         label_41->setObjectName(QString::fromUtf8("label_41"));
         label_41->setGeometry(QRect(610, 380, 71, 21));
-        line_groupID_4 = new QLineEdit(multiUpload);
-        line_groupID_4->setObjectName(QString::fromUtf8("line_groupID_4"));
-        line_groupID_4->setGeometry(QRect(680, 420, 113, 20));
         pushButton = new QPushButton(multiUpload);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(120, 120, 81, 21));
@@ -408,6 +387,36 @@ public:
         label_out = new QLabel(multiUpload);
         label_out->setObjectName(QString::fromUtf8("label_out"));
         label_out->setGeometry(QRect(550, 500, 241, 21));
+        label_46 = new QLabel(multiUpload);
+        label_46->setObjectName(QString::fromUtf8("label_46"));
+        label_46->setGeometry(QRect(420, 50, 111, 20));
+        line_locality_2 = new QLineEdit(multiUpload);
+        line_locality_2->setObjectName(QString::fromUtf8("line_locality_2"));
+        line_locality_2->setGeometry(QRect(360, 50, 53, 20));
+        comboBox_broth = new QComboBox(multiUpload);
+        comboBox_broth->setObjectName(QString::fromUtf8("comboBox_broth"));
+        comboBox_broth->setGeometry(QRect(80, 400, 113, 20));
+        comboBox_broth_2 = new QComboBox(multiUpload);
+        comboBox_broth_2->setObjectName(QString::fromUtf8("comboBox_broth_2"));
+        comboBox_broth_2->setGeometry(QRect(280, 400, 113, 20));
+        comboBox_broth_3 = new QComboBox(multiUpload);
+        comboBox_broth_3->setObjectName(QString::fromUtf8("comboBox_broth_3"));
+        comboBox_broth_3->setGeometry(QRect(480, 400, 113, 20));
+        comboBox_broth_4 = new QComboBox(multiUpload);
+        comboBox_broth_4->setObjectName(QString::fromUtf8("comboBox_broth_4"));
+        comboBox_broth_4->setGeometry(QRect(680, 400, 113, 20));
+        line_groupID = new QLineEdit(multiUpload);
+        line_groupID->setObjectName(QString::fromUtf8("line_groupID"));
+        line_groupID->setGeometry(QRect(80, 420, 113, 20));
+        line_groupID_2 = new QLineEdit(multiUpload);
+        line_groupID_2->setObjectName(QString::fromUtf8("line_groupID_2"));
+        line_groupID_2->setGeometry(QRect(280, 420, 113, 20));
+        line_groupID_3 = new QLineEdit(multiUpload);
+        line_groupID_3->setObjectName(QString::fromUtf8("line_groupID_3"));
+        line_groupID_3->setGeometry(QRect(480, 420, 113, 20));
+        line_groupID_4 = new QLineEdit(multiUpload);
+        line_groupID_4->setObjectName(QString::fromUtf8("line_groupID_4"));
+        line_groupID_4->setGeometry(QRect(680, 420, 113, 20));
 
         retranslateUi(multiUpload);
         QObject::connect(buttonBox, SIGNAL(accepted()), multiUpload, SLOT(accept()));
@@ -435,32 +444,32 @@ public:
         label_20->setText(QApplication::translate("multiUpload", "Group-ID:", nullptr));
         label_23->setText(QApplication::translate("multiUpload", "Scientific-Name:", nullptr));
         label_5->setText(QApplication::translate("multiUpload", "ID:", nullptr));
-        label_10->setText(QApplication::translate("multiUpload", "Group-ID:", nullptr));
+        label_10->setText(QApplication::translate("multiUpload", "Group ID:", nullptr));
         label_8->setText(QApplication::translate("multiUpload", "Resol. x/y:", nullptr));
         label_7->setText(QApplication::translate("multiUpload", "Imagesize:", nullptr));
         label_6->setText(QApplication::translate("multiUpload", "Timestamp:", nullptr));
-        label_9->setText(QApplication::translate("multiUpload", "Broth-ID:", nullptr));
+        label_9->setText(QApplication::translate("multiUpload", "Broth:", nullptr));
         label_13->setText(QApplication::translate("multiUpload", "Path:", nullptr));
         label_14->setText(QApplication::translate("multiUpload", "Path:", nullptr));
         label_11->setText(QApplication::translate("multiUpload", "Imagesize:", nullptr));
-        label_12->setText(QApplication::translate("multiUpload", "Broth-ID:", nullptr));
+        label_12->setText(QApplication::translate("multiUpload", "Broth:", nullptr));
         label_15->setText(QApplication::translate("multiUpload", "ID:", nullptr));
         label_16->setText(QApplication::translate("multiUpload", "Timestamp:", nullptr));
-        label_17->setText(QApplication::translate("multiUpload", "Group-ID:", nullptr));
+        label_17->setText(QApplication::translate("multiUpload", "Group ID:", nullptr));
         label_19->setText(QApplication::translate("multiUpload", "Resol. x/y:", nullptr));
         label_28->setText(QApplication::translate("multiUpload", "Path:", nullptr));
         label_29->setText(QApplication::translate("multiUpload", "Imagesize:", nullptr));
-        label_30->setText(QApplication::translate("multiUpload", "Broth-ID:", nullptr));
+        label_30->setText(QApplication::translate("multiUpload", "Broth:", nullptr));
         label_31->setText(QApplication::translate("multiUpload", "ID:", nullptr));
         label_32->setText(QApplication::translate("multiUpload", "Timestamp:", nullptr));
-        label_33->setText(QApplication::translate("multiUpload", "Group-ID:", nullptr));
+        label_33->setText(QApplication::translate("multiUpload", "Group ID:", nullptr));
         label_34->setText(QApplication::translate("multiUpload", "Resol. x/y:", nullptr));
         label_35->setText(QApplication::translate("multiUpload", "Path:", nullptr));
         label_36->setText(QApplication::translate("multiUpload", "Imagesize:", nullptr));
-        label_37->setText(QApplication::translate("multiUpload", "Broth-ID:", nullptr));
+        label_37->setText(QApplication::translate("multiUpload", "Broth:", nullptr));
         label_38->setText(QApplication::translate("multiUpload", "ID:", nullptr));
         label_39->setText(QApplication::translate("multiUpload", "Timestamp:", nullptr));
-        label_40->setText(QApplication::translate("multiUpload", "Group-ID:", nullptr));
+        label_40->setText(QApplication::translate("multiUpload", "Group ID:", nullptr));
         label_41->setText(QApplication::translate("multiUpload", "Resol. x/y:", nullptr));
         pushButton->setText(QApplication::translate("multiUpload", "Select...", nullptr));
         pushButton_2->setText(QApplication::translate("multiUpload", "Select...", nullptr));
@@ -472,6 +481,7 @@ public:
         label_44->setText(QApplication::translate("multiUpload", "NCBMM:", nullptr));
         label_45->setText(QApplication::translate("multiUpload", "SFM:", nullptr));
         label_out->setText(QApplication::translate("multiUpload", "...", nullptr));
+        label_46->setText(QApplication::translate("multiUpload", "Latitude / Longitude", nullptr));
     } // retranslateUi
 
 };
