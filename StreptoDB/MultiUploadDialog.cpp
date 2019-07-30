@@ -295,5 +295,6 @@ void multiUploadDialog::dragOpenFiles(vector<string> urls){
 			multiUploadDialog::loadFile(QString::fromStdString(urls[i]), 0);
 		}
 	}
+	urls.clear();
 
 }

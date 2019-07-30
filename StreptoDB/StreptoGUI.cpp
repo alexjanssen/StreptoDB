@@ -491,7 +491,7 @@ void StreptoGUI::dropEvent(QDropEvent* event) {
 		if (!ui.line_groupID_group->text().isEmpty()) {
 			ud->grpID = ui.line_groupID_group->text().toInt();
 		}
-
+		ud->dragOpenFile(QString::fromStdString(mimeData->urls().at(0).toString().toStdString().substr(8)));
 		ud->show();
 	}
 	else if (mimeData->urls().size() > 1) {

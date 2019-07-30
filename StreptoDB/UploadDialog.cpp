@@ -99,13 +99,14 @@ void uploadDialog::dragOpenFile(QString fileName) {
 			}
 			ui.comboBox_broth->setCurrentIndex(temp);
 
+			int temp2 = 0;
 			ui.comboBox_group->clear();
 			vector<Group> vGroup = dbcon2->getGroup("NOT NULL");
 			for (int g = 0; g < vGroup.size(); g++) {
 				ui.comboBox_group->addItem(QString::fromStdString(vGroup[g].intern_id + "\t   -" + std::to_string(vGroup[g].group_id)));
-				
+				if (vGroup[g].group_id == grpID) { temp2 = g; }
 			}
-			ui.comboBox_group->setCurrentIndex(grpID-1);
+			ui.comboBox_group->setCurrentIndex(temp2);
 
 			ui.line_path->setText(fileName);
 	
