@@ -45,15 +45,17 @@ public:
     QComboBox *comboBox_group;
     QLabel *label_13;
     QLineEdit *line_path;
+    QLineEdit *line_scale;
+    QLabel *label_14;
 
     void setupUi(QDialog *uploadDialog)
     {
         if (uploadDialog->objectName().isEmpty())
             uploadDialog->setObjectName(QString::fromUtf8("uploadDialog"));
-        uploadDialog->resize(408, 244);
+        uploadDialog->resize(407, 263);
         buttonBox = new QDialogButtonBox(uploadDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(240, 210, 156, 23));
+        buttonBox->setGeometry(QRect(240, 230, 156, 23));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         graphicsView = new QGraphicsView(uploadDialog);
@@ -61,7 +63,7 @@ public:
         graphicsView->setGeometry(QRect(10, 30, 191, 171));
         pushButton = new QPushButton(uploadDialog);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(10, 210, 75, 23));
+        pushButton->setGeometry(QRect(10, 230, 75, 23));
         label = new QLabel(uploadDialog);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 10, 91, 16));
@@ -97,10 +99,10 @@ public:
         label_7->setGeometry(QRect(210, 130, 81, 16));
         label_test = new QLabel(uploadDialog);
         label_test->setObjectName(QString::fromUtf8("label_test"));
-        label_test->setGeometry(QRect(210, 180, 191, 16));
+        label_test->setGeometry(QRect(210, 200, 191, 16));
         pushButton_2 = new QPushButton(uploadDialog);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(130, 210, 75, 23));
+        pushButton_2->setGeometry(QRect(130, 230, 75, 23));
         lineEdit_resolution_y = new QLineEdit(uploadDialog);
         lineEdit_resolution_y->setObjectName(QString::fromUtf8("lineEdit_resolution_y"));
         lineEdit_resolution_y->setGeometry(QRect(350, 90, 53, 20));
@@ -116,6 +118,12 @@ public:
         line_path = new QLineEdit(uploadDialog);
         line_path->setObjectName(QString::fromUtf8("line_path"));
         line_path->setGeometry(QRect(290, 150, 113, 20));
+        line_scale = new QLineEdit(uploadDialog);
+        line_scale->setObjectName(QString::fromUtf8("line_scale"));
+        line_scale->setGeometry(QRect(290, 170, 113, 20));
+        label_14 = new QLabel(uploadDialog);
+        label_14->setObjectName(QString::fromUtf8("label_14"));
+        label_14->setGeometry(QRect(210, 170, 71, 21));
 
         retranslateUi(uploadDialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), uploadDialog, SLOT(accept()));
@@ -140,6 +148,7 @@ public:
         label_test->setText(QApplication::translate("uploadDialog", "testing...", nullptr));
         pushButton_2->setText(QApplication::translate("uploadDialog", "Save", nullptr));
         label_13->setText(QApplication::translate("uploadDialog", "Path:", nullptr));
+        label_14->setText(QApplication::translate("uploadDialog", "Scale:", nullptr));
     } // retranslateUi
 
 };

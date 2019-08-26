@@ -10,9 +10,9 @@
 #include <QtWidgets/qtablewidget.h>
 #include <QTableWidgetItem>
 #include <QHeaderView>
-#include <CVController.h>
-#include <opencv2/core.hpp>
-#include <opencv2/imgcodecs.hpp>
+//#include <CVController.h>
+//#include <opencv2/core.hpp>
+//#include <opencv2/imgcodecs.hpp>
 #include <UploadDialog.h>
 #include <MultiUploadDialog.h>
 #include <ctime>
@@ -20,6 +20,7 @@
 #include <QDropEvent>
 #include <QMimeData>
 #include <SettingsDialog.h>
+#include <fstream>
 
 class StreptoGUI : public QMainWindow, public Ui::StreptoGUIClass
 {
@@ -31,6 +32,7 @@ public:
 
 public slots:
 	void uploadPic();
+	void loadSettings();
 	void loadDB();
 	void itemSelected(int x, int y);
 	void testCalc();
@@ -64,4 +66,6 @@ private slots:
 
 static vector<Image> resultGlob;
 static DBController *dbcon = new DBController();
+static CVController* cvcon = new CVController();
+static string globPath = "";
 static int column;

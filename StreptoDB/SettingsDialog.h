@@ -16,6 +16,7 @@ public:
 
 public slots:
 	void selectPath();
+	void loadSettings();
 	void saveSettings();
 
 };

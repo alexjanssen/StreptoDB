@@ -13,9 +13,37 @@ StreptoGUI::StreptoGUI(QMainWindow*parent)	: QMainWindow(parent)
 {
 	setAcceptDrops(true);	//needed for drag & drop
 	ui.setupUi(this);
+	StreptoGUI::loadSettings();
 	//ui.label -> setText("blaa");
 }
 
+
+
+//reading settings from settings.txt
+void StreptoGUI::loadSettings() {
+	string line;
+	ifstream myfile("../StreptoDB/Settings/settings.txt");
+	if (myfile.is_open())
+	{
+		while (getline(myfile, line))
+		{
+			if (line.find("path:") != std::string::npos) {
+				line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());
+				line = line.substr(line.find("path:") + 5);
+				globPath = line;
+			}
+			else if (line.find("filter:") != std::string::npos) {
+				line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());
+				line = line.substr(line.find("filter:") + 7);
+				ui.line_filter->setText(QString::fromStdString(line));
+			}
+			//ui.label->setText(QString::fromStdString(line) + "\n");
+		}
+		myfile.close();
+		ui.label->setText("Settings loaded...");
+	}
+	else ui.label->setText("Unable to open Settings-File.");
+}
 
 
 
@@ -65,11 +93,19 @@ void StreptoGUI::itemSelected(int x, int y)
 			//if found, set graphicsView with image
 			if (resultGlob[i].image_id == imgID) {
 				QPixmap pixmap2;
-				QImage image(resultGlob[i].filePath.c_str());
+				//load pic with filePath from Settings:
+				string newPath = resultGlob[i].filePath;
+				string temp = newPath.substr(0, newPath.find_last_of("/"));
+				newPath = resultGlob[i].filePath.substr(temp.find_last_of("/"));
+				newPath = globPath + newPath;
+				ui.label_3->setText(QString::fromStdString(newPath));
+
+
+				QImage image(QString::fromStdString(newPath));
 				pixmap2 = pixmap2.fromImage(image);
 
 				QGraphicsScene* scene = new QGraphicsScene();
-				scene->addPixmap(pixmap2.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+				scene->addPixmap(pixmap2.scaled(374, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 				ui.graphicsView->setScene(scene);
 				ui.graphicsView->show();
 				//fill image Parameters
@@ -81,6 +117,7 @@ void StreptoGUI::itemSelected(int x, int y)
 				ui.line_brothID->setText(QString::number(resultGlob[i].broth_id));
 				ui.line_groupID->setText(QString::number(resultGlob[i].group_id));
 				ui.line_path->setText(QString::fromStdString(resultGlob[i].filePath));
+				ui.line_scale->setText(QString::number(resultGlob[i].scale));
 				//fill group Parameters
 				Group grp = dbcon->getGroup("=" + std::to_string(resultGlob[i].group_id))[0];
 				ui.line_groupID_group->setText(QString::number(grp.group_id));
@@ -137,6 +174,7 @@ void StreptoGUI::itemSelected(int x, int y)
 				ui.line_brothID->setText("");
 				ui.line_groupID->setText("");
 				ui.line_path->setText("");
+				ui.line_scale->setText("");
 
 				vector<CalcedParams> what;
 				vector<StrainInhibition> dubious_val;
@@ -156,10 +194,11 @@ void StreptoGUI::fillTable(vector<Image> result){
 	ui.tableWidget->verticalHeader()->setVisible(true);
 	ui.tableWidget->verticalHeader()->setFixedWidth(40);
 	ui.tableWidget->verticalHeader()->resizeSection(0, 40);
-	ui.tableWidget->setColumnWidth(0, 154);
-	ui.tableWidget->setColumnWidth(1, 154);
-	ui.tableWidget->setColumnWidth(2, 154);
-	ui.tableWidget->setColumnWidth(3, 154);
+	ui.tableWidget->setColumnWidth(0, 175); //154
+	ui.tableWidget->setColumnWidth(1, 175);
+	ui.tableWidget->setColumnWidth(2, 175);
+	ui.tableWidget->setColumnWidth(3, 175);
+	
 	//ui.tableWidget->setShowGrid(false);
 	//->setStyleSheet("QTableView {selection-background-color: red;}");
 	//->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -184,7 +223,7 @@ void StreptoGUI::fillTable(vector<Image> result){
 		}
 	}
 
-	//todo comment
+	//fills that vertical header with the group-name, yeah looks gross.
 	ui.tableWidget->setRowCount(group.size());
 	ui.label->setText("Groups found: ");
 	for (int z = 0; z < group.size(); z++) {
@@ -197,8 +236,9 @@ void StreptoGUI::fillTable(vector<Image> result){
 				QTableWidgetItem* twi = new QTableWidgetItem();
 				//pixmap.loadFromData(result[0].image_preview);
 				pixmap = pixmap.fromImage(result[x].image_preview);
-				twi->setData(Qt::DecorationRole, pixmap.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+				twi->setData(Qt::DecorationRole, pixmap.scaled(125, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 				twi->setText(QString::number(result[x].image_id));
+				
 				ui.tableWidget->setItem(z, result[x].broth_id-1, twi);
 				//ui.label->setText(ui.label->text() + " / " + QString::number(result[x].broth_id));
 			}
@@ -272,21 +312,24 @@ void StreptoGUI::fillTable3(vector<StrainInhibition> result) {
 //for testing Calculations
 void StreptoGUI::testCalc() {
 	CalcedParams cp = CalcedParams();
-	cp.calc_id = dbcon->getMaxCalcParamID() + 1;
 	cp.image_id = ui.line_ID->text().toInt();
-	cp.class_id = 1;	//Yeah, thats hard coded for mean_grey()
 	cp.timestamp = ui.line_timestamp->text().toStdString();
 
-	cv::Mat testbildM = cv::imread(ui.line_path->text().toStdString());
-    cv::Scalar tempVal = cv::mean(testbildM);
-	cp.value = tempVal.val[0];
+	//get filePath from Settings:
+	string newPath = ui.line_path->text().toStdString();
+	string temp = newPath.substr(0, newPath.find_last_of("/"));
+	newPath = ui.line_path->text().toStdString().substr(temp.find_last_of("/"));
+	newPath = globPath + newPath;
 
-	if (!dbcon->addCalcedParams(cp)) {
-		ui.label_12->setText("Successfully added new Parameters to DB.");
-	}
-	else {
-		ui.label_12->setText("Something went wrong calculating and adding new Parameters to DB.");
-	}
+	//Calculations and all openCV functions are in CVController, also loading the file
+	//lets calc and add the paramaters one by one:
+	cp.calc_id = dbcon->getMaxCalcParamID() + 1;
+	cp.class_id = 1;	//mean_grey()
+	cp.value = cvcon->mean1(newPath);
+	if (!dbcon->addCalcedParams(cp)) {ui.label_12->setText("mean1 added to DB.");}
+	else {ui.label_12->setText("mean1 failed to save.");}
+
+
 
 }
 
@@ -374,6 +417,7 @@ void StreptoGUI::imgSave(){
 	img2.broth_id = ui.line_brothID->text().toInt();
 	img2.group_id = ui.line_groupID->text().toInt();
 	img2.filePath = ui.line_path->text().toStdString();
+	img2.scale = ui.line_scale->text().toDouble();
 
 	if (!dbcon->updateImage(img2)) {
 		ui.label_3->setText("successfully updated Image.");

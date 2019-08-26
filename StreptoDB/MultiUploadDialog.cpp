@@ -105,11 +105,11 @@ void multiUploadDialog::loadFile(QString fileName, int bid){
 		ui.line_groupID_group->setText(QString::number(newGrpID));
 		ui.line_internID->setText("XX 00");
 		ui.line_timestamp_group->setText(buffer2);
-		ui.line_scientific->setText("Examplycetus");
+		ui.line_scientific->setText("NN");
 		ui.line_genome->setText("www.rub.de");
 		ui.line_locality->setText("0.0");
 		ui.line_locality_2->setText("0.0");
-		ui.line_spore_color->setText("fancy");
+		ui.line_spore_color->setText("default");
 		//Image Parameter
 		ui.line_ID->setText(QString::number(id + 1));
 		ui.line_timestamp->setText(buffer2);
@@ -118,6 +118,7 @@ void multiUploadDialog::loadFile(QString fileName, int bid){
 		ui.line_resolution_y->setText(QString::number(image.height()));
 		ui.line_groupID->setText(QString::number(newGrpID));
 		ui.line_path->setText(fileName);
+		ui.line_scale->setText(QString::number(2));
 
 		QPixmap pixmap2;
 		pixmap2 = pixmap2.fromImage(image);
@@ -145,6 +146,7 @@ void multiUploadDialog::loadFile(QString fileName, int bid){
 		ui.line_resolution_y_2->setText(QString::number(image.height()));
 		ui.line_groupID_2->setText(QString::number(newGrpID));
 		ui.line_path_2->setText(fileName);
+		ui.line_scale_2->setText(QString::number(2));
 
 		QPixmap pixmap2;
 		pixmap2 = pixmap2.fromImage(image);
@@ -172,6 +174,7 @@ void multiUploadDialog::loadFile(QString fileName, int bid){
 		ui.line_resolution_y_3->setText(QString::number(image.height()));
 		ui.line_groupID_3->setText(QString::number(newGrpID));
 		ui.line_path_3->setText(fileName);
+		ui.line_scale_3->setText(QString::number(2));
 
 		QPixmap pixmap2;
 		pixmap2 = pixmap2.fromImage(image);
@@ -199,6 +202,7 @@ void multiUploadDialog::loadFile(QString fileName, int bid){
 		ui.line_resolution_y_4->setText(QString::number(image.height()));
 		ui.line_groupID_4->setText(QString::number(newGrpID));
 		ui.line_path_4->setText(fileName);
+		ui.line_scale_4->setText(QString::number(2));
 
 		QPixmap pixmap2;
 		pixmap2 = pixmap2.fromImage(image);
@@ -244,6 +248,7 @@ void multiUploadDialog::saveAll() {
 	vImg->at(0).broth_id = atoi(ui.comboBox_broth->currentText().toStdString().substr(ui.comboBox_broth->currentText().toStdString().find("-") + 1).c_str());
 	vImg->at(0).group_id = ui.line_groupID_group->text().toInt();
 	vImg->at(0).filePath = ui.line_path->text().toStdString();
+	vImg->at(0).scale = ui.line_scale->text().toDouble();
 
 	vImg->at(1).image_id = ui.line_ID_2->text().toInt();
 	vImg->at(1).date = ui.line_timestamp_2->text().toStdString();
@@ -253,6 +258,7 @@ void multiUploadDialog::saveAll() {
 	vImg->at(1).broth_id = atoi(ui.comboBox_broth_2->currentText().toStdString().substr(ui.comboBox_broth_2->currentText().toStdString().find("-") + 1).c_str());
 	vImg->at(1).group_id = ui.line_groupID_group->text().toInt();
 	vImg->at(1).filePath = ui.line_path_2->text().toStdString();
+	vImg->at(1).scale = ui.line_scale_2->text().toDouble();
 
 	vImg->at(2).image_id = ui.line_ID_3->text().toInt();
 	vImg->at(2).date = ui.line_timestamp_3->text().toStdString();
@@ -262,6 +268,7 @@ void multiUploadDialog::saveAll() {
 	vImg->at(2).broth_id = atoi(ui.comboBox_broth_3->currentText().toStdString().substr(ui.comboBox_broth_3->currentText().toStdString().find("-") + 1).c_str());
 	vImg->at(2).group_id = ui.line_groupID_group->text().toInt();
 	vImg->at(2).filePath = ui.line_path_3->text().toStdString();
+	vImg->at(1).scale = ui.line_scale_3->text().toDouble();
 
 	vImg->at(3).image_id = ui.line_ID_4->text().toInt();
 	vImg->at(3).date = ui.line_timestamp_4->text().toStdString();
@@ -271,6 +278,7 @@ void multiUploadDialog::saveAll() {
 	vImg->at(3).broth_id = atoi(ui.comboBox_broth_4->currentText().toStdString().substr(ui.comboBox_broth_4->currentText().toStdString().find("-") + 1).c_str());
 	vImg->at(3).group_id = ui.line_groupID_group->text().toInt();
 	vImg->at(3).filePath = ui.line_path_4->text().toStdString();
+	vImg->at(1).scale = ui.line_scale_4->text().toDouble();
 
 	if (dbcon2->addGroup(group)) {
 		for (int i = 0; i < vImg->size(); i++) {

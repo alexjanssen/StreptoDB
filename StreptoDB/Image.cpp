@@ -21,6 +21,7 @@ public:
 	int broth_id;
 	int group_id;
 	string filePath;
+	double scale;
 
 	
 };

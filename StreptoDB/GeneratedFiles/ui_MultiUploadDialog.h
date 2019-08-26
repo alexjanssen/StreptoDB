@@ -119,15 +119,23 @@ public:
     QLineEdit *line_groupID_2;
     QLineEdit *line_groupID_3;
     QLineEdit *line_groupID_4;
+    QLineEdit *line_scale;
+    QLabel *label_47;
+    QLineEdit *line_scale_2;
+    QLabel *label_48;
+    QLineEdit *line_scale_3;
+    QLabel *label_49;
+    QLineEdit *line_scale_4;
+    QLabel *label_50;
 
     void setupUi(QDialog *multiUpload)
     {
         if (multiUpload->objectName().isEmpty())
             multiUpload->setObjectName(QString::fromUtf8("multiUpload"));
-        multiUpload->resize(813, 535);
+        multiUpload->resize(814, 548);
         buttonBox = new QDialogButtonBox(multiUpload);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(450, 470, 341, 21));
+        buttonBox->setGeometry(QRect(450, 500, 341, 21));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         graphicsView = new QGraphicsView(multiUpload);
@@ -346,7 +354,7 @@ public:
         pushButton_4->setGeometry(QRect(720, 120, 81, 21));
         pushButton_save = new QPushButton(multiUpload);
         pushButton_save->setObjectName(QString::fromUtf8("pushButton_save"));
-        pushButton_save->setGeometry(QRect(550, 470, 75, 21));
+        pushButton_save->setGeometry(QRect(550, 500, 75, 21));
         label_42 = new QLabel(multiUpload);
         label_42->setObjectName(QString::fromUtf8("label_42"));
         label_42->setGeometry(QRect(10, 120, 41, 16));
@@ -386,7 +394,7 @@ public:
         line_resolution_x_4->setGeometry(QRect(680, 380, 53, 20));
         label_out = new QLabel(multiUpload);
         label_out->setObjectName(QString::fromUtf8("label_out"));
-        label_out->setGeometry(QRect(550, 500, 241, 21));
+        label_out->setGeometry(QRect(550, 530, 241, 21));
         label_46 = new QLabel(multiUpload);
         label_46->setObjectName(QString::fromUtf8("label_46"));
         label_46->setGeometry(QRect(420, 50, 111, 20));
@@ -417,6 +425,30 @@ public:
         line_groupID_4 = new QLineEdit(multiUpload);
         line_groupID_4->setObjectName(QString::fromUtf8("line_groupID_4"));
         line_groupID_4->setGeometry(QRect(680, 420, 113, 20));
+        line_scale = new QLineEdit(multiUpload);
+        line_scale->setObjectName(QString::fromUtf8("line_scale"));
+        line_scale->setGeometry(QRect(80, 460, 113, 20));
+        label_47 = new QLabel(multiUpload);
+        label_47->setObjectName(QString::fromUtf8("label_47"));
+        label_47->setGeometry(QRect(10, 460, 71, 21));
+        line_scale_2 = new QLineEdit(multiUpload);
+        line_scale_2->setObjectName(QString::fromUtf8("line_scale_2"));
+        line_scale_2->setGeometry(QRect(280, 460, 113, 20));
+        label_48 = new QLabel(multiUpload);
+        label_48->setObjectName(QString::fromUtf8("label_48"));
+        label_48->setGeometry(QRect(210, 460, 71, 21));
+        line_scale_3 = new QLineEdit(multiUpload);
+        line_scale_3->setObjectName(QString::fromUtf8("line_scale_3"));
+        line_scale_3->setGeometry(QRect(480, 460, 113, 20));
+        label_49 = new QLabel(multiUpload);
+        label_49->setObjectName(QString::fromUtf8("label_49"));
+        label_49->setGeometry(QRect(410, 460, 71, 21));
+        line_scale_4 = new QLineEdit(multiUpload);
+        line_scale_4->setObjectName(QString::fromUtf8("line_scale_4"));
+        line_scale_4->setGeometry(QRect(680, 460, 113, 20));
+        label_50 = new QLabel(multiUpload);
+        label_50->setObjectName(QString::fromUtf8("label_50"));
+        label_50->setGeometry(QRect(610, 460, 71, 21));
 
         retranslateUi(multiUpload);
         QObject::connect(buttonBox, SIGNAL(accepted()), multiUpload, SLOT(accept()));
@@ -482,6 +514,10 @@ public:
         label_45->setText(QApplication::translate("multiUpload", "SFM:", nullptr));
         label_out->setText(QApplication::translate("multiUpload", "...", nullptr));
         label_46->setText(QApplication::translate("multiUpload", "Latitude / Longitude", nullptr));
+        label_47->setText(QApplication::translate("multiUpload", "Scale:", nullptr));
+        label_48->setText(QApplication::translate("multiUpload", "Scale:", nullptr));
+        label_49->setText(QApplication::translate("multiUpload", "Scale:", nullptr));
+        label_50->setText(QApplication::translate("multiUpload", "Scale:", nullptr));
     } // retranslateUi
 
 };

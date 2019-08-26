@@ -30,6 +30,8 @@ public:
     QLabel *label_3;
     QPushButton *bttn_save;
     QLabel *label;
+    QLineEdit *lineEdit_filt;
+    QLabel *label_4;
 
     void setupUi(QDialog *settingsDialog)
     {
@@ -67,6 +69,13 @@ public:
         label = new QLabel(settingsDialog);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(130, 180, 261, 21));
+        lineEdit_filt = new QLineEdit(settingsDialog);
+        lineEdit_filt->setObjectName(QString::fromUtf8("lineEdit_filt"));
+        lineEdit_filt->setEnabled(true);
+        lineEdit_filt->setGeometry(QRect(140, 130, 261, 20));
+        label_4 = new QLabel(settingsDialog);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(10, 130, 131, 16));
 
         retranslateUi(settingsDialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), settingsDialog, SLOT(accept()));
@@ -86,6 +95,8 @@ public:
         label_3->setText(QApplication::translate("settingsDialog", "Just select one Image:", nullptr));
         bttn_save->setText(QApplication::translate("settingsDialog", "Save", nullptr));
         label->setText(QApplication::translate("settingsDialog", "...", nullptr));
+        lineEdit_filt->setText(QApplication::translate("settingsDialog", "CS", nullptr));
+        label_4->setText(QApplication::translate("settingsDialog", "Default Group-Filter:", nullptr));
     } // retranslateUi
 
 };

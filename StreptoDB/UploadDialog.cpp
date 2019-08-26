@@ -38,6 +38,7 @@ void uploadDialog::insertIntoDB() {
 	img.group_id = atoi(ui.comboBox_group->currentText().toStdString().substr(ui.comboBox_group->currentText().toStdString().find("-") + 1).c_str());
 	//ui.label_test->setText(QString::number(atoi(ui.comboBox_broth->currentText().toStdString().substr(ui.comboBox_broth->currentText().toStdString().find("-")+1).c_str())));
 	img.filePath = ui.line_path->text().toStdString();
+	img.scale = ui.line_scale->text().toDouble();
 
 	if (dbcon2->addImage2(img)) {
 		ui.label_test->setText("successfully saved Image to DB.");
@@ -109,6 +110,6 @@ void uploadDialog::dragOpenFile(QString fileName) {
 			ui.comboBox_group->setCurrentIndex(temp2);
 
 			ui.line_path->setText(fileName);
-	
+			ui.line_scale->setText(QString::number(2));
 
 }

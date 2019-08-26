@@ -54,6 +54,7 @@ static int callback_img(void* param, int numCols, char** col, char** colName)
 	img.broth_id = atoi(col[6]);
 	img.group_id = atoi(col[7]);
 	img.filePath = (string)col[8];
+	img.scale = atoi(col[9]);
 
 	result->push_back(img);
 
@@ -234,6 +235,7 @@ vector<Image> DBController::getImages(string filt) {
 					"I.BROTH_ID, " \
 					"I.GROUP_ID, " \
 					"I.PATH, " \
+					"I.SCALE, " \
 					"S.ID_INTERN " \
 					"FROM Images I LEFT JOIN Streptomyceten S ON I.GROUP_ID = S.ID_GROUP " \
 					"WHERE S.ID_INTERN LIKE '" + filt + "%' " \
@@ -606,7 +608,7 @@ vector<Image> DBController::getImages(string filt) {
 
  //INSERT INTO Images
  bool DBController::addImage2(Image img) {
-
+	 
 	 QImage image(QString::fromStdString(img.filePath));
 	 if (image.isNull())
 	 {
@@ -636,8 +638,8 @@ vector<Image> DBController::getImages(string filt) {
 		 sqlite3_stmt* stmt = NULL;
 		 string err_str;
 		 rc = sqlite3_prepare(db, \
-			 "INSERT INTO Images(IMAGE_ID, IMAGE_PREVIEW_BLOB, TIMESTAMP, IMAGESIZE, RESOLUTION_X, RESOLUTION_Y, BROTH_ID, GROUP_ID, PATH)" \
-			 " VALUES(?,?,?,?,?,?,?,?,?);", \
+			 "INSERT INTO Images(IMAGE_ID, IMAGE_PREVIEW_BLOB, TIMESTAMP, IMAGESIZE, RESOLUTION_X, RESOLUTION_Y, BROTH_ID, GROUP_ID, PATH, SCALE)" \
+			 " VALUES(?,?,?,?,?,?,?,?,?,?);", \
 			 - 1, &stmt, NULL);
 		 if (rc != SQLITE_OK) {
 			 DBOUT("prepare failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
@@ -656,6 +658,7 @@ vector<Image> DBController::getImages(string filt) {
 			 sqlite3_bind_int(stmt, 7, img.broth_id);
 			 sqlite3_bind_int(stmt, 8, img.group_id);
 			 sqlite3_bind_text(stmt, 9, img.filePath.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_double(stmt, 10, img.scale);
 
 			 if (rc != SQLITE_OK) {
 				 DBOUT("bind failed: DBController::addImage2(Image)", sqlite3_errmsg(db));
@@ -721,7 +724,8 @@ vector<Image> DBController::getImages(string filt) {
 			 "RESOLUTION_Y = ?," \
 			 "BROTH_ID = ?," \
 			 "GROUP_ID = ?," \
-			 "PATH = ?" \
+			 "PATH = ?," \
+			 "SCALE = ?" \
 			 "WHERE IMAGE_ID = ?;" , \
 			 - 1, &stmt, NULL);
 		 if (rc != SQLITE_OK) {
@@ -741,7 +745,8 @@ vector<Image> DBController::getImages(string filt) {
 			 sqlite3_bind_int(stmt, 7, img.broth_id);
 			 sqlite3_bind_int(stmt, 8, img.group_id);
 			 sqlite3_bind_text(stmt, 9, img.filePath.c_str(), -1, SQLITE_STATIC);
-			 sqlite3_bind_int(stmt, 10, img.image_id);
+			 sqlite3_bind_double(stmt, 10, img.scale);
+			 sqlite3_bind_int(stmt, 11, img.image_id);
 
 			 if (rc != SQLITE_OK) {
 				 DBOUT("bind failed: DBController::updateImage(Image)", sqlite3_errmsg(db));

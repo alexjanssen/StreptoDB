@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>813</width>
-    <height>535</height>
+    <width>814</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>450</x>
-     <y>470</y>
+     <y>500</y>
      <width>341</width>
      <height>21</height>
     </rect>
@@ -865,7 +865,7 @@
    <property name="geometry">
     <rect>
      <x>550</x>
-     <y>470</y>
+     <y>500</y>
      <width>75</width>
      <height>21</height>
     </rect>
@@ -1024,7 +1024,7 @@
    <property name="geometry">
     <rect>
      <x>550</x>
-     <y>500</y>
+     <y>530</y>
      <width>241</width>
      <height>21</height>
     </rect>
@@ -1136,6 +1136,98 @@
     </rect>
    </property>
   </widget>
+  <widget class="QLineEdit" name="line_scale">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>460</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_47">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>460</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Scale:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="line_scale_2">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>460</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_48">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>460</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Scale:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="line_scale_3">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>460</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_49">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>460</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Scale:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="line_scale_4">
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>460</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_50">
+   <property name="geometry">
+    <rect>
+     <x>610</x>
+     <y>460</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Scale:</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
@@ -1146,8 +1238,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>450</x>
+     <y>500</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -1162,8 +1254,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>450</x>
+     <y>500</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -1243,7 +1335,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>587</x>
-     <y>480</y>
+     <y>510</y>
     </hint>
     <hint type="destinationlabel">
      <x>406</x>
