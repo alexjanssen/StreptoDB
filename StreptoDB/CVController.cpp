@@ -40,10 +40,11 @@ cv::Mat CVController::QImage2Mat(QImage const& src)
 }
 
 
+//function reads image from file and returns a 8bit deep, unsigned int type with 3 channels RGB Mat
 cv::Mat CVController::readImage(std::string path) {
 	cv::Mat matIN = cv::imread(path);
 	if (matIN.dims != NULL) {
-		cv::Mat matOUT(cv::Size(2752, 2208), CV_16FC3);
+		cv::Mat matOUT(cv::Size(2752, 2208), CV_16UC3);
 		cv::resize(matIN, matOUT, cv::Size(2752, 2208));
 
 		return matOUT;
@@ -55,7 +56,7 @@ cv::Mat CVController::readImage(std::string path) {
 		}
 		matIN = QImage2Mat(image);
 		if (matIN.dims != NULL) {
-			cv::Mat matOUT(cv::Size(2752, 2208), CV_16FC3);
+			cv::Mat matOUT(cv::Size(2752, 2208), CV_16UC3);
 			cv::resize(matIN, matOUT, cv::Size(2752, 2208));
 
 			return matOUT;
@@ -66,6 +67,7 @@ cv::Mat CVController::readImage(std::string path) {
 }
 
 
+//returns the mean value of the first color channel
 double CVController::mean1(std::string path)
 {
 	cv::Mat mat = CVController::readImage(path);
@@ -77,4 +79,78 @@ double CVController::mean1(std::string path)
 	else {
 		return NULL; 
 	}
+}
+
+
+int CVController::extractScale(std::string path)
+{
+	/// Source image to display
+	Mat img_display;
+	cv::Mat img = CVController::readImage(path);
+	img.copyTo(img_display);
+
+	/// Create the result matrix
+	Mat templ = Mat(7, 100, CV_8UC3, Scalar(255, 255, 255)); //CV_8UC3
+	//templ.flags = 1124024336;
+
+	//cv::Mat templ = cv::imread("D:/Images/scale.tif");
+	
+	int result_cols = img.cols -templ.cols + 1;
+	int result_rows = img.rows -templ.rows + 1;
+	Mat result;
+	result.create(result_rows, result_cols, CV_8UC3); //CV_32FC1
+
+	/// Do the Matching and Normalize
+	int match_method = TM_SQDIFF;
+	matchTemplate(img, templ, result, match_method);
+	normalize(result, result, 0, 1, NORM_MINMAX, -1, Mat());
+
+	/// Localizing the best match with minMaxLoc
+	double minVal; double maxVal; Point minLoc; Point maxLoc;
+	Point matchLoc;
+
+	minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, Mat());
+
+	// For SQDIFF and SQDIFF_NORMED, the best matches are lower values. For all the other methods, the higher the better
+	if (match_method == TM_SQDIFF || match_method == TM_SQDIFF_NORMED)
+	{
+		matchLoc = minLoc;
+	}
+	else
+	{
+		matchLoc = maxLoc;
+	}
+
+	//get the length of the scale
+	int length = 0;
+	int x = matchLoc.x;
+	while (img.at<Vec3b>(Point(x, matchLoc.y)) == Vec3b(255, 255, 255)) {
+		//if (img.at<Vec3b>(Point(matchLoc.x, matchLoc.y))[0] == 255) {
+		x--;
+		length++;
+	}
+	x = matchLoc.x + 1;
+	while (img.at<Vec3b>(Point(x, matchLoc.y)) == Vec3b(255, 255, 255)) {
+		x++;
+		length++;
+	}
+
+
+
+	/// Show me what you got
+	rectangle(img_display, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
+	rectangle(result, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
+
+	char* image_window = "Source Image";
+	char* result_window = "Result window";
+	//char* test_window = "testing";
+	namedWindow(image_window, WINDOW_KEEPRATIO);
+	namedWindow(result_window, WINDOW_KEEPRATIO);
+	//namedWindow(test_window, WINDOW_KEEPRATIO);
+	imshow(image_window, img_display);
+	imshow(result_window, result);
+	//imshow(test_window, templ);
+
+
+	return length;
 }

@@ -19,6 +19,7 @@ public:
 	cv::Mat readImage(std::string path);
 
 	double mean1(std::string path);
+	int extractScale(std::string path);
 private:
 
 };

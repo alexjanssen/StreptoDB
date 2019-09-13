@@ -117,7 +117,7 @@ void StreptoGUI::itemSelected(int x, int y)
 				ui.line_brothID->setText(QString::number(resultGlob[i].broth_id));
 				ui.line_groupID->setText(QString::number(resultGlob[i].group_id));
 				ui.line_path->setText(QString::fromStdString(resultGlob[i].filePath));
-				ui.line_scale->setText(QString::number(resultGlob[i].scale));
+				ui.line_scale->setText(QString::number(resultGlob[i].scale, 'd', 1));
 				//fill group Parameters
 				Group grp = dbcon->getGroup("=" + std::to_string(resultGlob[i].group_id))[0];
 				ui.line_groupID_group->setText(QString::number(grp.group_id));
@@ -322,12 +322,20 @@ void StreptoGUI::testCalc() {
 	newPath = globPath + newPath;
 
 	//Calculations and all openCV functions are in CVController, also loading the file
-	//lets calc and add the paramaters one by one:
+	//lets calculate and add the paramaters one by one:
 	cp.calc_id = dbcon->getMaxCalcParamID() + 1;
 	cp.class_id = 1;	//mean_grey()
 	cp.value = cvcon->mean1(newPath);
 	if (!dbcon->addCalcedParams(cp)) {ui.label_12->setText("mean1 added to DB.");}
 	else {ui.label_12->setText("mean1 failed to save.");}
+
+
+	cp.calc_id++;
+	cp.class_id = 2; //scale()
+	int scaleLength = cvcon->extractScale(newPath);
+	cp.value = ui.line_scale->text().toDouble() / scaleLength;
+	if (!dbcon->addCalcedParams(cp)) { ui.label_12->setText("Scale added to DB(one pxl in mm)."); }
+	else { ui.label_12->setText("Scale failed to save."); }
 
 
 

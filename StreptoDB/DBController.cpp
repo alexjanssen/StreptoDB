@@ -54,7 +54,7 @@ static int callback_img(void* param, int numCols, char** col, char** colName)
 	img.broth_id = atoi(col[6]);
 	img.group_id = atoi(col[7]);
 	img.filePath = (string)col[8];
-	img.scale = atoi(col[9]);
+	img.scale = atof(col[9]);
 
 	result->push_back(img);
 
@@ -77,8 +77,8 @@ static int callback_group(void* param, int numCols, char** col, char** colName)
 	group.date = (string)col[2];
 	group.sci_name = (string)col[3];
 	group.genome_lnk = (string)col[4];
-	group.latitude = atoi(col[5]);
-	group.longitude = atoi(col[6]);
+	group.latitude = atof(col[5]);
+	group.longitude = atof(col[6]);
 	group.siderophore = (bool)atoi(col[7]);
 	group.spore_color = (string)col[8];
 
