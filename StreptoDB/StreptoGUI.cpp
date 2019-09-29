@@ -321,25 +321,84 @@ void StreptoGUI::testCalc() {
 	newPath = ui.line_path->text().toStdString().substr(temp.find_last_of("/"));
 	newPath = globPath + newPath;
 
+	//delete all calculated Parameters for selected image
+	if (!dbcon->deleteCalculatedParameters(cp.image_id)) {}
+	else { ui.label_12->setText("failed to delete image calculations."); }
+
 	//Calculations and all openCV functions are in CVController, also loading the file
 	//lets calculate and add the paramaters one by one:
-	cp.calc_id = dbcon->getMaxCalcParamID() + 1;
-	cp.class_id = 1;	//mean_grey()
-	cp.value = cvcon->mean1(newPath);
-	if (!dbcon->addCalcedParams(cp)) {ui.label_12->setText("mean1 added to DB.");}
-	else {ui.label_12->setText("mean1 failed to save.");}
+	ui.label_12->setText("saving... everything ok so far.");
+	//Start with Scale:
+	try {
+		cp.calc_id = dbcon->getMaxCalcParamID() + 1;
+	}
+	catch (exception) { cp.calc_id = 1; };
 
-
-	cp.calc_id++;
-	cp.class_id = 2; //scale()
+	cp.class_id = 1; //scale()
 	int scaleLength = cvcon->extractScale(newPath);
 	cp.value = ui.line_scale->text().toDouble() / scaleLength;
-	if (!dbcon->addCalcedParams(cp)) { ui.label_12->setText("Scale added to DB(one pxl in mm)."); }
+	if (!dbcon->addCalcedParams(cp)) {}
 	else { ui.label_12->setText("Scale failed to save."); }
+	
+	//Then calculate the segmentations:
+	cvcon->segmentation(newPath, ui.spinBox_TH->text().toDouble() / 100, ui.spinBox_BG->text().toDouble() / 100, ui.spinBox_FG->text().toDouble(), false);
 
+	//and calculate the foreground-size:
+	cp.calc_id++;
+	cp.class_id = 2;	//size_foreground()
+	cp.value = cvcon->foregroundSize(cp.value);
+	if (!dbcon->addCalcedParams(cp)) {}
+	else {ui.label_12->setText("size_foreground failed to save.");}
 
+	//and calculate the fore-/back-ground colours:
+	cp.calc_id++;
+	cp.class_id = 3;	//foreground_channel_0()
+	cp.value = cvcon->meanFG(0);
+	if (!dbcon->addCalcedParams(cp)) {}
+	else { ui.label_12->setText("foreground_channel_0 failed to save."); }
+	cp.calc_id++;
+	cp.class_id = 4;	//foreground_channel_1()
+	cp.value = cvcon->meanFG(1);
+	if (!dbcon->addCalcedParams(cp)) {}
+	else { ui.label_12->setText("foreground_channel_1 failed to save."); }
+	cp.calc_id++;
+	cp.class_id = 5;	//foreground_channel_2()
+	cp.value = cvcon->meanFG(2);
+	if (!dbcon->addCalcedParams(cp)) {}
+	else { ui.label_12->setText("foreground_channel_2 failed to save."); }
+	cp.calc_id++;
+	cp.class_id = 6;	//background_channel_0()
+	cp.value = cvcon->meanBG(0);
+	if (!dbcon->addCalcedParams(cp)) {}
+	else { ui.label_12->setText("background_channel_0 failed to save."); }
+	cp.calc_id++;
+	cp.class_id = 7;	//background_channel_1()
+	cp.value = cvcon->meanBG(1);
+	if (!dbcon->addCalcedParams(cp)) {}
+	else { ui.label_12->setText("background_channel_1 failed to save."); }
+	cp.calc_id++;
+	cp.class_id = 8;	//background_channel_2()
+	cp.value = cvcon->meanBG(2);
+	if (!dbcon->addCalcedParams(cp)) {}
+	else { ui.label_12->setText("background_channel_2 failed to save."); }
 
+	//cvcon->foregroundExtraction(newPath);
+	//cvcon->histo(newPath);
+	
 }
+
+//for testing Calculations
+void StreptoGUI::showSegmentation() {
+	//get filePath from Settings:
+	string newPath = ui.line_path->text().toStdString();
+	string temp = newPath.substr(0, newPath.find_last_of("/"));
+	newPath = ui.line_path->text().toStdString().substr(temp.find_last_of("/"));
+	newPath = globPath + newPath;
+
+	//cvcon->histo(newPath);
+	cvcon->segmentation(newPath, ui.spinBox_TH->text().toDouble()/100, ui.spinBox_BG->text().toDouble()/100, ui.spinBox_FG->text().toDouble(),true);
+}
+
 
 
 //for adding Strain-Inhibitions to DB

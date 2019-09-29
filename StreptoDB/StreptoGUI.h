@@ -36,6 +36,7 @@ public slots:
 	void loadDB();
 	void itemSelected(int x, int y);
 	void testCalc();
+	void showSegmentation();
 	void addInhibition();
 	void compare();
 	void paramSelected(int x, int y);

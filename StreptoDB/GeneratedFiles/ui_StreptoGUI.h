@@ -23,6 +23,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
@@ -68,10 +69,6 @@ public:
     QTableWidget *tableWidget_4;
     QLabel *label_14;
     QLabel *label_15;
-    QCheckBox *checkBox_color;
-    QCheckBox *checkBox_shape;
-    QCheckBox *checkBox_size;
-    QCheckBox *checkBox_bgColor;
     QLabel *label_16;
     QPushButton *bttn_compare;
     QLabel *label_17;
@@ -119,6 +116,16 @@ public:
     QPushButton *bttn_editBroth;
     QPushButton *bttn_editTeststrains;
     QPushButton *bttn_orderbyDist;
+    QPushButton *bttn_segmentation;
+    QLabel *label_29;
+    QLabel *label_30;
+    QSpinBox *spinBox_BG;
+    QSpinBox *spinBox_TH;
+    QPushButton *bttn_calc;
+    QLabel *label_31;
+    QSpinBox *spinBox_FG;
+    QLabel *label_32;
+    QLabel *label_33;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -129,7 +136,7 @@ public:
     {
         if (StreptoGUIClass->objectName().isEmpty())
             StreptoGUIClass->setObjectName(QString::fromUtf8("StreptoGUIClass"));
-        StreptoGUIClass->resize(1386, 940);
+        StreptoGUIClass->resize(1386, 954);
         actionAnalys = new QAction(StreptoGUIClass);
         actionAnalys->setObjectName(QString::fromUtf8("actionAnalys"));
         action_settings = new QAction(StreptoGUIClass);
@@ -223,37 +230,25 @@ public:
         label_13->setGeometry(QRect(1180, 360, 71, 21));
         tableWidget_4 = new QTableWidget(centralWidget);
         tableWidget_4->setObjectName(QString::fromUtf8("tableWidget_4"));
-        tableWidget_4->setGeometry(QRect(10, 750, 1361, 131));
+        tableWidget_4->setGeometry(QRect(10, 770, 1361, 131));
         label_14 = new QLabel(centralWidget);
         label_14->setObjectName(QString::fromUtf8("label_14"));
         label_14->setGeometry(QRect(10, 710, 91, 16));
         label_14->setLayoutDirection(Qt::LeftToRight);
         label_15 = new QLabel(centralWidget);
         label_15->setObjectName(QString::fromUtf8("label_15"));
-        label_15->setGeometry(QRect(10, 720, 171, 16));
+        label_15->setGeometry(QRect(10, 730, 171, 16));
         label_15->setLayoutDirection(Qt::LeftToRight);
-        checkBox_color = new QCheckBox(centralWidget);
-        checkBox_color->setObjectName(QString::fromUtf8("checkBox_color"));
-        checkBox_color->setGeometry(QRect(200, 710, 51, 17));
-        checkBox_shape = new QCheckBox(centralWidget);
-        checkBox_shape->setObjectName(QString::fromUtf8("checkBox_shape"));
-        checkBox_shape->setGeometry(QRect(200, 730, 61, 17));
-        checkBox_size = new QCheckBox(centralWidget);
-        checkBox_size->setObjectName(QString::fromUtf8("checkBox_size"));
-        checkBox_size->setGeometry(QRect(260, 710, 101, 17));
-        checkBox_bgColor = new QCheckBox(centralWidget);
-        checkBox_bgColor->setObjectName(QString::fromUtf8("checkBox_bgColor"));
-        checkBox_bgColor->setGeometry(QRect(260, 730, 111, 17));
         label_16 = new QLabel(centralWidget);
         label_16->setObjectName(QString::fromUtf8("label_16"));
-        label_16->setGeometry(QRect(10, 730, 171, 16));
+        label_16->setGeometry(QRect(10, 720, 221, 16));
         label_16->setLayoutDirection(Qt::LeftToRight);
         bttn_compare = new QPushButton(centralWidget);
         bttn_compare->setObjectName(QString::fromUtf8("bttn_compare"));
-        bttn_compare->setGeometry(QRect(400, 710, 131, 23));
+        bttn_compare->setGeometry(QRect(640, 710, 131, 23));
         label_17 = new QLabel(centralWidget);
         label_17->setObjectName(QString::fromUtf8("label_17"));
-        label_17->setGeometry(QRect(780, 730, 281, 16));
+        label_17->setGeometry(QRect(10, 750, 241, 16));
         label_18 = new QLabel(centralWidget);
         label_18->setObjectName(QString::fromUtf8("label_18"));
         label_18->setGeometry(QRect(1180, 20, 71, 16));
@@ -399,7 +394,48 @@ public:
         bttn_editTeststrains->setGeometry(QRect(590, 10, 91, 23));
         bttn_orderbyDist = new QPushButton(centralWidget);
         bttn_orderbyDist->setObjectName(QString::fromUtf8("bttn_orderbyDist"));
-        bttn_orderbyDist->setGeometry(QRect(540, 710, 191, 23));
+        bttn_orderbyDist->setGeometry(QRect(640, 730, 191, 23));
+        bttn_segmentation = new QPushButton(centralWidget);
+        bttn_segmentation->setObjectName(QString::fromUtf8("bttn_segmentation"));
+        bttn_segmentation->setGeometry(QRect(500, 710, 111, 23));
+        label_29 = new QLabel(centralWidget);
+        label_29->setObjectName(QString::fromUtf8("label_29"));
+        label_29->setGeometry(QRect(260, 700, 81, 16));
+        label_29->setLayoutDirection(Qt::LeftToRight);
+        label_30 = new QLabel(centralWidget);
+        label_30->setObjectName(QString::fromUtf8("label_30"));
+        label_30->setGeometry(QRect(260, 720, 81, 16));
+        label_30->setLayoutDirection(Qt::LeftToRight);
+        spinBox_BG = new QSpinBox(centralWidget);
+        spinBox_BG->setObjectName(QString::fromUtf8("spinBox_BG"));
+        spinBox_BG->setGeometry(QRect(340, 700, 42, 22));
+        spinBox_BG->setMinimum(-199);
+        spinBox_BG->setMaximum(199);
+        spinBox_TH = new QSpinBox(centralWidget);
+        spinBox_TH->setObjectName(QString::fromUtf8("spinBox_TH"));
+        spinBox_TH->setGeometry(QRect(340, 720, 42, 22));
+        spinBox_TH->setMinimum(-199);
+        spinBox_TH->setMaximum(199);
+        bttn_calc = new QPushButton(centralWidget);
+        bttn_calc->setObjectName(QString::fromUtf8("bttn_calc"));
+        bttn_calc->setGeometry(QRect(500, 730, 111, 23));
+        label_31 = new QLabel(centralWidget);
+        label_31->setObjectName(QString::fromUtf8("label_31"));
+        label_31->setGeometry(QRect(260, 740, 81, 16));
+        label_31->setLayoutDirection(Qt::LeftToRight);
+        spinBox_FG = new QSpinBox(centralWidget);
+        spinBox_FG->setObjectName(QString::fromUtf8("spinBox_FG"));
+        spinBox_FG->setGeometry(QRect(340, 740, 42, 22));
+        spinBox_FG->setMinimum(-199);
+        spinBox_FG->setMaximum(199);
+        label_32 = new QLabel(centralWidget);
+        label_32->setObjectName(QString::fromUtf8("label_32"));
+        label_32->setGeometry(QRect(390, 740, 91, 16));
+        label_32->setLayoutDirection(Qt::LeftToRight);
+        label_33 = new QLabel(centralWidget);
+        label_33->setObjectName(QString::fromUtf8("label_33"));
+        label_33->setGeometry(QRect(390, 700, 61, 16));
+        label_33->setLayoutDirection(Qt::LeftToRight);
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -456,6 +492,8 @@ public:
         QObject::connect(bttn_newGroup, SIGNAL(clicked()), StreptoGUIClass, SLOT(newGroup()));
         QObject::connect(action_settings, SIGNAL(triggered()), StreptoGUIClass, SLOT(act_settings()));
         QObject::connect(bttn_editTeststrains, SIGNAL(clicked()), StreptoGUIClass, SLOT(editTestStrains()));
+        QObject::connect(bttn_segmentation, SIGNAL(clicked()), StreptoGUIClass, SLOT(showSegmentation()));
+        QObject::connect(bttn_calc, SIGNAL(clicked()), StreptoGUIClass, SLOT(testCalc()));
 
         tabWidget->setCurrentIndex(1);
 
@@ -488,12 +526,8 @@ public:
         bttn_testCalc->setText(QApplication::translate("StreptoGUIClass", "Test-Calc", nullptr));
         label_13->setText(QApplication::translate("StreptoGUIClass", "Path:", nullptr));
         label_14->setText(QApplication::translate("StreptoGUIClass", "- Select an Image", nullptr));
-        label_15->setText(QApplication::translate("StreptoGUIClass", "- Select attributes for comparison:", nullptr));
-        checkBox_color->setText(QApplication::translate("StreptoGUIClass", "color", nullptr));
-        checkBox_shape->setText(QApplication::translate("StreptoGUIClass", "shape", nullptr));
-        checkBox_size->setText(QApplication::translate("StreptoGUIClass", "size", nullptr));
-        checkBox_bgColor->setText(QApplication::translate("StreptoGUIClass", "background color", nullptr));
-        label_16->setText(QApplication::translate("StreptoGUIClass", "- find best matches:", nullptr));
+        label_15->setText(QApplication::translate("StreptoGUIClass", "- Adjust attributes for comparison:", nullptr));
+        label_16->setText(QApplication::translate("StreptoGUIClass", "- look at the Fore/Background segmentation:", nullptr));
         bttn_compare->setText(QApplication::translate("StreptoGUIClass", "order by selected-Group", nullptr));
         label_17->setText(QApplication::translate("StreptoGUIClass", "Comparison: ", nullptr));
         label_18->setText(QApplication::translate("StreptoGUIClass", "Group Info:", nullptr));
@@ -526,6 +560,13 @@ public:
         bttn_editBroth->setText(QApplication::translate("StreptoGUIClass", "edit Broth", nullptr));
         bttn_editTeststrains->setText(QApplication::translate("StreptoGUIClass", "edit Test-Strains", nullptr));
         bttn_orderbyDist->setText(QApplication::translate("StreptoGUIClass", "order by distance to selected-Group", nullptr));
+        bttn_segmentation->setText(QApplication::translate("StreptoGUIClass", "Show Segmentation", nullptr));
+        label_29->setText(QApplication::translate("StreptoGUIClass", "Background(%):", nullptr));
+        label_30->setText(QApplication::translate("StreptoGUIClass", "Threshold(%):", nullptr));
+        bttn_calc->setText(QApplication::translate("StreptoGUIClass", "Add Calculations", nullptr));
+        label_31->setText(QApplication::translate("StreptoGUIClass", "Foreground:", nullptr));
+        label_32->setText(QApplication::translate("StreptoGUIClass", "(Dilation-iterations)", nullptr));
+        label_33->setText(QApplication::translate("StreptoGUIClass", "(Circle-Size)", nullptr));
         menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Options", nullptr));
         menuInfo->setTitle(QApplication::translate("StreptoGUIClass", "Info", nullptr));
     } // retranslateUi

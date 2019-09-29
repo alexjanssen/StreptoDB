@@ -5,6 +5,7 @@
 #include <opencv2/highgui.hpp>
 #include <QtWidgets\QGraphicsPixmapItem>
 #include <opencv2/imgproc.hpp>
+#include <vector>
 //#include <string>
 
 class CVController
@@ -18,9 +19,18 @@ public:
 
 	cv::Mat readImage(std::string path);
 
-	double mean1(std::string path);
+	double mean1(std::string path,int channel);
+	double meanFG(int channel);
+	double meanBG(int channel);
+	double foregroundSize(double scale);
+
 	int extractScale(std::string path);
+	void foregroundExtraction(std::string path);
+	void segmentation(std::string path, double, double,double,bool);
+	void histo(std::string path);
 private:
 
 };
+
+static cv::Mat foreground_const, background_const, mask_const, bgmask_const;
 

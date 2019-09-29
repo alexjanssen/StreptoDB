@@ -133,7 +133,10 @@ static int callback_calcedParams(void* param, int numCols, char** col, char** co
 static int callback_maxID(void* param, int numCols, char** col, char** colName)
 {
 	int* col_width = (int*)param;
-	maxID = atoi(col[0]);
+	if (col[0] == NULL) {
+		maxID = 0;
+	}else{ maxID = atoi(col[0]); }
+	
 	return 0;
 }
 
