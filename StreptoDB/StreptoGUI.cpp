@@ -87,6 +87,8 @@ void StreptoGUI::loadDB() {
 void StreptoGUI::itemSelected(int x, int y)
 {	//first check if selected item exists
 	if (ui.tableWidget->item(x, y) ){ 
+		selX = x;
+		selY = y;
 		int imgID = atoi(ui.tableWidget->item(x, y)->text().toStdString().c_str());
 		//search for item in global result vector with imageID
 		for (int i = 0; i < resultGlob.size(); i++) {
@@ -114,8 +116,21 @@ void StreptoGUI::itemSelected(int x, int y)
 				ui.line_imgSize->setText(QString::number(resultGlob[i].imagesize));
 				ui.line_resolution_x->setText(QString::number(resultGlob[i].resolution_x));
 				ui.line_resolution_y->setText(QString::number(resultGlob[i].resolution_y));
-				ui.line_brothID->setText(QString::number(resultGlob[i].broth_id));
-				ui.line_groupID->setText(QString::number(resultGlob[i].group_id));
+
+				//Fill up the Broth combobox and set Broth
+				ui.comboBox_broth->clear();
+				vector<Broth> vbroth = dbcon->getBroth("NOT NULL");
+				int temp2 = 0;
+				for (int g = 0; g < vbroth.size(); g++) {
+					ui.comboBox_broth->addItem(QString::fromStdString(vbroth[g].name + "\t   -" + std::to_string(vbroth[g].broth_id)));
+					if (vbroth[g].broth_id == resultGlob[i].broth_id) {
+						temp2 = g;
+					}
+				}
+				ui.comboBox_broth->setCurrentIndex(temp2);
+				
+				//ui.line_brothID->setText(QString::number(resultGlob[i].broth_id));
+				//ui.line_groupID->setText(QString::number(resultGlob[i].group_id));
 				ui.line_path->setText(QString::fromStdString(resultGlob[i].filePath));
 				ui.line_scale->setText(QString::number(resultGlob[i].scale, 'd', 1));
 				//fill group Parameters
@@ -171,8 +186,9 @@ void StreptoGUI::itemSelected(int x, int y)
 				ui.line_imgSize->setText("");
 				ui.line_resolution_x->setText("");
 				ui.line_resolution_y->setText("");
-				ui.line_brothID->setText("");
-				ui.line_groupID->setText("");
+				//ui.line_brothID->setText("");
+				
+				//ui.line_groupID->setText("");
 				ui.line_path->setText("");
 				ui.line_scale->setText("");
 
@@ -323,11 +339,11 @@ void StreptoGUI::testCalc() {
 
 	//delete all calculated Parameters for selected image
 	if (!dbcon->deleteCalculatedParameters(cp.image_id)) {}
-	else { ui.label_12->setText("failed to delete image calculations."); }
+	else { ui.label_28->setText("failed to delete image calculations."); }
 
 	//Calculations and all openCV functions are in CVController, also loading the file
 	//lets calculate and add the paramaters one by one:
-	ui.label_12->setText("saving... everything ok so far.");
+	ui.label_28->setText("saving... everything ok so far.");
 	//Start with Scale:
 	try {
 		cp.calc_id = dbcon->getMaxCalcParamID() + 1;
@@ -336,9 +352,10 @@ void StreptoGUI::testCalc() {
 
 	cp.class_id = 1; //scale()
 	int scaleLength = cvcon->extractScale(newPath);
-	cp.value = ui.line_scale->text().toDouble() / scaleLength;
+	double scale = ui.line_scale->text().toDouble() / scaleLength;
+	cp.value = scale;
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_12->setText("Scale failed to save."); }
+	else { ui.label_28->setText("Scale failed to save."); }
 	
 	//Then calculate the segmentations:
 	cvcon->segmentation(newPath, ui.spinBox_TH->text().toDouble() / 100, ui.spinBox_BG->text().toDouble() / 100, ui.spinBox_FG->text().toDouble(), false);
@@ -346,42 +363,48 @@ void StreptoGUI::testCalc() {
 	//and calculate the foreground-size:
 	cp.calc_id++;
 	cp.class_id = 2;	//size_foreground()
-	cp.value = cvcon->foregroundSize(cp.value);
+	double area = cvcon->foregroundSize(scale);
+	cp.value = area;
 	if (!dbcon->addCalcedParams(cp)) {}
-	else {ui.label_12->setText("size_foreground failed to save.");}
+	else {ui.label_28->setText("size_foreground failed to save.");}
 
 	//and calculate the fore-/back-ground colours:
 	cp.calc_id++;
 	cp.class_id = 3;	//foreground_channel_0()
 	cp.value = cvcon->meanFG(0);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_12->setText("foreground_channel_0 failed to save."); }
+	else { ui.label_28->setText("foreground_channel_0 failed to save."); }
 	cp.calc_id++;
 	cp.class_id = 4;	//foreground_channel_1()
 	cp.value = cvcon->meanFG(1);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_12->setText("foreground_channel_1 failed to save."); }
+	else { ui.label_28->setText("foreground_channel_1 failed to save."); }
 	cp.calc_id++;
 	cp.class_id = 5;	//foreground_channel_2()
 	cp.value = cvcon->meanFG(2);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_12->setText("foreground_channel_2 failed to save."); }
+	else { ui.label_28->setText("foreground_channel_2 failed to save."); }
 	cp.calc_id++;
 	cp.class_id = 6;	//background_channel_0()
 	cp.value = cvcon->meanBG(0);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_12->setText("background_channel_0 failed to save."); }
+	else { ui.label_28->setText("background_channel_0 failed to save."); }
 	cp.calc_id++;
 	cp.class_id = 7;	//background_channel_1()
 	cp.value = cvcon->meanBG(1);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_12->setText("background_channel_1 failed to save."); }
+	else { ui.label_28->setText("background_channel_1 failed to save."); }
 	cp.calc_id++;
 	cp.class_id = 8;	//background_channel_2()
 	cp.value = cvcon->meanBG(2);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_12->setText("background_channel_2 failed to save."); }
-
+	else { ui.label_28->setText("background_channel_2 failed to save."); }
+	cp.calc_id++;
+	cp.class_id = 9;	//circularity
+	cp.value = cvcon->circFact(scale,area);
+	if (!dbcon->addCalcedParams(cp)) {}
+	else { ui.label_28->setText("circularity failed to save."); }
+	itemSelected(selX, selY);
 	//cvcon->foregroundExtraction(newPath);
 	//cvcon->histo(newPath);
 	
@@ -413,8 +436,9 @@ void StreptoGUI::addInhibition() {
 	}
 
 	if (strainID != 0) {
-		if (!dbcon->addStrainInhibition(maxID,ui.line_ID->text().toInt(), strainID, ui.line_brothID->text().toInt(), ui.checkBox_inhibition->isChecked())) {
+		if (!dbcon->addStrainInhibition(maxID,ui.line_ID->text().toInt(), strainID, atoi(ui.comboBox_broth->currentText().toStdString().substr(ui.comboBox_broth->currentText().toStdString().find("-") + 1).c_str()), ui.checkBox_inhibition->isChecked())) {
 			ui.label_28->setText("Success!");
+			itemSelected(selX, selY);
 		}
 		else {
 			ui.label_28->setText("Fail!");
@@ -433,7 +457,7 @@ void StreptoGUI::paramSelected(int x, int y)
 	if (ui.tableWidget_2->item(x, y)) {
 		int imgID = ui.line_ID->text().toInt();
 
-		vector<Compare> comp = dbcon->getCompare(ui.tableWidget_2->item(x, 3)->text().toDouble(), ui.line_brothID->text().toInt(), ui.tableWidget_2->item(x, 2)->text().toInt());
+		vector<Compare> comp = dbcon->getCompare(ui.tableWidget_2->item(x, 3)->text().toDouble(), atoi(ui.comboBox_broth->currentText().toStdString().substr(ui.comboBox_broth->currentText().toStdString().find("-") + 1).c_str()), ui.tableWidget_2->item(x, 2)->text().toInt());
 		//vector<Compare> comp = dbcon->getCompare(42, 1, 1);
 
 		ui.tableWidget_4->setRowCount(1);
@@ -481,13 +505,14 @@ void StreptoGUI::imgSave(){
 	img2.imagesize = ui.line_imgSize->text().toDouble();
 	img2.resolution_x = ui.line_resolution_x->text().toDouble();
 	img2.resolution_y = ui.line_resolution_y->text().toDouble();
-	img2.broth_id = ui.line_brothID->text().toInt();
-	img2.group_id = ui.line_groupID->text().toInt();
+	img2.broth_id = atoi(ui.comboBox_broth->currentText().toStdString().substr(ui.comboBox_broth->currentText().toStdString().find("-") + 1).c_str());
+	img2.group_id = ui.line_groupID_group->text().toInt();
 	img2.filePath = ui.line_path->text().toStdString();
 	img2.scale = ui.line_scale->text().toDouble();
 
 	if (!dbcon->updateImage(img2)) {
 		ui.label_3->setText("successfully updated Image.");
+		StreptoGUI::loadDB();
 	}
 	else {
 		ui.label_3->setText("failed to update Image.");
@@ -497,11 +522,19 @@ void StreptoGUI::imgSave(){
 
 //Arbeit Arbeit
 void StreptoGUI::imgDelete(){
-	if (dbcon->deleteImage(ui.line_ID->text().toInt())) {
-		ui.label_3->setText("successfully deleted Image.");
+	//ui.label_28->setText(QString::number(dbcon->getImages(ui.line_internID->text().toStdString()).size()));
+	if (dbcon->getImages(ui.line_internID->text().toStdString()).size() == 1) {
+		grpDelete();
 	}
 	else {
-		ui.label_3->setText("failed to delete Image.");
+
+		if (dbcon->deleteImage(ui.line_ID->text().toInt())) {
+			ui.label_3->setText("successfully deleted Image.");
+			StreptoGUI::loadDB();
+		}
+		else {
+			ui.label_3->setText("failed to delete Image.");
+		}
 	}
 }
 
@@ -519,6 +552,7 @@ void StreptoGUI::grpSave(){
 
 	if (!dbcon->updateGroup(grp2)) {
 		ui.label_3->setText("successfully updated Group.");
+		StreptoGUI::loadDB();
 	}
 	else {
 		ui.label_3->setText("failed to update Group.");
@@ -534,6 +568,7 @@ void StreptoGUI::grpDelete(){
 	}
 	if (dbcon->deleteGroup(ui.line_groupID_group->text().toInt(), imgs)) {
 		ui.label_3->setText("successfully deleted Group.");
+		StreptoGUI::loadDB();
 	}
 	else {
 		ui.label_3->setText("failed to delete Group.");
@@ -546,12 +581,15 @@ void StreptoGUI::subtableDelete(){
 		//ui.tableWidget_2->item(ui.tableWidget_2->currentRow(), 0)->text().toDouble();
 		if (dbcon->deleteCalcedParam(ui.tableWidget_2->item(ui.tableWidget_2->currentRow(), 0)->text().toDouble())) {
 			ui.label_3->setText("Successfully deleted entry in Calculations");
+			itemSelected(selX,selY);
+
 		}else { ui.label_3->setText("Failed to delete entry in Calculations"); }
 	}
 	else {	//Strain-Inhibition
 		//ui.label_12->setText(QString::number(ui.tableWidget_3->currentRow()));
 		if (dbcon->deleteStrainInhibition(ui.tableWidget_3->item(ui.tableWidget_3->currentRow(), 0)->text().toDouble())) {
 			ui.label_3->setText("Successfully deleted entry in Strain-Inhibition");
+			itemSelected(selX, selY);
 		}
 		else { ui.label_3->setText("Failed to delete entry in Strain-Inhibition"); }
 	}

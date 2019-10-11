@@ -70,3 +70,5 @@ static DBController *dbcon = new DBController();
 static CVController* cvcon = new CVController();
 static string globPath = "";
 static int column;
+static int selX;
+static int selY;

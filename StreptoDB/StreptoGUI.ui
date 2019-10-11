@@ -223,39 +223,6 @@
      <string>Broth-ID:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="line_brothID">
-    <property name="geometry">
-     <rect>
-      <x>1260</x>
-      <y>320</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_10">
-    <property name="geometry">
-     <rect>
-      <x>1180</x>
-      <y>340</y>
-      <width>71</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Group-ID:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="line_groupID">
-    <property name="geometry">
-     <rect>
-      <x>1260</x>
-      <y>340</y>
-      <width>113</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
@@ -299,7 +266,7 @@
     <property name="geometry">
      <rect>
       <x>1260</x>
-      <y>360</y>
+      <y>340</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -309,7 +276,7 @@
     <property name="geometry">
      <rect>
       <x>1180</x>
-      <y>360</y>
+      <y>340</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -667,7 +634,7 @@
     <property name="geometry">
      <rect>
       <x>1290</x>
-      <y>400</y>
+      <y>380</y>
       <width>41</width>
       <height>23</height>
      </rect>
@@ -686,7 +653,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_Calculations">
      <attribute name="title">
@@ -793,9 +760,9 @@
    <widget class="QLabel" name="label_28">
     <property name="geometry">
      <rect>
-      <x>1220</x>
+      <x>1080</x>
       <y>690</y>
-      <width>71</width>
+      <width>211</width>
       <height>31</height>
      </rect>
     </property>
@@ -833,7 +800,7 @@
     <property name="geometry">
      <rect>
       <x>1330</x>
-      <y>400</y>
+      <y>380</y>
       <width>41</width>
       <height>23</height>
      </rect>
@@ -892,7 +859,7 @@
     <property name="geometry">
      <rect>
       <x>1260</x>
-      <y>380</y>
+      <y>360</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -902,7 +869,7 @@
     <property name="geometry">
      <rect>
       <x>1180</x>
-      <y>380</y>
+      <y>360</y>
       <width>71</width>
       <height>21</height>
      </rect>
@@ -1102,6 +1069,16 @@
     </property>
     <property name="text">
      <string>(Circle-Size)</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_broth">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>320</y>
+      <width>113</width>
+      <height>22</height>
+     </rect>
     </property>
    </widget>
   </widget>

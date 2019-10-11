@@ -58,9 +58,6 @@ public:
     QLabel *label_8;
     QLineEdit *line_resolution_x;
     QLabel *label_9;
-    QLineEdit *line_brothID;
-    QLabel *label_10;
-    QLineEdit *line_groupID;
     QLabel *label_11;
     QLabel *label_12;
     QPushButton *bttn_testCalc;
@@ -126,6 +123,7 @@ public:
     QSpinBox *spinBox_FG;
     QLabel *label_32;
     QLabel *label_33;
+    QComboBox *comboBox_broth;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -204,15 +202,6 @@ public:
         label_9 = new QLabel(centralWidget);
         label_9->setObjectName(QString::fromUtf8("label_9"));
         label_9->setGeometry(QRect(1180, 320, 71, 21));
-        line_brothID = new QLineEdit(centralWidget);
-        line_brothID->setObjectName(QString::fromUtf8("line_brothID"));
-        line_brothID->setGeometry(QRect(1260, 320, 113, 20));
-        label_10 = new QLabel(centralWidget);
-        label_10->setObjectName(QString::fromUtf8("label_10"));
-        label_10->setGeometry(QRect(1180, 340, 71, 21));
-        line_groupID = new QLineEdit(centralWidget);
-        line_groupID->setObjectName(QString::fromUtf8("line_groupID"));
-        line_groupID->setGeometry(QRect(1260, 340, 113, 20));
         label_11 = new QLabel(centralWidget);
         label_11->setObjectName(QString::fromUtf8("label_11"));
         label_11->setGeometry(QRect(860, 400, 111, 21));
@@ -224,10 +213,10 @@ public:
         bttn_testCalc->setGeometry(QRect(780, 400, 75, 23));
         line_path = new QLineEdit(centralWidget);
         line_path->setObjectName(QString::fromUtf8("line_path"));
-        line_path->setGeometry(QRect(1260, 360, 113, 20));
+        line_path->setGeometry(QRect(1260, 340, 113, 20));
         label_13 = new QLabel(centralWidget);
         label_13->setObjectName(QString::fromUtf8("label_13"));
-        label_13->setGeometry(QRect(1180, 360, 71, 21));
+        label_13->setGeometry(QRect(1180, 340, 71, 21));
         tableWidget_4 = new QTableWidget(centralWidget);
         tableWidget_4->setObjectName(QString::fromUtf8("tableWidget_4"));
         tableWidget_4->setGeometry(QRect(10, 770, 1361, 131));
@@ -320,7 +309,7 @@ public:
         line_filter->setGeometry(QRect(10, 11, 41, 20));
         bttn_IMG_save = new QPushButton(centralWidget);
         bttn_IMG_save->setObjectName(QString::fromUtf8("bttn_IMG_save"));
-        bttn_IMG_save->setGeometry(QRect(1290, 400, 41, 23));
+        bttn_IMG_save->setGeometry(QRect(1290, 380, 41, 23));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setGeometry(QRect(780, 430, 511, 241));
@@ -358,7 +347,7 @@ public:
         bttn_add_inhibit->setGeometry(QRect(1220, 670, 71, 23));
         label_28 = new QLabel(centralWidget);
         label_28->setObjectName(QString::fromUtf8("label_28"));
-        label_28->setGeometry(QRect(1220, 690, 71, 31));
+        label_28->setGeometry(QRect(1080, 690, 211, 31));
         bttn_GRP_delete = new QPushButton(centralWidget);
         bttn_GRP_delete->setObjectName(QString::fromUtf8("bttn_GRP_delete"));
         bttn_GRP_delete->setGeometry(QRect(1330, 180, 41, 23));
@@ -367,7 +356,7 @@ public:
         bttn_GRP_save->setGeometry(QRect(1290, 180, 41, 23));
         bttn_IMG_delete = new QPushButton(centralWidget);
         bttn_IMG_delete->setObjectName(QString::fromUtf8("bttn_IMG_delete"));
-        bttn_IMG_delete->setGeometry(QRect(1330, 400, 41, 23));
+        bttn_IMG_delete->setGeometry(QRect(1330, 380, 41, 23));
         bttn_subtable_delete = new QPushButton(centralWidget);
         bttn_subtable_delete->setObjectName(QString::fromUtf8("bttn_subtable_delete"));
         bttn_subtable_delete->setGeometry(QRect(1220, 430, 71, 23));
@@ -382,10 +371,10 @@ public:
         line_locality_2->setGeometry(QRect(1320, 140, 53, 20));
         line_scale = new QLineEdit(centralWidget);
         line_scale->setObjectName(QString::fromUtf8("line_scale"));
-        line_scale->setGeometry(QRect(1260, 380, 113, 20));
+        line_scale->setGeometry(QRect(1260, 360, 113, 20));
         label_47 = new QLabel(centralWidget);
         label_47->setObjectName(QString::fromUtf8("label_47"));
-        label_47->setGeometry(QRect(1180, 380, 71, 21));
+        label_47->setGeometry(QRect(1180, 360, 71, 21));
         bttn_editBroth = new QPushButton(centralWidget);
         bttn_editBroth->setObjectName(QString::fromUtf8("bttn_editBroth"));
         bttn_editBroth->setGeometry(QRect(690, 10, 75, 23));
@@ -436,6 +425,9 @@ public:
         label_33->setObjectName(QString::fromUtf8("label_33"));
         label_33->setGeometry(QRect(390, 700, 61, 16));
         label_33->setLayoutDirection(Qt::LeftToRight);
+        comboBox_broth = new QComboBox(centralWidget);
+        comboBox_broth->setObjectName(QString::fromUtf8("comboBox_broth"));
+        comboBox_broth->setGeometry(QRect(1260, 320, 113, 22));
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -495,7 +487,7 @@ public:
         QObject::connect(bttn_segmentation, SIGNAL(clicked()), StreptoGUIClass, SLOT(showSegmentation()));
         QObject::connect(bttn_calc, SIGNAL(clicked()), StreptoGUIClass, SLOT(testCalc()));
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(StreptoGUIClass);
@@ -520,7 +512,6 @@ public:
         label_7->setText(QApplication::translate("StreptoGUIClass", "Imagesize:", nullptr));
         label_8->setText(QApplication::translate("StreptoGUIClass", "Resolution_x/y:", nullptr));
         label_9->setText(QApplication::translate("StreptoGUIClass", "Broth-ID:", nullptr));
-        label_10->setText(QApplication::translate("StreptoGUIClass", "Group-ID:", nullptr));
         label_11->setText(QApplication::translate("StreptoGUIClass", "Calculated Parameter:", nullptr));
         label_12->setText(QApplication::translate("StreptoGUIClass", "...", nullptr));
         bttn_testCalc->setText(QApplication::translate("StreptoGUIClass", "Test-Calc", nullptr));

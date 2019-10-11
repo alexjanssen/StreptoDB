@@ -116,7 +116,31 @@ double CVController::meanBG(int channel)
 //the number of non black pixels of cv::Mat foreground_const
 //with the scale
 double CVController::foregroundSize(double scale) {
-	return cv::countNonZero(mask_const)*scale;
+	return cv::countNonZero(mask_const)*(scale*scale);
+}
+
+// = (4*pi*A) / P²	//P=Umfang; A=Flächeninhalt
+double CVController::circFact(double scale, double area) {
+	Mat image = foreground_const;
+	std::vector<std::vector<Point> > contours;
+	RNG rng(12345);
+	//contours.copySize(mask_const);
+
+	cv::findContours(mask_const, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+
+	/*Mat drawing = Mat::zeros(image.size(), CV_8UC3);
+	for (int i = 0; i < contours.size(); i++)
+	{
+		Scalar color = (255,255,255);
+		drawContours(drawing, contours, i, color, 2, 8);
+	}
+	char* img_windowC = "Contours";
+	namedWindow(img_windowC, WINDOW_KEEPRATIO);
+	imshow(img_windowC, drawing);*/
+
+	double Umfang = cv::arcLength(contours[0], true) * scale;
+
+	return (4*CV_PI*area)/(Umfang*Umfang);
 }
 
 

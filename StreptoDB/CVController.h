@@ -24,6 +24,8 @@ public:
 	double meanBG(int channel);
 	double foregroundSize(double scale);
 
+	double circFact(double scale, double area);
+
 	int extractScale(std::string path);
 	void foregroundExtraction(std::string path);
 	void segmentation(std::string path, double, double,double,bool);
