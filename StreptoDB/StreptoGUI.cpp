@@ -352,7 +352,7 @@ void StreptoGUI::testCalc() {
 
 	cp.class_id = 1; //scale()
 	int scaleLength = cvcon->extractScale(newPath);
-	double scale = ui.line_scale->text().toDouble() / scaleLength;
+	double scale = ui.line_scale->text().toDouble() / scaleLength;	//size of one Pixel in mm; not square millimeter!
 	cp.value = scale;
 	if (!dbcon->addCalcedParams(cp)) {}
 	else { ui.label_28->setText("Scale failed to save."); }
@@ -611,6 +611,208 @@ void StreptoGUI::act_settings()
 //Todo
 void StreptoGUI::compare(){
 	//vector<Compare> comp = dbcon->getCompare(ui.line);
+
+	//vector of imageIDs and brothIds, the images we want to compare to others
+	//this vector is ordered by broth_id ascending
+	vector<ImgBroth> imgBroth = dbcon->getImgBroth(ui.line_groupID_group->text().toInt());
+
+	//next we need the calculated Parameters for each imageID in the vector above
+	//DBController::getCalcedParams(int id)
+	vector<CalcedParams> cpBroth1 = dbcon->getCalcedParams(imgBroth.at(0).img_id);
+	vector<CalcedParams> cpBroth2 = dbcon->getCalcedParams(imgBroth.at(1).img_id);
+	vector<CalcedParams> cpBroth3 = dbcon->getCalcedParams(imgBroth.at(2).img_id);
+	vector<CalcedParams> cpBroth4 = dbcon->getCalcedParams(imgBroth.at(3).img_id);
+	//now we want to compare each parameter in each broth vector with all the other groups
+	//so we get 4 Lists with 9 Lists in them, each containing the image IDs and Differences to the given Parameter
+	//if you are confused now, dont ask me. I dont get paid for this.
+	vector<vector<Compare>> comBroth1;
+	vector<vector<Compare>> comBroth2;
+	vector<vector<Compare>> comBroth3;
+	vector<vector<Compare>> comBroth4;
+	for (int p = 2; p <= 9; p++) {
+		comBroth1.push_back(dbcon->getCompare(cpBroth1.at(p-1).value,1,p));
+	}
+	for (int p = 2; p <= 9; p++) {
+		comBroth2.push_back(dbcon->getCompare(cpBroth2.at(p - 1).value, 2, p));
+	}
+	for (int p = 2; p <= 9; p++) {
+		comBroth3.push_back(dbcon->getCompare(cpBroth3.at(p - 1).value, 3, p));
+	}
+	for (int p = 2; p <= 9; p++) {
+		comBroth4.push_back(dbcon->getCompare(cpBroth4.at(p - 1).value, 4, p));
+	}
+
+	//now we want the sum of the differences, but we want the differences to be treated equally,
+	//we are no racists here and each difference deserves that.
+	//So we iterate that till we get dizzy.
+	//We determine the highest difference, and say thats 100% difference, thats our scale
+	double maxDiff = 0;
+		for (int i = 0; i < comBroth1.size(); i++) {       // loops through each row of vector
+			for (int j = 0; j < comBroth1[i].size(); j++) { // loops through each element of each row 
+				if (comBroth1[i][j].diff > maxDiff) {
+					maxDiff = comBroth1[i][j].diff;
+				}
+			}
+			//here we have maxDiff, now comes math, not even once
+			for (int j = 0; j < comBroth1[i].size(); j++) { // loops through each element of each row 
+				comBroth1[i][j].diff = comBroth1[i][j].diff / maxDiff * 100;
+			}
+			maxDiff = 0;
+		}
+	//-----------------
+		for (int i = 0; i < comBroth2.size(); i++) {       // loops through each row of vector
+			for (int j = 0; j < comBroth2[i].size(); j++) { // loops through each element of each row 
+				if (comBroth2[i][j].diff > maxDiff) {
+					maxDiff = comBroth2[i][j].diff;
+				}
+			}
+			//here we have maxDiff, now comes math, not even once
+			for (int j = 0; j < comBroth2[i].size(); j++) { // loops through each element of each row 
+				comBroth2[i][j].diff = comBroth2[i][j].diff / maxDiff * 100;
+			}
+			maxDiff = 0;
+		}
+	//-------------------
+		for (int i = 0; i < comBroth3.size(); i++) {       // loops through each row of vector
+			for (int j = 0; j < comBroth3[i].size(); j++) { // loops through each element of each row 
+				if (comBroth3[i][j].diff > maxDiff) {
+					maxDiff = comBroth3[i][j].diff;
+				}
+			}
+			//here we have maxDiff, now comes math, not even once
+			for (int j = 0; j < comBroth3[i].size(); j++) { // loops through each element of each row 
+				comBroth3[i][j].diff = comBroth3[i][j].diff / maxDiff * 100;
+			}
+			maxDiff = 0;
+		}
+	//-------------------
+		for (int i = 0; i < comBroth4.size(); i++) {       // loops through each row of vector
+			for (int j = 0; j < comBroth4[i].size(); j++) { // loops through each element of each row 
+				if (comBroth4[i][j].diff > maxDiff) {
+					maxDiff = comBroth4[i][j].diff;
+				}
+			}
+			//here we have maxDiff, now comes math, not even once
+			for (int j = 0; j < comBroth4[i].size(); j++) { // loops through each element of each row 
+				comBroth4[i][j].diff = comBroth4[i][j].diff / maxDiff * 100;
+			}
+			maxDiff = 0;
+		}
+
+	//now back to the sum of the differences
+	//we add up each difference for each imageID, so we need to find each imageID in all Lists.
+	//We start with the first List, add up all differences and sort that. As result we get a single
+	//List with the added Differences
+	vector<Compare> sumOfDiff1;
+	vector<Compare> sumOfDiff2;
+	vector<Compare> sumOfDiff3;
+	vector<Compare> sumOfDiff4;
+	for (int i = 0; i < comBroth1[0].size(); i++) {			// loops through each element of the first vector
+		sumOfDiff1.push_back(Compare());
+		sumOfDiff1[i].image_id = comBroth1[0][i].image_id;	//take each id and find that id in each other vector
+		for (int u = 0; u < comBroth1.size(); u++) {       // loops through each row of vector
+			for (int j = 0; j < comBroth1[u].size(); j++) { // loops through each element of each row 
+				if (sumOfDiff1[i].image_id == comBroth1[u][j].image_id) {
+					sumOfDiff1[i].diff = sumOfDiff1[i].diff + comBroth1[u][j].diff;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < comBroth2[0].size(); i++) {			// loops through each element of the first vector
+		sumOfDiff2.push_back(Compare());
+		sumOfDiff2[i].image_id = comBroth2[0][i].image_id;	//take each id and find that id in each other vector
+		for (int u = 0; u < comBroth2.size(); u++) {       // loops through each row of vector
+			for (int j = 0; j < comBroth2[u].size(); j++) { // loops through each element of each row 
+				if (sumOfDiff2[i].image_id == comBroth2[u][j].image_id) {
+					sumOfDiff2[i].diff = sumOfDiff2[i].diff + comBroth2[u][j].diff;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < comBroth3[0].size(); i++) {			// loops through each element of the first vector
+		sumOfDiff3.push_back(Compare());
+		sumOfDiff3[i].image_id = comBroth3[0][i].image_id;	//take each id and find that id in each other vector
+		for (int u = 0; u < comBroth3.size(); u++) {       // loops through each row of vector
+			for (int j = 0; j < comBroth3[u].size(); j++) { // loops through each element of each row 
+				if (sumOfDiff3[i].image_id == comBroth3[u][j].image_id) {
+					sumOfDiff3[i].diff = sumOfDiff3[i].diff + comBroth3[u][j].diff;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < comBroth4[0].size(); i++) {			// loops through each element of the first vector
+		sumOfDiff4.push_back(Compare());
+		sumOfDiff4[i].image_id = comBroth4[0][i].image_id;	//take each id and find that id in each other vector
+		for (int u = 0; u < comBroth4.size(); u++) {       // loops through each row of vector
+			for (int j = 0; j < comBroth4[u].size(); j++) { // loops through each element of each row 
+				if (sumOfDiff4[i].image_id == comBroth4[u][j].image_id) {
+					sumOfDiff4[i].diff = sumOfDiff4[i].diff + comBroth4[u][j].diff;
+				}
+			}
+		}
+	}
+	//Now we have a vector with the sum of the differences. Since we have 8 Parameter, 
+	//we have to divide the result by 8. And Sort that list by the difference ascending.
+	//Oh and we need the GroupID, since we want to compare the Groups
+	for (int z = 0; z < sumOfDiff1.size(); z++) {
+		sumOfDiff1[z].diff = sumOfDiff1[z].diff / 8;
+		sumOfDiff1[z].grpID = dbcon->getGroupID(sumOfDiff1[z].image_id);
+	}
+	for (int z = 0; z < sumOfDiff2.size(); z++) {
+		sumOfDiff2[z].diff = sumOfDiff2[z].diff / 8;
+		sumOfDiff2[z].grpID = dbcon->getGroupID(sumOfDiff2[z].image_id);
+	}
+	for (int z = 0; z < sumOfDiff3.size(); z++) {
+		sumOfDiff3[z].diff = sumOfDiff3[z].diff / 8;
+		sumOfDiff3[z].grpID = dbcon->getGroupID(sumOfDiff3[z].image_id);
+	}
+	for (int z = 0; z < sumOfDiff4.size(); z++) {
+		sumOfDiff4[z].diff = sumOfDiff4[z].diff / 8;
+		sumOfDiff4[z].grpID = dbcon->getGroupID(sumOfDiff4[z].image_id);
+	}
+
+	//To compare the 4 different Broths, we calculate the median difference for each Group
+	//and get the final List with the final sorting
+	vector<Compare> finalList;
+	for (int i = 0; i < sumOfDiff1.size(); i++) {			// loops through each element of the first vector
+		finalList.push_back(Compare());
+		finalList[i].grpID = sumOfDiff1[i].grpID;	//take each id and find that id in each other vector
+		finalList[i].diff = sumOfDiff1[i].diff;
+
+		for (int u = 0; u < sumOfDiff2.size(); u++) {
+			if (finalList[i].grpID == sumOfDiff2[u].grpID) {
+				finalList[i].diff = finalList[i].diff + sumOfDiff2[u].diff;
+			}
+		}
+		for (int u = 0; u < sumOfDiff3.size(); u++) {
+			if (finalList[i].grpID == sumOfDiff3[u].grpID) {
+				finalList[i].diff = finalList[i].diff + sumOfDiff3[u].diff;
+			}
+		}
+		for (int u = 0; u < sumOfDiff4.size(); u++) {
+			if (finalList[i].grpID == sumOfDiff4[u].grpID) {
+				finalList[i].diff = finalList[i].diff + sumOfDiff4[u].diff;
+			}
+		}
+		finalList[i].diff = finalList[i].diff / 4;
+	}
+
+	//Now we want to display our Results
+	//lets take the vector resultGlob, and recycle that, yeah green programming lol.
+	vector<Image> resultGlob_sorted;
+	for(int h = 0; h < finalList.size();h++){
+		for (int g = 0; g < resultGlob.size(); g++) {
+			if (resultGlob[g].group_id == finalList[h].grpID) {
+				resultGlob_sorted.push_back(resultGlob[g]);
+			}
+		}
+	}
+	StreptoGUI::fillTable(resultGlob_sorted);
+
+	//And fill the bottom table with the calculated differences from vectors sumOfDiff1-4
+
+
+
 
 
 }

@@ -9,6 +9,7 @@ public:
 	// Data Members 
 	int image_id;
 	double diff;
+	int grpID;
 };
 
 

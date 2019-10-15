@@ -10,6 +10,7 @@
 #include <StrainInhibition.cpp>
 #include <Broth.cpp>
 #include <TestStrain.cpp>
+#include <ImgBroth.cpp>
 
 using namespace std;
 
@@ -26,7 +27,9 @@ public:
 	int getMaxInhibitionID();
 	int getMaxImageID();
 	int getMaxGroupID();
+	int getGroupID(int imageID);
 	vector<CalcedParams> getCalcedParams(int);
+	vector<ImgBroth> getImgBroth(int id);
 	vector<Compare> getCompare(double, int, int);
 	vector<TestStrain> getTestStrains();
 	vector<StrainInhibition> getInhibition(int);
@@ -58,3 +61,4 @@ static vector<CalcedParams> *result_calcedParams = new vector<CalcedParams>;
 static vector<Compare>* result_compare = new vector<Compare>;
 static vector<StrainInhibition>* result_inhibition = new vector<StrainInhibition>;
 static vector<TestStrain>* result_testStrains = new vector<TestStrain>;
+static vector<ImgBroth>* imgBroth = new vector<ImgBroth>;

@@ -141,6 +141,25 @@ static int callback_maxID(void* param, int numCols, char** col, char** colName)
 }
 
 
+//still same apeshit
+static int callback_getImgBroth(void* param, int numCols, char** col, char** colName)
+{
+	int* col_width = (int*)param;
+	ImgBroth ib = ImgBroth();
+	if (col[0] == NULL) {
+		ib.img_id = 0;
+		ib.broth_id = 0;
+	}
+	else { 
+		ib.img_id = atoi(col[0]);
+		ib.broth_id = atoi(col[1]);
+	}
+	imgBroth->push_back(ib);
+
+	return 0;
+}
+
+
 //same for Compare
 static int callback_compare(void* param, int numCols, char** col, char** colName)
 {
@@ -503,6 +522,26 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
+
+ //return GroupID of given ImageID
+ int DBController::getGroupID(int imageID) {
+	 char* zErrMsg = 0;
+	 string query = "SELECT GROUP_ID FROM Images WHERE IMAGE_ID = "+ std::to_string(imageID) +";";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 //result->empty();
+		 sqlite3_exec(db, query.c_str(), callback_maxID, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getGroupID()):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return maxID;
+ }
+
+
+
  //returns calculated Parameters for specific IMAGE_ID
  vector<CalcedParams> DBController::getCalcedParams(int id) {
 	 char* zErrMsg = 0;
@@ -518,6 +557,24 @@ vector<Image> DBController::getImages(string filt) {
 	 sqlite3_close(db);
 
 	 return *result_calcedParams;
+ }
+
+
+ //returns vector with imageID and brothID for a given groupID
+ vector<ImgBroth> DBController::getImgBroth(int id) {
+	 char* zErrMsg = 0;
+	 string query = "SELECT IMAGE_ID, BROTH_ID FROM Images where GROUP_ID = " + std::to_string(id) + " ORDER BY BROTH_ID ASC;";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 imgBroth->clear();
+		 sqlite3_exec(db, query.c_str(), callback_getImgBroth, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getImgBroth(int)):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return *imgBroth;
  }
 
 

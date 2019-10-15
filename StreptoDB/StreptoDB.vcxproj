@@ -234,6 +234,7 @@
     </ClCompile>
     <ClCompile Include="Group.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImgBroth.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MultiUploadDialog.cpp" />
     <ClCompile Include="SettingsDialog.cpp" />

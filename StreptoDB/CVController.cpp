@@ -4,17 +4,15 @@
 using namespace cv;
 //using namespace std;
 
-CVController::CVController()
-{
+CVController::CVController(){
+	//nothing, use the functions.
 	//Mat imageCV;
 	//imageCV = imread(fileName.toStdString, IMREAD_COLOR);
-
-
 }
 
 
-CVController::~CVController()
-{
+CVController::~CVController(){
+	
 }
 
 
@@ -22,8 +20,7 @@ CVController::~CVController()
 
 
 
-QImage CVController::Mat2QImage(cv::Mat const& src)
-{
+QImage CVController::Mat2QImage(cv::Mat const& src){
 	cv::Mat temp; // make the same cv::Mat
 	cvtColor(src, temp, cv::COLOR_RGB2BGR); // cvtColor Makes a copt, that what i need
 	QImage dest((const uchar*)temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
@@ -32,8 +29,7 @@ QImage CVController::Mat2QImage(cv::Mat const& src)
 	return dest;
 }
 
-cv::Mat CVController::QImage2Mat(QImage const& src)
-{
+cv::Mat CVController::QImage2Mat(QImage const& src){
 	cv::Mat tmp(src.height(), src.width(), CV_8UC3, (uchar*)src.bits(), src.bytesPerLine()); //CV_32FC4
 	cv::Mat result;//(cv::Size(2752, 2208), CV_8UC3); // deep copy just in case (my lack of knowledge with open cv)
 	cvtColor(tmp, result, cv::COLOR_RGB2BGR); //RGB2BGR
@@ -42,7 +38,9 @@ cv::Mat CVController::QImage2Mat(QImage const& src)
 }
 
 
+
 //function reads image from file and returns a 8bit deep, unsigned int type with 3 channels RGB Mat
+//But please, just use 2752x2208 pixel images
 cv::Mat CVController::readImage(std::string path) {
 	cv::Mat matIN = cv::imread(path);
 	if (matIN.dims != NULL) {
@@ -69,9 +67,9 @@ cv::Mat CVController::readImage(std::string path) {
 }
 
 
+
 //returns the mean value of the given color channel
-double CVController::mean1(std::string path, int channel)
-{
+double CVController::mean1(std::string path, int channel){
 	cv::Mat mat = CVController::readImage(path);
 	if (mat.dims != NULL) {
 		cv::Scalar tempVal = cv::mean(mat);
@@ -84,9 +82,9 @@ double CVController::mean1(std::string path, int channel)
 }
 
 
+
 //returns the mean foreground value of the given color channel
-double CVController::meanFG(int channel)
-{
+double CVController::meanFG(int channel){
 	if (foreground_const.dims != NULL) {
 		cv::Scalar tempVal = cv::mean(foreground_const, mask_const);
 
@@ -98,9 +96,9 @@ double CVController::meanFG(int channel)
 }
 
 
+
 //returns the mean background value of the given color channel
-double CVController::meanBG(int channel)
-{
+double CVController::meanBG(int channel){
 	if (foreground_const.dims != NULL) {
 		cv::Scalar tempVal = cv::mean(background_const, bgmask_const);
 
@@ -112,13 +110,17 @@ double CVController::meanBG(int channel)
 }
 
 
+
 //Determines the Size of the Foreground by multiplying 
 //the number of non black pixels of cv::Mat foreground_const
 //with the scale
 double CVController::foregroundSize(double scale) {
-	return cv::countNonZero(mask_const)*(scale*scale);
+	return cv::countNonZero(mask_const)*(scale*scale); //make it square-millimeter!
 }
 
+
+
+//Calculates the Circularity-Factor (1 = perfect circle)
 // = (4*pi*A) / P²	//P=Umfang; A=Flächeninhalt
 double CVController::circFact(double scale, double area) {
 	Mat image = foreground_const;
@@ -146,8 +148,7 @@ double CVController::circFact(double scale, double area) {
 
 
 //returns the number of pixels(length of scale in pixel)
-int CVController::extractScale(std::string path)
-{
+int CVController::extractScale(std::string path){
 	/// Source image to display
 	Mat img_display;
 	cv::Mat img = CVController::readImage(path);
@@ -177,8 +178,7 @@ int CVController::extractScale(std::string path)
 	{
 		matchLoc = minLoc;
 	}
-	else
-	{
+	else{
 		matchLoc = maxLoc;
 	}
 
@@ -186,7 +186,6 @@ int CVController::extractScale(std::string path)
 	int length = 0;
 	int x = matchLoc.x;
 	while (img.at<Vec3b>(Point(x, matchLoc.y)) == Vec3b(255, 255, 255)) {
-		//if (img.at<Vec3b>(Point(matchLoc.x, matchLoc.y))[0] == 255) {
 		x--;
 		length++;
 	}
@@ -323,8 +322,7 @@ void CVController::histo(std::string path) {
 	/// Load image
 	src = CVController::readImage(path);
 
-	if (!src.data)
-	{
+	if (!src.data){
 		return;
 	}
 
@@ -360,8 +358,7 @@ void CVController::histo(std::string path) {
 	normalize(r_hist, r_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
 
 	/// Draw for each channel
-	for (int i = 1; i < histSize; i++)
-	{
+	for (int i = 1; i < histSize; i++){
 		line(histImage, Point(bin_w * (i - 1), hist_h - cvRound(b_hist.at<float>(i - 1))),
 			Point(bin_w * (i), hist_h - cvRound(b_hist.at<float>(i))),
 			Scalar(255, 0, 0), 2, 8, 0);
@@ -376,8 +373,6 @@ void CVController::histo(std::string path) {
 	/// Display
 	namedWindow("calcHist Demo", WINDOW_AUTOSIZE);
 	imshow("calcHist Demo", histImage);
-
-
 }
 
 
@@ -390,14 +385,11 @@ void CVController::foregroundExtraction(std::string path) {
 	//cv::Mat img(cv::Size(2752, 2208), CV_8UC1);
 	//cv::resize(img_in, img, cv::Size(2752, 2208), CV_8UC1);
 
-
 	cv::Mat bgd, fgd;
 	cv::Mat1b mask(img.rows, img.cols);
 
-
 	mask.setTo(cv::GC_BGD);
 	circle(mask, Point(img.cols / 2, img.rows / 2), img.cols / 5, GC_PR_FGD, FILLED);
-
 
 	grabCut(img, mask, Rect(), bgd, fgd, 1, GC_INIT_WITH_MASK);
 
@@ -410,7 +402,6 @@ void CVController::foregroundExtraction(std::string path) {
 	img.copyTo(tmp2, ~mask_fgpf);
 	// show it
 	//cv::imshow("foreground", tmp);
-
 
 	//char* bgd_window = "Background";
 	//char* fgd_window = "Foreground";
