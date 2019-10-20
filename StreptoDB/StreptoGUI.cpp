@@ -208,8 +208,8 @@ void StreptoGUI::fillTable(vector<Image> result){
 	ui.tableWidget->setRowCount(0);
 	ui.tableWidget->setColumnCount(4);
 	ui.tableWidget->verticalHeader()->setVisible(true);
-	ui.tableWidget->verticalHeader()->setFixedWidth(40);
-	ui.tableWidget->verticalHeader()->resizeSection(0, 40);
+	ui.tableWidget->verticalHeader()->setFixedWidth(50);
+	ui.tableWidget->verticalHeader()->resizeSection(0, 50);
 	ui.tableWidget->setColumnWidth(0, 175); //154
 	ui.tableWidget->setColumnWidth(1, 175);
 	ui.tableWidget->setColumnWidth(2, 175);
@@ -796,6 +796,23 @@ void StreptoGUI::compare(){
 		}
 		finalList[i].diff = finalList[i].diff / 4;
 	}
+	//almost forgotten: sort the finalList ascending by diff
+	vector<Compare> finalList_unsort = finalList;
+	finalList.clear();
+	Compare smallest;
+	while( finalList_unsort.size() > 0) {
+		smallest = finalList_unsort[0];
+		int count = 0;
+		for (int i1 = 0; i1 < finalList_unsort.size(); i1++) {
+			if (finalList_unsort[i1].diff <= smallest.diff) {
+				smallest = finalList_unsort[i1];
+				count = i1;
+			}
+		}
+		finalList.push_back(smallest);
+		finalList_unsort.erase(finalList_unsort.begin() + count);
+	}
+
 
 	//Now we want to display our Results
 	//lets take the vector resultGlob, and recycle that, yeah green programming lol.
@@ -809,12 +826,59 @@ void StreptoGUI::compare(){
 	}
 	StreptoGUI::fillTable(resultGlob_sorted);
 
-	//And fill the bottom table with the calculated differences from vectors sumOfDiff1-4
 
+	
+	//And fill the bottom table with the calculated differences
+	ui.tableWidget_4->setRowCount(4);
+	ui.tableWidget_4->setColumnCount(finalList.size());
+	//ui.tableWidget_3->verticalHeader()->setVisible(false);
+	//ui.tableWidget_3->horizontalHeader()->setVisible(false);
+	ui.tableWidget_4->setRowHeight(0, 25);
+	ui.tableWidget_4->setRowHeight(1, 25);
+	ui.tableWidget_4->setRowHeight(2, 25);
+	ui.tableWidget_4->setRowHeight(3, 25);
+	//ui.tableWidget_3->setVerticalHeaderItem(0, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup(ui.line_groupID->text().toInt()).intern_id)));
+	ui.tableWidget_4->setVerticalHeaderItem(0, new QTableWidgetItem(ui.tableWidget->horizontalHeaderItem(0)->text()));
+	ui.tableWidget_4->setVerticalHeaderItem(1, new QTableWidgetItem(ui.tableWidget->horizontalHeaderItem(1)->text()));
+	ui.tableWidget_4->setVerticalHeaderItem(2, new QTableWidgetItem(ui.tableWidget->horizontalHeaderItem(2)->text()));
+	ui.tableWidget_4->setVerticalHeaderItem(3, new QTableWidgetItem(ui.tableWidget->horizontalHeaderItem(3)->text()));
+	//QTableWidgetItem* twi0 = new QTableWidgetItem();
+	//QTableWidgetItem* twi1 = new QTableWidgetItem();
+	//QTableWidgetItem* twi2 = new QTableWidgetItem();
+	//QTableWidgetItem* twi3 = new QTableWidgetItem();
 
-
-
-
+	for (int i = 0; i < finalList.size(); i++) {
+		//twi0->setText("0.00 %");
+		//twi1->setText("0.00 %");
+		//twi2->setText("0.00 %");
+		//twi3->setText("0.00 %");
+		ui.tableWidget_4->setColumnWidth(i, 100);
+		ui.tableWidget_4->setHorizontalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup("=" + std::to_string(finalList[i].grpID))[0].intern_id)));
+		for (int s = 0; s < sumOfDiff1.size(); s++) {
+			if (finalList[i].grpID == sumOfDiff1[s].grpID) {
+				//twi0->setText(QString::number(sumOfDiff1[s].diff) + " %");
+				ui.tableWidget_4->setItem(0, i, new QTableWidgetItem(QString::number(sumOfDiff1[s].diff,'f',2) + " %"));
+			}
+			if (finalList[i].grpID == sumOfDiff2[s].grpID) {
+				//twi1->setText(QString::number(sumOfDiff2[s].diff) + " %");
+				ui.tableWidget_4->setItem(1, i, new QTableWidgetItem(QString::number(sumOfDiff2[s].diff, 'f', 2) + " %"));
+			}
+			if (finalList[i].grpID == sumOfDiff3[s].grpID) {
+				//twi2->setText(QString::number(sumOfDiff3[s].diff) + " %");
+				ui.tableWidget_4->setItem(2, i, new QTableWidgetItem(QString::number(sumOfDiff3[s].diff, 'f', 2) + " %"));
+			}
+			if (finalList[i].grpID == sumOfDiff4[s].grpID) {
+				//twi3->setText(QString::number(sumOfDiff4[s].diff) + " %");
+				ui.tableWidget_4->setItem(3, i, new QTableWidgetItem(QString::number(sumOfDiff4[s].diff, 'f', 2) + " %"));
+			}
+		}
+				//ui.tableWidget_4->setItem(0, i, twi0);
+				//ui.tableWidget_4->setItem(1, i, twi1);
+				//ui.tableWidget_4->setItem(2, i, twi2);
+				//ui.tableWidget_4->setItem(3, i, twi3);
+	}
+	
+	
 }
 
 

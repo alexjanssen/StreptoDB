@@ -154,17 +154,20 @@ int CVController::extractScale(std::string path){
 	cv::Mat img = CVController::readImage(path);
 	img.copyTo(img_display);
 
+	Mat cropedImage = img(Rect(img.cols-img.cols/5, img.rows-img.rows/10, img.cols / 5, img.rows / 10));
+
 	/// Create the result matrix
-	Mat templ = Mat(7, 100, CV_8UC3, Scalar(255, 255, 255)); //CV_8UC3
-	
-	int result_cols = img.cols -templ.cols + 1;
-	int result_rows = img.rows -templ.rows + 1;
+	Mat templ = Mat(7, 150, CV_8UC3, Scalar(255, 255, 255)); //CV_8UC3
+
+
+	int result_cols = cropedImage.cols -templ.cols + 1;
+	int result_rows = cropedImage.rows -templ.rows + 1;
 	Mat result;
 	result.create(result_rows, result_cols, CV_8UC3); //CV_32FC1
 
 	/// Do the Matching and Normalize
 	int match_method = TM_SQDIFF;
-	matchTemplate(img, templ, result, match_method);
+	matchTemplate(cropedImage, templ, result, match_method);
 	normalize(result, result, 0, 1, NORM_MINMAX, -1, Mat());
 
 	/// Localizing the best match with minMaxLoc
@@ -185,29 +188,29 @@ int CVController::extractScale(std::string path){
 	//get the length of the scale
 	int length = 0;
 	int x = matchLoc.x;
-	while (img.at<Vec3b>(Point(x, matchLoc.y)) == Vec3b(255, 255, 255)) {
+	while (cropedImage.at<Vec3b>(Point(x, matchLoc.y)) == Vec3b(255, 255, 255)) {
 		x--;
 		length++;
 	}
 	x = matchLoc.x + 1;
-	while (img.at<Vec3b>(Point(x, matchLoc.y)) == Vec3b(255, 255, 255)) {
+	while (cropedImage.at<Vec3b>(Point(x, matchLoc.y)) == Vec3b(255, 255, 255)) {
 		x++;
 		length++;
 	}
 
-	//// Show me what you got
-	//rectangle(img_display, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
-	//rectangle(result, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
+	// Show me what you got
+	rectangle(img_display, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
+	rectangle(result, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
 
-	//char* image_window = "Source Image";
-	//char* result_window = "Result window";
-	////char* test_window = "testing";
-	//namedWindow(image_window, WINDOW_KEEPRATIO);
-	//namedWindow(result_window, WINDOW_KEEPRATIO);
-	////namedWindow(test_window, WINDOW_KEEPRATIO);
-	//imshow(image_window, img_display);
-	//imshow(result_window, result);
-	////imshow(test_window, templ);
+	char* image_window_scale = "Source Image";
+	char* result_window_scale = "Result window";
+	//char* test_window = "testing";
+	namedWindow(image_window_scale, WINDOW_KEEPRATIO);
+	namedWindow(result_window_scale, WINDOW_KEEPRATIO);
+	//namedWindow(test_window, WINDOW_KEEPRATIO);
+	imshow(image_window_scale, cropedImage);
+	imshow(result_window_scale, result);
+	//imshow(test_window, templ);
 
 	return length;
 }
