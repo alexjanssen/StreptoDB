@@ -64,7 +64,9 @@ void StreptoGUI::loadDB() {
 	//####################################################
 	
 	//DBController *dbcon = new DBController();
-	
+	QString temp = ui.line_filter->text();
+	StreptoGUI::loadSettings();
+	ui.line_filter->setText(temp);
 	vector<Image> result;
 	result = dbcon->getImages(ui.line_filter->text().toStdString());
 	resultGlob = dbcon->getImages("%");
@@ -477,7 +479,8 @@ void StreptoGUI::paramSelected(int x, int y)
 					//pixmap.loadFromData(result[0].image_preview);
 					pixmap = pixmap.fromImage(resultGlob[u].image_preview);
 					twi->setData(Qt::DecorationRole, pixmap.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-					twi->setText(QString::number(resultGlob[u].image_id)+"\n"+QString::number(comp[i].diff));
+					twi->setText(QString::number(resultGlob[u].image_id)+"\n"+ QString::number(comp[i].diff, 'f', 2));
+					
 					ui.tableWidget_4->setItem(0, i, twi);
 
 					//ui.tableWidget_3->setHorizontalHeaderItem(i, new QTableWidgetItem("ISP2"));
@@ -919,23 +922,31 @@ void StreptoGUI::dropEvent(QDropEvent* event) {
 		mud->show();
 	}
 
-	//ui.label_3->setText(QString::number(mimeData->urls().size()));
 	for (int i = 0; i < mimeData->urls().size();i++) {
 		//ui.label_3->setText(ui.label_3->text() + mimeData->urls().at(i).toString() + " ; "+ QString::number(mimeData->urls().size()) +"\n");
 	}
-	// check for our needed mime type, here a file or a list of files
-	//if (mimeData->hasUrls())
-	//{
-		//QStringList pathList;
-		//QList<QUrl> urlList = mimeData->urls();
+}
 
-		// extract the local paths of the files
-		//for (int i = 0; i < urlList.size() && i < 32; +i)
-		//{
-		//	pathList.append(urlList.at(i).toLocalFile());
-		//}
 
-		// call a function to open the files
-		//openFiles(pathList);
-	//}
+void StreptoGUI::loadSql() {
+	QString fileName = QFileDialog::getOpenFileName(this, "Open Image File", QDir::currentPath());
+	string path = fileName.toStdString();
+	if (!fileName.isEmpty())
+	{
+		try {
+			dbcon->printResult2File(path);
+			ui.label_34->setText("Result: " + QString::fromStdString(path.substr(0, path.length() - 3) + "txt"));
+		}
+		catch (exception) {
+			ui.label_34->setText("Error running sql file!");
+		}
+		
+	}
+	else {
+		ui.label_34->setText("invalid Sql-File!");
+	}
+
+
+	//ui.label->setText(fileName);
+	//delete(&fileName);
 }

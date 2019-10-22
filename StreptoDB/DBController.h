@@ -11,6 +11,7 @@
 #include <Broth.cpp>
 #include <TestStrain.cpp>
 #include <ImgBroth.cpp>
+#include <fstream>
 
 using namespace std;
 
@@ -46,6 +47,8 @@ public:
 
 	bool addStrainInhibition(int si_id, int img_id, int strain_id, int broth_id, bool inhibit);
 
+	void printResult2File(string path);
+
 private:
 	bool openDB();
 	//void closeDB();
@@ -62,3 +65,4 @@ static vector<Compare>* result_compare = new vector<Compare>;
 static vector<StrainInhibition>* result_inhibition = new vector<StrainInhibition>;
 static vector<TestStrain>* result_testStrains = new vector<TestStrain>;
 static vector<ImgBroth>* imgBroth = new vector<ImgBroth>;
+static std::ofstream outfile;

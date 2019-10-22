@@ -47,6 +47,7 @@ public slots:
 	void subtableDelete();
 	void newGroup();
 	void act_settings();
+	void loadSql();
 
 protected:   
 	void dragMoveEvent(QDragMoveEvent* event);

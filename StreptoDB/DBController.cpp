@@ -219,7 +219,21 @@ static int callback_testStrains(void* param, int numCols, char** col, char** col
 }
 
 
-
+static int callback_print2file(void* param, int numCols, char** col, char** colName)
+{
+	// int numCols: holds the number of results
+	// (array) colName: holds each column returned
+	// (array) col: holds each value
+	int* col_width = (int*)param; // this isn't necessary, but it's convenient
+	
+	for (int i = 0; i < numCols; i++) {
+		outfile << (string)col[i] + "\t";
+	}
+	outfile << "\n";
+	
+	
+	return 0;
+}
 
 
 
@@ -1016,6 +1030,33 @@ vector<Image> DBController::getImages(string filt) {
 	 sqlite3_close(db);
 	 return true;
  }
+
+
+
+ void DBController::printResult2File(string path) {
+	 //returns vector<Compare>
+	 //double val		-> Value to compare
+	 //int broth_id		-> broth ID
+	 //int classP_ID	-> Classification Paramater ID
+	 char* zErrMsg = 0;
+	 std::ifstream t(path);
+	 std::stringstream buffer;
+	 buffer << t.rdbuf();
+	 string query = buffer.str();
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 DBOUT(query.c_str());
+		 outfile.open(path.substr(0, path.length()-3)+"txt");
+		 sqlite3_exec(db, query.c_str(), callback_print2file, NULL, &zErrMsg);
+		 outfile.close();
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::printResult2File(string)):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+ }
+
 
 
  //Stuff I might need later idk

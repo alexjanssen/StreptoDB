@@ -40,6 +40,7 @@ public:
     QAction *actionSave;
     QAction *action_Close;
     QAction *action_bout_StreptoDB;
+    QAction *actionDubious_Option;
     QWidget *centralWidget;
     QPushButton *bttn_uploadPic;
     QLineEdit *line_ID;
@@ -60,7 +61,6 @@ public:
     QLabel *label_9;
     QLabel *label_11;
     QLabel *label_12;
-    QPushButton *bttn_testCalc;
     QLineEdit *line_path;
     QLabel *label_13;
     QTableWidget *tableWidget_4;
@@ -112,7 +112,7 @@ public:
     QLabel *label_47;
     QPushButton *bttn_editBroth;
     QPushButton *bttn_editTeststrains;
-    QPushButton *bttn_orderbyDist;
+    QPushButton *bttn_loadsql;
     QPushButton *bttn_segmentation;
     QLabel *label_29;
     QLabel *label_30;
@@ -124,6 +124,7 @@ public:
     QLabel *label_32;
     QLabel *label_33;
     QComboBox *comboBox_broth;
+    QLabel *label_34;
     QMenuBar *menuBar;
     QMenu *menuDatei;
     QMenu *menuInfo;
@@ -145,6 +146,8 @@ public:
         action_Close->setObjectName(QString::fromUtf8("action_Close"));
         action_bout_StreptoDB = new QAction(StreptoGUIClass);
         action_bout_StreptoDB->setObjectName(QString::fromUtf8("action_bout_StreptoDB"));
+        actionDubious_Option = new QAction(StreptoGUIClass);
+        actionDubious_Option->setObjectName(QString::fromUtf8("actionDubious_Option"));
         centralWidget = new QWidget(StreptoGUIClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         bttn_uploadPic = new QPushButton(centralWidget);
@@ -204,13 +207,10 @@ public:
         label_9->setGeometry(QRect(1180, 320, 71, 21));
         label_11 = new QLabel(centralWidget);
         label_11->setObjectName(QString::fromUtf8("label_11"));
-        label_11->setGeometry(QRect(860, 400, 111, 21));
+        label_11->setGeometry(QRect(780, 400, 111, 21));
         label_12 = new QLabel(centralWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setGeometry(QRect(980, 400, 201, 21));
-        bttn_testCalc = new QPushButton(centralWidget);
-        bttn_testCalc->setObjectName(QString::fromUtf8("bttn_testCalc"));
-        bttn_testCalc->setGeometry(QRect(780, 400, 75, 23));
+        label_12->setGeometry(QRect(900, 400, 261, 21));
         line_path = new QLineEdit(centralWidget);
         line_path->setObjectName(QString::fromUtf8("line_path"));
         line_path->setGeometry(QRect(1260, 340, 113, 20));
@@ -381,9 +381,9 @@ public:
         bttn_editTeststrains = new QPushButton(centralWidget);
         bttn_editTeststrains->setObjectName(QString::fromUtf8("bttn_editTeststrains"));
         bttn_editTeststrains->setGeometry(QRect(590, 10, 91, 23));
-        bttn_orderbyDist = new QPushButton(centralWidget);
-        bttn_orderbyDist->setObjectName(QString::fromUtf8("bttn_orderbyDist"));
-        bttn_orderbyDist->setGeometry(QRect(640, 730, 191, 23));
+        bttn_loadsql = new QPushButton(centralWidget);
+        bttn_loadsql->setObjectName(QString::fromUtf8("bttn_loadsql"));
+        bttn_loadsql->setGeometry(QRect(1240, 720, 131, 23));
         bttn_segmentation = new QPushButton(centralWidget);
         bttn_segmentation->setObjectName(QString::fromUtf8("bttn_segmentation"));
         bttn_segmentation->setGeometry(QRect(500, 710, 111, 23));
@@ -428,6 +428,11 @@ public:
         comboBox_broth = new QComboBox(centralWidget);
         comboBox_broth->setObjectName(QString::fromUtf8("comboBox_broth"));
         comboBox_broth->setGeometry(QRect(1260, 320, 113, 22));
+        label_34 = new QLabel(centralWidget);
+        label_34->setObjectName(QString::fromUtf8("label_34"));
+        label_34->setGeometry(QRect(900, 750, 471, 21));
+        label_34->setLayoutDirection(Qt::LeftToRight);
+        label_34->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -462,9 +467,8 @@ public:
 
         menuBar->addAction(menuDatei->menuAction());
         menuBar->addAction(menuInfo->menuAction());
-        menuDatei->addAction(actionAnalys);
+        menuDatei->addAction(actionDubious_Option);
         menuDatei->addAction(action_settings);
-        menuDatei->addAction(actionSave);
         menuDatei->addAction(action_Close);
         menuInfo->addAction(action_bout_StreptoDB);
 
@@ -472,7 +476,6 @@ public:
         QObject::connect(bttn_uploadPic, SIGNAL(clicked()), StreptoGUIClass, SLOT(uploadPic()));
         QObject::connect(bttn_loadDB, SIGNAL(clicked()), StreptoGUIClass, SLOT(loadDB()));
         QObject::connect(tableWidget, SIGNAL(cellClicked(int,int)), StreptoGUIClass, SLOT(itemSelected(int,int)));
-        QObject::connect(bttn_testCalc, SIGNAL(clicked()), StreptoGUIClass, SLOT(testCalc()));
         QObject::connect(bttn_compare, SIGNAL(clicked()), StreptoGUIClass, SLOT(compare()));
         QObject::connect(tableWidget_2, SIGNAL(cellClicked(int,int)), StreptoGUIClass, SLOT(paramSelected(int,int)));
         QObject::connect(bttn_add_inhibit, SIGNAL(clicked()), StreptoGUIClass, SLOT(addInhibition()));
@@ -486,6 +489,9 @@ public:
         QObject::connect(bttn_editTeststrains, SIGNAL(clicked()), StreptoGUIClass, SLOT(editTestStrains()));
         QObject::connect(bttn_segmentation, SIGNAL(clicked()), StreptoGUIClass, SLOT(showSegmentation()));
         QObject::connect(bttn_calc, SIGNAL(clicked()), StreptoGUIClass, SLOT(testCalc()));
+        QObject::connect(bttn_loadsql, SIGNAL(clicked()), StreptoGUIClass, SLOT(loadSql()));
+        QObject::connect(action_Close, SIGNAL(triggered()), StreptoGUIClass, SLOT(close()));
+        QObject::connect(actionDubious_Option, SIGNAL(triggered()), StreptoGUIClass, SLOT(showMinimized()));
 
         tabWidget->setCurrentIndex(0);
 
@@ -501,6 +507,7 @@ public:
         actionSave->setText(QApplication::translate("StreptoGUIClass", "Save All", nullptr));
         action_Close->setText(QApplication::translate("StreptoGUIClass", "Close", nullptr));
         action_bout_StreptoDB->setText(QApplication::translate("StreptoGUIClass", "About StreptoDB...", nullptr));
+        actionDubious_Option->setText(QApplication::translate("StreptoGUIClass", "Dubious Option", nullptr));
         bttn_uploadPic->setText(QApplication::translate("StreptoGUIClass", "Upload", nullptr));
         label->setText(QApplication::translate("StreptoGUIClass", "StreptoDB", nullptr));
         label_2->setText(QApplication::translate("StreptoGUIClass", "Imageview:", nullptr));
@@ -514,7 +521,6 @@ public:
         label_9->setText(QApplication::translate("StreptoGUIClass", "Broth-ID:", nullptr));
         label_11->setText(QApplication::translate("StreptoGUIClass", "Calculated Parameter:", nullptr));
         label_12->setText(QApplication::translate("StreptoGUIClass", "...", nullptr));
-        bttn_testCalc->setText(QApplication::translate("StreptoGUIClass", "Test-Calc", nullptr));
         label_13->setText(QApplication::translate("StreptoGUIClass", "Path:", nullptr));
         label_14->setText(QApplication::translate("StreptoGUIClass", "- Select an Image", nullptr));
         label_15->setText(QApplication::translate("StreptoGUIClass", "- Adjust attributes for comparison:", nullptr));
@@ -550,7 +556,7 @@ public:
         label_47->setText(QApplication::translate("StreptoGUIClass", "Scale:", nullptr));
         bttn_editBroth->setText(QApplication::translate("StreptoGUIClass", "edit Broth", nullptr));
         bttn_editTeststrains->setText(QApplication::translate("StreptoGUIClass", "edit Test-Strains", nullptr));
-        bttn_orderbyDist->setText(QApplication::translate("StreptoGUIClass", "order by distance to selected-Group", nullptr));
+        bttn_loadsql->setText(QApplication::translate("StreptoGUIClass", "run SQL-File", nullptr));
         bttn_segmentation->setText(QApplication::translate("StreptoGUIClass", "Show Segmentation", nullptr));
         label_29->setText(QApplication::translate("StreptoGUIClass", "Background(%):", nullptr));
         label_30->setText(QApplication::translate("StreptoGUIClass", "Threshold(%):", nullptr));
@@ -558,6 +564,7 @@ public:
         label_31->setText(QApplication::translate("StreptoGUIClass", "Foreground:", nullptr));
         label_32->setText(QApplication::translate("StreptoGUIClass", "(Dilation-iterations)", nullptr));
         label_33->setText(QApplication::translate("StreptoGUIClass", "(Circle-Size)", nullptr));
+        label_34->setText(QApplication::translate("StreptoGUIClass", "...", nullptr));
         menuDatei->setTitle(QApplication::translate("StreptoGUIClass", "Options", nullptr));
         menuInfo->setTitle(QApplication::translate("StreptoGUIClass", "Info", nullptr));
     } // retranslateUi
