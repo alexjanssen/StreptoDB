@@ -87,6 +87,9 @@
     <ClCompile Include="ImgBroth.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="EditTestStrainsDialog.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="StreptoGUI.h">
@@ -101,6 +104,9 @@
     <QtMoc Include="SettingsDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="EditTestStrainsDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="StreptoGUI.ui">
@@ -113,6 +119,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="SettingsDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="EditTestStrainsDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -138,6 +147,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_SettingsDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_EditTestStrainsDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -222,6 +222,7 @@
     <ClCompile Include="Compare.cpp" />
     <ClCompile Include="CVController.cpp" />
     <ClCompile Include="DBController.cpp" />
+    <ClCompile Include="EditTestStrainsDialog.cpp" />
     <ClCompile Include="GeneratedFiles\qrc_StreptoGUI.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeader>
@@ -247,6 +248,7 @@
     <QtMoc Include="StreptoGUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="EditTestStrainsDialog.ui" />
     <QtUic Include="MultiUploadDialog.ui" />
     <QtUic Include="SettingsDialog.ui" />
     <QtUic Include="StreptoGUI.ui" />
@@ -258,6 +260,13 @@
   <ItemGroup>
     <ClInclude Include="CVController.h" />
     <ClInclude Include="DBController.h" />
+    <QtMoc Include="EditTestStrainsDialog.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Programme\openCV\opencv\sources\include\opencv2;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCharts;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDataVisualization;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)\sqlite3_dll</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Programme\openCV\opencv\build\include\opencv2;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCharts;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDataVisualization;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets;$(SolutionDir)\sqlite3_dll</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCharts;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDataVisualization;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCharts;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtDataVisualization;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtUiTools;$(QTDIR)\include\QtWidgets</IncludePath>
+    </QtMoc>
+    <ClInclude Include="GeneratedFiles\ui_EditTestStrainsDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_MultiUploadDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_SettingsDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_StreptoGUI.h" />

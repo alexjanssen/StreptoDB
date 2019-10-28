@@ -1119,8 +1119,8 @@
     <property name="title">
      <string>Options</string>
     </property>
-    <addaction name="actionDubious_Option"/>
     <addaction name="action_settings"/>
+    <addaction name="actionDubious_Option"/>
     <addaction name="action_Close"/>
    </widget>
    <widget class="QMenu" name="menuInfo">
@@ -1186,7 +1186,7 @@
   </action>
   <action name="actionDubious_Option">
    <property name="text">
-    <string>Dubious Option</string>
+    <string>Minimize</string>
    </property>
   </action>
  </widget>

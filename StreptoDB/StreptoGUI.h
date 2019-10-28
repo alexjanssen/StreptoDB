@@ -15,12 +15,14 @@
 //#include <opencv2/imgcodecs.hpp>
 #include <UploadDialog.h>
 #include <MultiUploadDialog.h>
+#include <EditTestStrainsDialog.h>
 #include <ctime>
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QMimeData>
 #include <SettingsDialog.h>
 #include <fstream>
+
 
 class StreptoGUI : public QMainWindow, public Ui::StreptoGUIClass
 {
@@ -48,6 +50,7 @@ public slots:
 	void newGroup();
 	void act_settings();
 	void loadSql();
+	void editTestStrains();
 
 protected:   
 	void dragMoveEvent(QDragMoveEvent* event);
@@ -57,6 +60,7 @@ protected:
 private:
 	uploadDialog* ud = new uploadDialog();
 	multiUploadDialog* mud = new multiUploadDialog();
+	editTestStrainsDialog* etsd = new editTestStrainsDialog();	//Im a genius choosing variable names.
 	vector<string>* urls = new vector<string>;
 
 private slots:

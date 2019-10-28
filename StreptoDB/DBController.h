@@ -22,11 +22,13 @@ public:
 	vector<Group> getGroup(string);
 	bool updateGroup(Group grp);
 	bool deleteGroup(int id_grp, vector<int> imgs);
+	bool addTestStrain(TestStrain ts);
 	bool addGroup(Group grp);
 	vector<Broth> getBroth(string id);
 	int getMaxCalcParamID();
 	int getMaxInhibitionID();
 	int getMaxImageID();
+	int getMaxTestStrainID();
 	int getMaxGroupID();
 	int getGroupID(int imageID);
 	vector<CalcedParams> getCalcedParams(int);
@@ -43,6 +45,7 @@ public:
 	bool deleteCalcedParam(int calcP_ID);
 	bool deleteStrainInhibits(int img_id);
 	bool deleteStrainInhibition(int SI_ID);
+	bool deleteTestStrain(int strain_id);
 	bool addCalcedParams(CalcedParams cp);
 
 	bool addStrainInhibition(int si_id, int img_id, int strain_id, int broth_id, bool inhibit);

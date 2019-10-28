@@ -467,8 +467,8 @@ public:
 
         menuBar->addAction(menuDatei->menuAction());
         menuBar->addAction(menuInfo->menuAction());
-        menuDatei->addAction(actionDubious_Option);
         menuDatei->addAction(action_settings);
+        menuDatei->addAction(actionDubious_Option);
         menuDatei->addAction(action_Close);
         menuInfo->addAction(action_bout_StreptoDB);
 
@@ -507,7 +507,7 @@ public:
         actionSave->setText(QApplication::translate("StreptoGUIClass", "Save All", nullptr));
         action_Close->setText(QApplication::translate("StreptoGUIClass", "Close", nullptr));
         action_bout_StreptoDB->setText(QApplication::translate("StreptoGUIClass", "About StreptoDB...", nullptr));
-        actionDubious_Option->setText(QApplication::translate("StreptoGUIClass", "Dubious Option", nullptr));
+        actionDubious_Option->setText(QApplication::translate("StreptoGUIClass", "Minimize", nullptr));
         bttn_uploadPic->setText(QApplication::translate("StreptoGUIClass", "Upload", nullptr));
         label->setText(QApplication::translate("StreptoGUIClass", "StreptoDB", nullptr));
         label_2->setText(QApplication::translate("StreptoGUIClass", "Imageview:", nullptr));

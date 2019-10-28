@@ -394,6 +394,51 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
+ //INSERT INTO Test_Strains
+ bool DBController::addTestStrain(TestStrain ts) {
+
+	 int rc = sqlite3_open_v2(db_name.c_str(), &db, SQLITE_OPEN_READWRITE, NULL);
+	 if (rc != SQLITE_OK) {
+		 DBOUT("db open failed: DBController::addTestStrain(TestStrain)", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 else {
+		 sqlite3_stmt* stmt = NULL;
+		 string err_str;
+		 rc = sqlite3_prepare(db, \
+			 "INSERT INTO Test_Strains(STRAIN_ID, STRAIN_NAME, BROTH_ID)" \
+			 " VALUES(?,?,?);", \
+			 - 1, &stmt, NULL);
+		 if (rc != SQLITE_OK) {
+			 DBOUT("prepare failed: DBController::addTestStrain(TestStrain)", sqlite3_errmsg(db));
+
+			 return false;
+		 }
+		 else {
+			 // SQLITE_STATIC because the statement is finalized
+			 // before the buffer is freed:
+			 sqlite3_bind_int(stmt, 1, ts.strain_id);
+			 sqlite3_bind_text(stmt, 2, ts.strain_name.c_str(), -1, SQLITE_STATIC);
+			 sqlite3_bind_int(stmt, 3, ts.broth_id);
+			 if (rc != SQLITE_OK) {
+				 DBOUT("bind failed: DBController::addTestStrain(TestStrain)", sqlite3_errmsg(db));
+				 return false;
+			 }
+			 else {
+				 rc = sqlite3_step(stmt);
+				 if (rc != SQLITE_DONE) {
+					 DBOUT("execution failed: DBController::addTestStrain(TestStrain)", sqlite3_errmsg(db));
+					 return false;
+				 }
+			 }
+		 }
+		 sqlite3_finalize(stmt);
+	 }
+	 sqlite3_close(db);
+	 return true;
+ }
+
+
  //INSERT INTO Streptomyceten
  bool DBController::addGroup(Group grp) {
 
@@ -518,6 +563,24 @@ vector<Image> DBController::getImages(string filt) {
  }
 
 
+ //return max ID from Test_Strains
+ int DBController::getMaxTestStrainID() {
+	 char* zErrMsg = 0;
+	 string query = "SELECT MAX(STRAIN_ID) FROM Test_Strains;";
+	 int rc = DBController::openDB();
+	 if (rc) {
+		 //result->empty();
+		 sqlite3_exec(db, query.c_str(), callback_maxID, NULL, &zErrMsg);
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::getMaxTestStrainID()):", sqlite3_errmsg(db));
+	 }
+	 sqlite3_close(db);
+
+	 return maxID;
+ }
+
+
  //return max ID from Group
  int DBController::getMaxGroupID() {
 	 char* zErrMsg = 0;
@@ -634,7 +697,7 @@ vector<Image> DBController::getImages(string filt) {
  //returns all Test-Strains
  vector<TestStrain> DBController::getTestStrains() {
 	 char* zErrMsg = 0;
-	 string query = "SELECT * FROM Test_Strains;";
+	 string query = "SELECT * FROM Test_Strains ORDER BY STRAIN_ID ASC;";
 	 int rc = DBController::openDB();
 	 if (rc) {
 		 result_testStrains->clear();
@@ -931,6 +994,33 @@ vector<Image> DBController::getImages(string filt) {
 	 }
 	 else {
 		 DBOUT("Can't execute SQL-Statement(DBController::deleteStrainInhibition()):", sqlite3_errmsg(db));
+		 return false;
+	 }
+	 sqlite3_close(db);
+ }
+
+
+ //DELETE FROM Test_Strains and 'Strain-Inhibits' WHERE STRAIN_ID = ?
+ bool DBController::deleteTestStrain(int strain_id) {
+	 char* zErrMsg = 0;
+	 string query1 = "DELETE FROM 'Strain-Inhibits' " \
+		 "WHERE STRAIN_ID = " + std::to_string(strain_id) + "; ";
+	 string query2 = "DELETE FROM Test_Strains " \
+		 "WHERE STRAIN_ID = " + std::to_string(strain_id) + "; ";
+
+	 int rc = DBController::openDB();
+	 if (rc && sqlite3_exec(db, query1.c_str(), callback, NULL, &zErrMsg) == SQLITE_OK) {
+		 if (rc && sqlite3_exec(db, query2.c_str(), callback, NULL, &zErrMsg) == SQLITE_OK) {
+			 return true;
+		 }
+		 else {
+			 DBOUT("Can't execute SQL-Statement(DBController::deleteStrainInhibits()) -query2:", sqlite3_errmsg(db));
+			 return false;
+		 }
+		 
+	 }
+	 else {
+		 DBOUT("Can't execute SQL-Statement(DBController::deleteStrainInhibits()) -query1:", sqlite3_errmsg(db));
 		 return false;
 	 }
 	 sqlite3_close(db);

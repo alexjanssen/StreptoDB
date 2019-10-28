@@ -599,16 +599,6 @@ void StreptoGUI::subtableDelete(){
 		//ui.tableWidget_2->currentRow();
 }
 
-void StreptoGUI::newGroup(){
-	multiUploadDialog* f = new multiUploadDialog();
-	f->show();
-}
-
-void StreptoGUI::act_settings()
-{
-	settingsDialog* f = new settingsDialog();
-	f->show();
-}
 
 
 //Todo
@@ -949,4 +939,22 @@ void StreptoGUI::loadSql() {
 
 	//ui.label->setText(fileName);
 	//delete(&fileName);
+}
+
+
+
+void StreptoGUI::newGroup() {
+	multiUploadDialog* f = new multiUploadDialog();
+	f->show();
+}
+
+void StreptoGUI::act_settings(){
+	settingsDialog* f = new settingsDialog();
+	f->show();
+}
+
+
+void StreptoGUI::editTestStrains(){
+	editTestStrainsDialog* f = new editTestStrainsDialog();
+	f->show();
 }
