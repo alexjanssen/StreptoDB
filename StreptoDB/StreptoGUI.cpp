@@ -351,13 +351,16 @@ void StreptoGUI::testCalc() {
 		cp.calc_id = dbcon->getMaxCalcParamID() + 1;
 	}
 	catch (exception) { cp.calc_id = 1; };
+	bool fail = false;
 
 	cp.class_id = 1; //scale()
 	int scaleLength = cvcon->extractScale(newPath);
 	double scale = ui.line_scale->text().toDouble() / scaleLength;	//size of one Pixel in mm; not square millimeter!
 	cp.value = scale;
+	if(ui.line_scale->text().toDouble() == 0){ ui.label_28->setText("Invalid Scale!"); fail = true; }
+	
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_28->setText("Scale failed to save."); }
+	else { ui.label_28->setText("Scale failed to save."); fail = true; }
 	
 	//Then calculate the segmentations:
 	cvcon->segmentation(newPath, ui.spinBox_TH->text().toDouble() / 100, ui.spinBox_BG->text().toDouble() / 100, ui.spinBox_FG->text().toDouble(), false);
@@ -368,47 +371,59 @@ void StreptoGUI::testCalc() {
 	double area = cvcon->foregroundSize(scale);
 	cp.value = area;
 	if (!dbcon->addCalcedParams(cp)) {}
-	else {ui.label_28->setText("size_foreground failed to save.");}
+	else {ui.label_28->setText("size_foreground failed to save."); fail = true;
+	}
 
 	//and calculate the fore-/back-ground colours:
 	cp.calc_id++;
 	cp.class_id = 3;	//foreground_channel_0()
 	cp.value = cvcon->meanFG(0);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_28->setText("foreground_channel_0 failed to save."); }
+	else { ui.label_28->setText("foreground_channel_0 failed to save."); fail = true;
+	}
 	cp.calc_id++;
 	cp.class_id = 4;	//foreground_channel_1()
 	cp.value = cvcon->meanFG(1);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_28->setText("foreground_channel_1 failed to save."); }
+	else { ui.label_28->setText("foreground_channel_1 failed to save."); fail = true;
+	}
 	cp.calc_id++;
 	cp.class_id = 5;	//foreground_channel_2()
 	cp.value = cvcon->meanFG(2);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_28->setText("foreground_channel_2 failed to save."); }
+	else { ui.label_28->setText("foreground_channel_2 failed to save."); fail = true;
+	}
 	cp.calc_id++;
 	cp.class_id = 6;	//background_channel_0()
 	cp.value = cvcon->meanBG(0);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_28->setText("background_channel_0 failed to save."); }
+	else { ui.label_28->setText("background_channel_0 failed to save."); fail = true;
+	}
 	cp.calc_id++;
 	cp.class_id = 7;	//background_channel_1()
 	cp.value = cvcon->meanBG(1);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_28->setText("background_channel_1 failed to save."); }
+	else { ui.label_28->setText("background_channel_1 failed to save."); fail = true;
+	}
 	cp.calc_id++;
 	cp.class_id = 8;	//background_channel_2()
 	cp.value = cvcon->meanBG(2);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_28->setText("background_channel_2 failed to save."); }
+	else { ui.label_28->setText("background_channel_2 failed to save."); fail = true;
+	}
 	cp.calc_id++;
 	cp.class_id = 9;	//circularity
 	cp.value = cvcon->circFact(scale,area);
 	if (!dbcon->addCalcedParams(cp)) {}
-	else { ui.label_28->setText("circularity failed to save."); }
+	else { ui.label_28->setText("circularity failed to save."); fail = true;
+	}
 	itemSelected(selX, selY);
 	//cvcon->foregroundExtraction(newPath);
 	//cvcon->histo(newPath);
+	if (fail==true) { 
+		dbcon->deleteCalculatedParameters(cp.image_id); 
+		//ui.label_28->setText("");
+	}
 	
 }
 

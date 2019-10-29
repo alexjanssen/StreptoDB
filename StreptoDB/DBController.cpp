@@ -120,7 +120,12 @@ static int callback_calcedParams(void* param, int numCols, char** col, char** co
 	cp.calc_id = atoi(col[0]);
 	cp.image_id = atoi(col[1]);
 	cp.class_id = atoi(col[2]);
-	cp.value = atof(col[3]);
+	if (col[3] == NULL) {
+		cp.value = 0;
+	}
+	else {
+		cp.value = atof(col[3]);
+	}
 	cp.timestamp = (string)col[4];
 
 	result_calcedParams->push_back(cp);

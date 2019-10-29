@@ -199,6 +199,7 @@ int CVController::extractScale(std::string path){
 	}
 
 	// Show me what you got
+	/*
 	rectangle(img_display, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
 	rectangle(result, matchLoc, Point(matchLoc.x + templ.cols, matchLoc.y + templ.rows), Scalar::all(0), 2, 8, 0);
 
@@ -211,7 +212,7 @@ int CVController::extractScale(std::string path){
 	imshow(image_window_scale, cropedImage);
 	imshow(result_window_scale, result);
 	//imshow(test_window, templ);
-
+	*/
 	return length;
 }
 

@@ -268,7 +268,7 @@ void multiUploadDialog::saveAll() {
 	vImg->at(2).broth_id = atoi(ui.comboBox_broth_3->currentText().toStdString().substr(ui.comboBox_broth_3->currentText().toStdString().find("-") + 1).c_str());
 	vImg->at(2).group_id = ui.line_groupID_group->text().toInt();
 	vImg->at(2).filePath = ui.line_path_3->text().toStdString();
-	vImg->at(1).scale = ui.line_scale_3->text().toDouble();
+	vImg->at(2).scale = ui.line_scale_3->text().toDouble();
 
 	vImg->at(3).image_id = ui.line_ID_4->text().toInt();
 	vImg->at(3).date = ui.line_timestamp_4->text().toStdString();
@@ -278,7 +278,7 @@ void multiUploadDialog::saveAll() {
 	vImg->at(3).broth_id = atoi(ui.comboBox_broth_4->currentText().toStdString().substr(ui.comboBox_broth_4->currentText().toStdString().find("-") + 1).c_str());
 	vImg->at(3).group_id = ui.line_groupID_group->text().toInt();
 	vImg->at(3).filePath = ui.line_path_4->text().toStdString();
-	vImg->at(1).scale = ui.line_scale_4->text().toDouble();
+	vImg->at(3).scale = ui.line_scale_4->text().toDouble();
 
 	if (dbcon2->addGroup(group)) {
 		for (int i = 0; i < vImg->size(); i++) {
