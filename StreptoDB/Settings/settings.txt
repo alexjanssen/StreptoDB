@@ -1,2 +1,2 @@
 path:		D:/Images
-filter:		CS
+filter:		

@@ -243,11 +243,11 @@ void StreptoGUI::fillTable(vector<Image> result){
 
 	//fills that vertical header with the group-name, yeah looks gross.
 	ui.tableWidget->setRowCount(group.size());
-	ui.label->setText("Groups found: ");
+	ui.label->setText("Groups found: "+ QString::number(group.size()));
 	for (int z = 0; z < group.size(); z++) {
 		ui.tableWidget->setRowHeight(z, 100);
 		ui.tableWidget->setVerticalHeaderItem(z, new QTableWidgetItem(QString::fromStdString(dbcon->getGroup("=" + std::to_string(group[z]))[0].intern_id)));
-		ui.label->setText(ui.label->text() + QString::fromStdString(dbcon->getGroup("=" + std::to_string(group[z]))[0].intern_id) + " | ");
+		//ui.label->setText(ui.label->text() + QString::fromStdString(dbcon->getGroup("=" + std::to_string(group[z]))[0].intern_id) + " | ");
 		for (int x = 0; x < result.size(); x++) {
 			if(group[z] == result[x].group_id){
 				QPixmap pixmap;
@@ -493,7 +493,7 @@ void StreptoGUI::paramSelected(int x, int y)
 					QTableWidgetItem* twi = new QTableWidgetItem();
 					//pixmap.loadFromData(result[0].image_preview);
 					pixmap = pixmap.fromImage(resultGlob[u].image_preview);
-					twi->setData(Qt::DecorationRole, pixmap.scaled(100, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+					twi->setData(Qt::DecorationRole, pixmap.scaled(125, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 					twi->setText(QString::number(resultGlob[u].image_id)+"\n"+ QString::number(comp[i].diff, 'f', 2));
 					
 					ui.tableWidget_4->setItem(0, i, twi);

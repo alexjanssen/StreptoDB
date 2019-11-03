@@ -1,0 +1,7 @@
+7	CS 03	2019-06-24	GN	M. luteus	1	
+5	CS 03	2019-06-18	ISP2	M. luteus	1	
+8	CS 03	2019-06-24	NCBMM	M. luteus	0	
+8	CS 03	2019-06-24	NCBMM	B. subtilis	1	
+2	CS 04	2019-01-02	GN	M. luteus	1	
+9	CS 04	2019-06-24	NCBMM	M. luteus	1	
+9	CS 04	2019-06-24	NCBMM	B. subtilis	0	

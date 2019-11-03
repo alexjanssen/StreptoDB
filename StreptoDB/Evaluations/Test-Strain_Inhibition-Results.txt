@@ -1,0 +1,4 @@
+Name:	        ID:	Count:	Pos-:	Neg-Inhibitions:	
+E. coli 	3	0	0	0	
+B. subtilis 	2	2	1	1	
+M. luteus 	1	5	4	1	
