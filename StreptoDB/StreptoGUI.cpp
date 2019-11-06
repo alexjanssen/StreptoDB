@@ -256,6 +256,13 @@ void StreptoGUI::fillTable(vector<Image> result){
 				pixmap = pixmap.fromImage(result[x].image_preview);
 				twi->setData(Qt::DecorationRole, pixmap.scaled(125, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 				twi->setText(QString::number(result[x].image_id));
+				//Set Text color red, if parameters are missing
+				try {
+					dbcon->getCalcedParams(result[x].image_id).at(0).calc_id; 
+				}
+				catch (exception) {
+					twi->setForeground(QBrush(QColor(255, 0, 0)));
+				}
 				
 				ui.tableWidget->setItem(z, result[x].broth_id-1, twi);
 				//ui.label->setText(ui.label->text() + " / " + QString::number(result[x].broth_id));

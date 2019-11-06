@@ -669,7 +669,7 @@ vector<Image> DBController::getImages(string filt) {
 	 char* zErrMsg = 0;
 	 string query =	 "SELECT " \
 					 "t1.IMAGE_ID," \
-					 "t1.diff " \
+					 "t1.diff * t1.diff " \
 					 "FROM" \
 						 "(SELECT " \
 						 "MAX(cp.TIMESTAMP)," \

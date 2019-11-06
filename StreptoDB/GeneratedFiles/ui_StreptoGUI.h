@@ -398,13 +398,13 @@ public:
         spinBox_BG = new QSpinBox(centralWidget);
         spinBox_BG->setObjectName(QString::fromUtf8("spinBox_BG"));
         spinBox_BG->setGeometry(QRect(340, 700, 42, 22));
-        spinBox_BG->setMinimum(-199);
-        spinBox_BG->setMaximum(199);
+        spinBox_BG->setMinimum(-999);
+        spinBox_BG->setMaximum(999);
         spinBox_TH = new QSpinBox(centralWidget);
         spinBox_TH->setObjectName(QString::fromUtf8("spinBox_TH"));
         spinBox_TH->setGeometry(QRect(340, 720, 42, 22));
-        spinBox_TH->setMinimum(-199);
-        spinBox_TH->setMaximum(199);
+        spinBox_TH->setMinimum(-999);
+        spinBox_TH->setMaximum(999);
         bttn_calc = new QPushButton(centralWidget);
         bttn_calc->setObjectName(QString::fromUtf8("bttn_calc"));
         bttn_calc->setGeometry(QRect(500, 730, 111, 23));
@@ -415,8 +415,8 @@ public:
         spinBox_FG = new QSpinBox(centralWidget);
         spinBox_FG->setObjectName(QString::fromUtf8("spinBox_FG"));
         spinBox_FG->setGeometry(QRect(340, 740, 42, 22));
-        spinBox_FG->setMinimum(-199);
-        spinBox_FG->setMaximum(199);
+        spinBox_FG->setMinimum(-999);
+        spinBox_FG->setMaximum(999);
         label_32 = new QLabel(centralWidget);
         label_32->setObjectName(QString::fromUtf8("label_32"));
         label_32->setGeometry(QRect(390, 740, 91, 16));

@@ -959,10 +959,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-199</number>
+     <number>-999</number>
     </property>
     <property name="maximum">
-     <number>199</number>
+     <number>999</number>
     </property>
    </widget>
    <widget class="QSpinBox" name="spinBox_TH">
@@ -975,10 +975,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-199</number>
+     <number>-999</number>
     </property>
     <property name="maximum">
-     <number>199</number>
+     <number>999</number>
     </property>
    </widget>
    <widget class="QPushButton" name="bttn_calc">
@@ -1020,10 +1020,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-199</number>
+     <number>-999</number>
     </property>
     <property name="maximum">
-     <number>199</number>
+     <number>999</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_32">
