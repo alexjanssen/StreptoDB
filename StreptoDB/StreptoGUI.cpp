@@ -501,7 +501,7 @@ void StreptoGUI::paramSelected(int x, int y)
 					//pixmap.loadFromData(result[0].image_preview);
 					pixmap = pixmap.fromImage(resultGlob[u].image_preview);
 					twi->setData(Qt::DecorationRole, pixmap.scaled(125, 100, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-					twi->setText(QString::number(resultGlob[u].image_id)+"\n"+ QString::number(comp[i].diff, 'f', 2));
+					twi->setText(QString::number(resultGlob[u].image_id)+"\n"+ QString::number(cv::sqrt(comp[i].diff), 'f', 2));
 					
 					ui.tableWidget_4->setItem(0, i, twi);
 
