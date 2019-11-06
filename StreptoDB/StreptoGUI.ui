@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1386</width>
-    <height>954</height>
+    <width>1387</width>
+    <height>974</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="bttn_uploadPic">
     <property name="geometry">
      <rect>
-      <x>780</x>
+      <x>790</x>
       <y>360</y>
       <width>75</width>
       <height>23</height>
@@ -55,7 +55,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>761</width>
+      <width>771</width>
       <height>651</height>
      </rect>
     </property>
@@ -63,7 +63,7 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>780</x>
+      <x>790</x>
       <y>40</y>
       <width>385</width>
       <height>311</height>
@@ -92,7 +92,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>860</x>
+      <x>870</x>
       <y>360</y>
       <width>231</width>
       <height>21</height>
@@ -226,7 +226,7 @@
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>780</x>
+      <x>790</x>
       <y>400</y>
       <width>111</width>
       <height>21</height>
@@ -278,7 +278,7 @@
       <x>10</x>
       <y>770</y>
       <width>1361</width>
-      <height>131</height>
+      <height>151</height>
      </rect>
     </property>
    </widget>
@@ -633,7 +633,7 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>780</x>
+      <x>790</x>
       <y>430</y>
       <width>511</width>
       <height>241</height>
@@ -679,7 +679,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>780</x>
+      <x>790</x>
       <y>670</y>
       <width>113</width>
       <height>21</height>
@@ -698,7 +698,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>900</x>
+      <x>910</x>
       <y>670</y>
       <width>113</width>
       <height>21</height>
@@ -711,7 +711,7 @@
    <widget class="QComboBox" name="comboBox_testStrain">
     <property name="geometry">
      <rect>
-      <x>1020</x>
+      <x>1030</x>
       <y>670</y>
       <width>121</width>
       <height>22</height>
@@ -721,7 +721,7 @@
    <widget class="QCheckBox" name="checkBox_inhibition">
     <property name="geometry">
      <rect>
-      <x>1150</x>
+      <x>1160</x>
       <y>670</y>
       <width>71</width>
       <height>21</height>
@@ -734,7 +734,7 @@
    <widget class="QPushButton" name="bttn_add_inhibit">
     <property name="geometry">
      <rect>
-      <x>1220</x>
+      <x>1230</x>
       <y>670</y>
       <width>71</width>
       <height>23</height>
@@ -747,7 +747,7 @@
    <widget class="QLabel" name="label_28">
     <property name="geometry">
      <rect>
-      <x>1080</x>
+      <x>1090</x>
       <y>690</y>
       <width>211</width>
       <height>31</height>
@@ -1093,7 +1093,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1386</width>
+     <width>1387</width>
      <height>21</height>
     </rect>
    </property>

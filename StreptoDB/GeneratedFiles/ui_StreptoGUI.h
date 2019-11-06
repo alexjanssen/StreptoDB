@@ -135,7 +135,7 @@ public:
     {
         if (StreptoGUIClass->objectName().isEmpty())
             StreptoGUIClass->setObjectName(QString::fromUtf8("StreptoGUIClass"));
-        StreptoGUIClass->resize(1386, 954);
+        StreptoGUIClass->resize(1387, 974);
         actionAnalys = new QAction(StreptoGUIClass);
         actionAnalys->setObjectName(QString::fromUtf8("actionAnalys"));
         action_settings = new QAction(StreptoGUIClass);
@@ -152,7 +152,7 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         bttn_uploadPic = new QPushButton(centralWidget);
         bttn_uploadPic->setObjectName(QString::fromUtf8("bttn_uploadPic"));
-        bttn_uploadPic->setGeometry(QRect(780, 360, 75, 23));
+        bttn_uploadPic->setGeometry(QRect(790, 360, 75, 23));
         line_ID = new QLineEdit(centralWidget);
         line_ID->setObjectName(QString::fromUtf8("line_ID"));
         line_ID->setGeometry(QRect(1260, 240, 113, 20));
@@ -161,10 +161,10 @@ public:
         label->setGeometry(QRect(10, 690, 251, 16));
         tableWidget = new QTableWidget(centralWidget);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(10, 40, 761, 651));
+        tableWidget->setGeometry(QRect(10, 40, 771, 651));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setGeometry(QRect(780, 40, 385, 311));
+        graphicsView->setGeometry(QRect(790, 40, 385, 311));
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(780, 20, 71, 16));
@@ -174,7 +174,7 @@ public:
         label_2->setFont(font);
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(860, 360, 231, 21));
+        label_3->setGeometry(QRect(870, 360, 231, 21));
         bttn_loadDB = new QPushButton(centralWidget);
         bttn_loadDB->setObjectName(QString::fromUtf8("bttn_loadDB"));
         bttn_loadDB->setGeometry(QRect(60, 10, 75, 23));
@@ -207,7 +207,7 @@ public:
         label_9->setGeometry(QRect(1180, 320, 71, 21));
         label_11 = new QLabel(centralWidget);
         label_11->setObjectName(QString::fromUtf8("label_11"));
-        label_11->setGeometry(QRect(780, 400, 111, 21));
+        label_11->setGeometry(QRect(790, 400, 111, 21));
         label_12 = new QLabel(centralWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
         label_12->setGeometry(QRect(900, 400, 261, 21));
@@ -219,7 +219,7 @@ public:
         label_13->setGeometry(QRect(1180, 340, 71, 21));
         tableWidget_4 = new QTableWidget(centralWidget);
         tableWidget_4->setObjectName(QString::fromUtf8("tableWidget_4"));
-        tableWidget_4->setGeometry(QRect(10, 770, 1361, 131));
+        tableWidget_4->setGeometry(QRect(10, 770, 1361, 151));
         label_14 = new QLabel(centralWidget);
         label_14->setObjectName(QString::fromUtf8("label_14"));
         label_14->setGeometry(QRect(10, 710, 91, 16));
@@ -312,7 +312,7 @@ public:
         bttn_IMG_save->setGeometry(QRect(1290, 380, 41, 23));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(780, 430, 511, 241));
+        tabWidget->setGeometry(QRect(790, 430, 511, 241));
         tab_Calculations = new QWidget();
         tab_Calculations->setObjectName(QString::fromUtf8("tab_Calculations"));
         tableWidget_2 = new QTableWidget(tab_Calculations);
@@ -328,26 +328,26 @@ public:
         line_inhibit_internID = new QLineEdit(centralWidget);
         line_inhibit_internID->setObjectName(QString::fromUtf8("line_inhibit_internID"));
         line_inhibit_internID->setEnabled(false);
-        line_inhibit_internID->setGeometry(QRect(780, 670, 113, 21));
+        line_inhibit_internID->setGeometry(QRect(790, 670, 113, 21));
         line_inhibit_internID->setAcceptDrops(false);
         line_inhibit_internID->setReadOnly(true);
         line_inhibit_broth = new QLineEdit(centralWidget);
         line_inhibit_broth->setObjectName(QString::fromUtf8("line_inhibit_broth"));
         line_inhibit_broth->setEnabled(false);
-        line_inhibit_broth->setGeometry(QRect(900, 670, 113, 21));
+        line_inhibit_broth->setGeometry(QRect(910, 670, 113, 21));
         line_inhibit_broth->setReadOnly(true);
         comboBox_testStrain = new QComboBox(centralWidget);
         comboBox_testStrain->setObjectName(QString::fromUtf8("comboBox_testStrain"));
-        comboBox_testStrain->setGeometry(QRect(1020, 670, 121, 22));
+        comboBox_testStrain->setGeometry(QRect(1030, 670, 121, 22));
         checkBox_inhibition = new QCheckBox(centralWidget);
         checkBox_inhibition->setObjectName(QString::fromUtf8("checkBox_inhibition"));
-        checkBox_inhibition->setGeometry(QRect(1150, 670, 71, 21));
+        checkBox_inhibition->setGeometry(QRect(1160, 670, 71, 21));
         bttn_add_inhibit = new QPushButton(centralWidget);
         bttn_add_inhibit->setObjectName(QString::fromUtf8("bttn_add_inhibit"));
-        bttn_add_inhibit->setGeometry(QRect(1220, 670, 71, 23));
+        bttn_add_inhibit->setGeometry(QRect(1230, 670, 71, 23));
         label_28 = new QLabel(centralWidget);
         label_28->setObjectName(QString::fromUtf8("label_28"));
-        label_28->setGeometry(QRect(1080, 690, 211, 31));
+        label_28->setGeometry(QRect(1090, 690, 211, 31));
         bttn_GRP_delete = new QPushButton(centralWidget);
         bttn_GRP_delete->setObjectName(QString::fromUtf8("bttn_GRP_delete"));
         bttn_GRP_delete->setGeometry(QRect(1330, 180, 41, 23));
@@ -436,7 +436,7 @@ public:
         StreptoGUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(StreptoGUIClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1386, 21));
+        menuBar->setGeometry(QRect(0, 0, 1387, 21));
         menuBar->setDefaultUp(true);
         menuBar->setNativeMenuBar(true);
         menuDatei = new QMenu(menuBar);
