@@ -44,19 +44,36 @@ static int callback_img(void* param, int numCols, char** col, char** colName)
 	Image img = Image();
 	int* col_width = (int*)param; // this isn't necessary, but it's convenient
 
-	img.image_id = atoi(col[0]);
-	unsigned char* data = (unsigned char*)col[1];
-	img.image_preview = QImage::fromData(data, atoi(col[3]),nullptr);
-	img.date = (string)col[2];
-	img.imagesize = atoi(col[3]);
-	img.resolution_x = atoi(col[4]);
-	img.resolution_y = atoi(col[5]);
-	img.broth_id = atoi(col[6]);
-	img.group_id = atoi(col[7]);
-	img.filePath = (string)col[8];
-	img.scale = atof(col[9]);
+	try {
+		img.image_id = atoi(col[0]);
+		unsigned char* data = (unsigned char*)col[1];
+		img.image_preview = QImage::fromData(data, atoi(col[3]), nullptr);
+		img.date = (string)col[2];
+		img.imagesize = atoi(col[3]);
+		img.resolution_x = atoi(col[4]);
+		img.resolution_y = atoi(col[5]);
+		img.broth_id = atoi(col[6]);
+		img.group_id = atoi(col[7]);
+		img.filePath = (string)col[8];
+		img.scale = atof(col[9]);
 
-	result->push_back(img);
+		result->push_back(img);
+	}catch (exception) {
+		img.image_id = 0;
+		unsigned char* data = (unsigned char*)0;
+		img.image_preview = QImage::fromData(data, atoi(0), nullptr);
+		img.date = (string)"error";
+		img.imagesize = atoi(0);
+		img.resolution_x = atoi(0);
+		img.resolution_y = atoi(0);
+		img.broth_id = atoi(0);
+		img.group_id = atoi(0);
+		img.filePath = (string)"error";
+		img.scale = atof(0);
+
+		result->push_back(img);
+	}
+
 
 	return 0;
 }

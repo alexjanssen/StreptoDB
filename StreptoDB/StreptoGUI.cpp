@@ -110,6 +110,7 @@ void StreptoGUI::itemSelected(int x, int y)
 
 				QGraphicsScene* scene = new QGraphicsScene();
 				scene->addPixmap(pixmap2.scaled(374, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+				if (pixmap2.isNull()) { scene->addText("Couldnt find Image, \n please check standard path to Images in Options->Settings,\n or check filename and path below.\n\nPlease dont try to calculate image parameters \n and dont try to show the segmentation."); }
 				ui.graphicsView->setScene(scene);
 				ui.graphicsView->show();
 				//fill image Parameters

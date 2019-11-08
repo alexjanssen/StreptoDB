@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1387</width>
+    <width>1513</width>
     <height>974</height>
    </rect>
   </property>
@@ -30,9 +30,9 @@
    <widget class="QLineEdit" name="line_ID">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>240</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -118,9 +118,9 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>280</x>
       <y>10</y>
-      <width>351</width>
+      <width>311</width>
       <height>20</height>
      </rect>
     </property>
@@ -131,7 +131,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>243</y>
       <width>71</width>
       <height>20</height>
@@ -144,7 +144,7 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>260</y>
       <width>71</width>
       <height>21</height>
@@ -157,9 +157,9 @@
    <widget class="QLineEdit" name="line_timestamp">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>260</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -167,7 +167,7 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>280</y>
       <width>71</width>
       <height>21</height>
@@ -180,9 +180,9 @@
    <widget class="QLineEdit" name="line_imgSize">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>280</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -190,7 +190,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>300</y>
       <width>81</width>
       <height>21</height>
@@ -203,9 +203,9 @@
    <widget class="QLineEdit" name="line_resolution_x">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>300</y>
-      <width>53</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -213,7 +213,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>320</y>
       <width>71</width>
       <height>21</height>
@@ -252,9 +252,9 @@
    <widget class="QLineEdit" name="line_path">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>340</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -262,7 +262,7 @@
    <widget class="QLabel" name="label_13">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>340</y>
       <width>71</width>
       <height>21</height>
@@ -277,7 +277,7 @@
      <rect>
       <x>10</x>
       <y>770</y>
-      <width>1361</width>
+      <width>1491</width>
       <height>151</height>
      </rect>
     </property>
@@ -333,8 +333,8 @@
    <widget class="QPushButton" name="bttn_compare">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>710</y>
+      <x>140</x>
+      <y>10</y>
       <width>131</width>
       <height>23</height>
      </rect>
@@ -359,7 +359,7 @@
    <widget class="QLabel" name="label_18">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>20</y>
       <width>71</width>
       <height>16</height>
@@ -378,7 +378,7 @@
    <widget class="QLabel" name="label_19">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>220</y>
       <width>71</width>
       <height>16</height>
@@ -397,7 +397,7 @@
    <widget class="QLabel" name="label_20">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>40</y>
       <width>71</width>
       <height>20</height>
@@ -410,9 +410,9 @@
    <widget class="QLineEdit" name="line_groupID_group">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>40</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -420,9 +420,9 @@
    <widget class="QLineEdit" name="line_internID">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>60</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -430,7 +430,7 @@
    <widget class="QLabel" name="label_21">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>60</y>
       <width>71</width>
       <height>20</height>
@@ -443,9 +443,9 @@
    <widget class="QLineEdit" name="line_timestamp_group">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>80</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -453,7 +453,7 @@
    <widget class="QLabel" name="label_22">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>80</y>
       <width>71</width>
       <height>20</height>
@@ -466,9 +466,9 @@
    <widget class="QLineEdit" name="line_scientific">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>100</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -476,7 +476,7 @@
    <widget class="QLabel" name="label_23">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>100</y>
       <width>81</width>
       <height>20</height>
@@ -489,9 +489,9 @@
    <widget class="QLineEdit" name="line_genome">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>120</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -499,7 +499,7 @@
    <widget class="QLabel" name="label_24">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>120</y>
       <width>71</width>
       <height>20</height>
@@ -512,9 +512,9 @@
    <widget class="QLineEdit" name="line_locality">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>140</y>
-      <width>53</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -522,7 +522,7 @@
    <widget class="QLabel" name="label_25">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>140</y>
       <width>81</width>
       <height>20</height>
@@ -535,7 +535,7 @@
    <widget class="QLabel" name="label_26">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>180</y>
       <width>71</width>
       <height>20</height>
@@ -548,9 +548,9 @@
    <widget class="QLineEdit" name="line_spore_color">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>160</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -558,7 +558,7 @@
    <widget class="QLabel" name="label_27">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>160</y>
       <width>71</width>
       <height>20</height>
@@ -571,7 +571,7 @@
    <widget class="QCheckBox" name="checkBox_siderophore">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>180</y>
       <width>51</width>
       <height>21</height>
@@ -584,9 +584,9 @@
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>200</y>
-      <width>191</width>
+      <width>231</width>
       <height>21</height>
      </rect>
     </property>
@@ -620,7 +620,7 @@
    <widget class="QPushButton" name="bttn_IMG_save">
     <property name="geometry">
      <rect>
-      <x>1290</x>
+      <x>1340</x>
       <y>380</y>
       <width>41</width>
       <height>23</height>
@@ -760,7 +760,7 @@
    <widget class="QPushButton" name="bttn_GRP_delete">
     <property name="geometry">
      <rect>
-      <x>1330</x>
+      <x>1380</x>
       <y>180</y>
       <width>41</width>
       <height>23</height>
@@ -773,7 +773,7 @@
    <widget class="QPushButton" name="bttn_GRP_save">
     <property name="geometry">
      <rect>
-      <x>1290</x>
+      <x>1340</x>
       <y>180</y>
       <width>41</width>
       <height>23</height>
@@ -786,7 +786,7 @@
    <widget class="QPushButton" name="bttn_IMG_delete">
     <property name="geometry">
      <rect>
-      <x>1330</x>
+      <x>1380</x>
       <y>380</y>
       <width>41</width>
       <height>23</height>
@@ -812,9 +812,9 @@
    <widget class="QLineEdit" name="line_resolution_y">
     <property name="geometry">
      <rect>
-      <x>1320</x>
+      <x>1350</x>
       <y>300</y>
-      <width>53</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -822,7 +822,7 @@
    <widget class="QPushButton" name="bttn_newGroup">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>600</x>
       <y>10</y>
       <width>75</width>
       <height>23</height>
@@ -835,9 +835,9 @@
    <widget class="QLineEdit" name="line_locality_2">
     <property name="geometry">
      <rect>
-      <x>1320</x>
+      <x>1350</x>
       <y>140</y>
-      <width>53</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -845,9 +845,9 @@
    <widget class="QLineEdit" name="line_scale">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>360</y>
-      <width>113</width>
+      <width>151</width>
       <height>20</height>
      </rect>
     </property>
@@ -855,7 +855,7 @@
    <widget class="QLabel" name="label_47">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>360</y>
       <width>71</width>
       <height>21</height>
@@ -868,7 +868,7 @@
    <widget class="QPushButton" name="bttn_editBroth">
     <property name="geometry">
      <rect>
-      <x>690</x>
+      <x>1100</x>
       <y>10</y>
       <width>75</width>
       <height>23</height>
@@ -881,7 +881,7 @@
    <widget class="QPushButton" name="bttn_editTeststrains">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>680</x>
       <y>10</y>
       <width>91</width>
       <height>23</height>
@@ -894,7 +894,7 @@
    <widget class="QPushButton" name="bttn_loadsql">
     <property name="geometry">
      <rect>
-      <x>1240</x>
+      <x>1360</x>
       <y>720</y>
       <width>131</width>
       <height>23</height>
@@ -907,8 +907,8 @@
    <widget class="QPushButton" name="bttn_segmentation">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>710</y>
+      <x>540</x>
+      <y>700</y>
       <width>111</width>
       <height>23</height>
      </rect>
@@ -984,7 +984,7 @@
    <widget class="QPushButton" name="bttn_calc">
     <property name="geometry">
      <rect>
-      <x>500</x>
+      <x>540</x>
       <y>730</y>
       <width>111</width>
       <height>23</height>
@@ -1031,7 +1031,7 @@
      <rect>
       <x>390</x>
       <y>740</y>
-      <width>91</width>
+      <width>141</width>
       <height>16</height>
      </rect>
     </property>
@@ -1039,7 +1039,7 @@
      <enum>Qt::LeftToRight</enum>
     </property>
     <property name="text">
-     <string>(Dilation-iterations)</string>
+     <string>(Dilation-iterations(0 to 100))</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_33">
@@ -1047,7 +1047,7 @@
      <rect>
       <x>390</x>
       <y>700</y>
-      <width>61</width>
+      <width>131</width>
       <height>16</height>
      </rect>
     </property>
@@ -1055,15 +1055,15 @@
      <enum>Qt::LeftToRight</enum>
     </property>
     <property name="text">
-     <string>(Circle-Size)</string>
+     <string>(Circle-Size(-200 to 200))</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBox_broth">
     <property name="geometry">
      <rect>
-      <x>1260</x>
+      <x>1270</x>
       <y>320</y>
-      <width>113</width>
+      <width>151</width>
       <height>22</height>
      </rect>
     </property>
@@ -1071,7 +1071,7 @@
    <widget class="QLabel" name="label_34">
     <property name="geometry">
      <rect>
-      <x>900</x>
+      <x>1020</x>
       <y>750</y>
       <width>471</width>
       <height>21</height>
@@ -1087,13 +1087,327 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="label_35">
+    <property name="geometry">
+     <rect>
+      <x>1330</x>
+      <y>430</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>Short Param Description:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_36">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>430</y>
+      <width>21</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>ID:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_37">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>450</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>1: size of one pixel in mm (0.00X)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_38">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>470</y>
+      <width>191</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>2: size of Streptomyces in mm² (1-500)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_39">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>490</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>3: mean foreground channel red (0-255)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_40">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>510</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>4: mean fg-channel green (0-255)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_41">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>530</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>5: mean fg- channel blue (0-255)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_42">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>550</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>6: mean background channel red (0-255)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_43">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>590</y>
+      <width>211</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>8: mean bg-channel blue (0-255)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_44">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>570</y>
+      <width>191</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>7: mean bg-channel green (0-255)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_45">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>610</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>9: Shape; roundness-factor (0-1)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_46">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>720</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>(-100 to 100)</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_48">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>700</y>
+      <width>191</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>Pictures with missing Parameters
+have a red ID. Please add calculations
+for these pics.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_49">
+    <property name="geometry">
+     <rect>
+      <x>1430</x>
+      <y>40</y>
+      <width>81</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Please dont
+leave any fields
+empty and dont
+try to crash it
+with special 
+characters.</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_50">
+    <property name="geometry">
+     <rect>
+      <x>1430</x>
+      <y>360</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>(in mm &gt; 0)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_51">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>640</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>Click on a param to see the total 
+difference to the other image-params
+with the same broth and same
+classification.</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1387</width>
+     <width>1513</width>
      <height>21</height>
     </rect>
    </property>
