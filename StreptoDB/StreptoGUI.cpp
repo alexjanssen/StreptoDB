@@ -22,7 +22,7 @@ StreptoGUI::StreptoGUI(QMainWindow*parent)	: QMainWindow(parent)
 //reading settings from settings.txt
 void StreptoGUI::loadSettings() {
 	string line;
-	ifstream myfile("../StreptoDB/Settings/settings.txt");
+	ifstream myfile("../Settings/settings.txt");
 	if (myfile.is_open())
 	{
 		while (getline(myfile, line))
@@ -549,17 +549,23 @@ void StreptoGUI::imgSave(){
 //Arbeit Arbeit
 void StreptoGUI::imgDelete(){
 	//ui.label_28->setText(QString::number(dbcon->getImages(ui.line_internID->text().toStdString()).size()));
-	if (dbcon->getImages(ui.line_internID->text().toStdString()).size() == 1) {
-		grpDelete();
-	}
-	else {
+	QMessageBox::StandardButton reply;
+	reply = QMessageBox::question(this, "Confirm deletion", "Are you sure you want to delete selected image?",
+		QMessageBox::Yes | QMessageBox::No);
+	if (reply == QMessageBox::Yes) {
 
-		if (dbcon->deleteImage(ui.line_ID->text().toInt())) {
-			ui.label_3->setText("successfully deleted Image.");
-			StreptoGUI::loadDB();
+		if (dbcon->getImages(ui.line_internID->text().toStdString()).size() == 1) {
+			grpDelete();
 		}
 		else {
-			ui.label_3->setText("failed to delete Image.");
+
+			if (dbcon->deleteImage(ui.line_ID->text().toInt())) {
+				ui.label_3->setText("successfully deleted Image.");
+				StreptoGUI::loadDB();
+			}
+			else {
+				ui.label_3->setText("failed to delete Image.");
+			}
 		}
 	}
 }
@@ -586,18 +592,23 @@ void StreptoGUI::grpSave(){
 }
 
 void StreptoGUI::grpDelete(){
-	vector<int> imgs;
-	for (int i = 0; i < resultGlob.size(); i++) {
-		if (resultGlob[i].group_id == ui.line_groupID_group->text().toInt()) {
-			imgs.push_back(resultGlob[i].image_id);
+	QMessageBox::StandardButton reply;
+	reply = QMessageBox::question(this, "Confirm deletion", "Are you sure you want to delete selected group?",
+		QMessageBox::Yes | QMessageBox::No);
+	if (reply == QMessageBox::Yes) {
+		vector<int> imgs;
+		for (int i = 0; i < resultGlob.size(); i++) {
+			if (resultGlob[i].group_id == ui.line_groupID_group->text().toInt()) {
+				imgs.push_back(resultGlob[i].image_id);
+			}
 		}
-	}
-	if (dbcon->deleteGroup(ui.line_groupID_group->text().toInt(), imgs)) {
-		ui.label_3->setText("successfully deleted Group.");
-		StreptoGUI::loadDB();
-	}
-	else {
-		ui.label_3->setText("failed to delete Group.");
+		if (dbcon->deleteGroup(ui.line_groupID_group->text().toInt(), imgs)) {
+			ui.label_3->setText("successfully deleted Group.");
+			StreptoGUI::loadDB();
+		}
+		else {
+			ui.label_3->setText("failed to delete Group.");
+		}
 	}
 }
 

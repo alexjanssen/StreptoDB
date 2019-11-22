@@ -22,7 +22,7 @@ settingsDialog::settingsDialog(QDialog* parent) : QDialog(parent)
 
 void settingsDialog::loadSettings() {
 	string line;
-	ifstream myfile("../StreptoDB/Settings/settings.txt");
+	ifstream myfile("../Settings/settings.txt");
 	if (myfile.is_open())
 	{
 		while (getline(myfile, line))
@@ -74,14 +74,14 @@ void settingsDialog::selectPath() {
 //ToDo
 void settingsDialog::saveSettings() {
 		
-	if (remove("../StreptoDB/Settings/settings.txt") != 0)
+	if (remove("../Settings/settings.txt") != 0)
 		ui.label->setText("Error deleting file");
 	else
 		ui.label->setText("File successfully deleted");
 
 
 	//fstream fs("../StreptoDB/Settings/settings.txt");
-	std::ofstream outfile("../StreptoDB/Settings/settings.txt");
+	std::ofstream outfile("../Settings/settings.txt");
 
 
 	outfile << "path:\t\t" + ui.lineEdit_path->text().toStdString();

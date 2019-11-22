@@ -1,0 +1,5 @@
+1. Total count Images:	68	
+2. Count Test-Strains:	3	
+3. Count Inhibition-Listings:	8	
+4. Count Positive-Inhibitions:	6	
+5. Count Negative-Inhibitions:	2	
