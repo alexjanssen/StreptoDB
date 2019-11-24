@@ -22,6 +22,7 @@ multiUploadDialog::multiUploadDialog(QDialog* parent) : QDialog(parent){
 	ui.setupUi(this);
 	vImg->clear();
 	ui.label_out->setText("Dont forget to save!");
+	clearInput();
 }
 
 
@@ -74,7 +75,7 @@ void multiUploadDialog::loadFile(QString fileName, int bid){
 	}
 	Image img = Image();
 	img.image_preview = image.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-	vImg->push_back(img);
+	//vImg->push_back(img);
 	
 	DBController* dbcon2 = new DBController();
 	int id = dbcon2->getMaxImageID();			//set imageID
@@ -240,46 +241,67 @@ void multiUploadDialog::saveAll() {
 	group.siderophore = ui.checkBox_siderophore->isChecked();
 	group.spore_color = ui.line_spore_color->text().toStdString();
 
-	vImg->at(0).image_id = ui.line_ID->text().toInt();
-	vImg->at(0).date = ui.line_timestamp->text().toStdString();
-	vImg->at(0).imagesize = ui.line_imgSize->text().toDouble();
-	vImg->at(0).resolution_x = ui.line_resolution_x->text().toDouble();
-	vImg->at(0).resolution_y = ui.line_resolution_y->text().toDouble();
-	vImg->at(0).broth_id = atoi(ui.comboBox_broth->currentText().toStdString().substr(ui.comboBox_broth->currentText().toStdString().find("-") + 1).c_str());
-	vImg->at(0).group_id = ui.line_groupID_group->text().toInt();
-	vImg->at(0).filePath = ui.line_path->text().toStdString();
-	vImg->at(0).scale = ui.line_scale->text().toDouble();
-
-	vImg->at(1).image_id = ui.line_ID_2->text().toInt();
-	vImg->at(1).date = ui.line_timestamp_2->text().toStdString();
-	vImg->at(1).imagesize = ui.line_imgSize_2->text().toDouble();
-	vImg->at(1).resolution_x = ui.line_resolution_x_2->text().toDouble();
-	vImg->at(1).resolution_y = ui.line_resolution_y_2->text().toDouble();
-	vImg->at(1).broth_id = atoi(ui.comboBox_broth_2->currentText().toStdString().substr(ui.comboBox_broth_2->currentText().toStdString().find("-") + 1).c_str());
-	vImg->at(1).group_id = ui.line_groupID_group->text().toInt();
-	vImg->at(1).filePath = ui.line_path_2->text().toStdString();
-	vImg->at(1).scale = ui.line_scale_2->text().toDouble();
-
-	vImg->at(2).image_id = ui.line_ID_3->text().toInt();
-	vImg->at(2).date = ui.line_timestamp_3->text().toStdString();
-	vImg->at(2).imagesize = ui.line_imgSize_3->text().toDouble();
-	vImg->at(2).resolution_x = ui.line_resolution_x_3->text().toDouble();
-	vImg->at(2).resolution_y = ui.line_resolution_y_3->text().toDouble();
-	vImg->at(2).broth_id = atoi(ui.comboBox_broth_3->currentText().toStdString().substr(ui.comboBox_broth_3->currentText().toStdString().find("-") + 1).c_str());
-	vImg->at(2).group_id = ui.line_groupID_group->text().toInt();
-	vImg->at(2).filePath = ui.line_path_3->text().toStdString();
-	vImg->at(2).scale = ui.line_scale_3->text().toDouble();
-
-	vImg->at(3).image_id = ui.line_ID_4->text().toInt();
-	vImg->at(3).date = ui.line_timestamp_4->text().toStdString();
-	vImg->at(3).imagesize = ui.line_imgSize_4->text().toDouble();
-	vImg->at(3).resolution_x = ui.line_resolution_x_4->text().toDouble();
-	vImg->at(3).resolution_y = ui.line_resolution_y_4->text().toDouble();
-	vImg->at(3).broth_id = atoi(ui.comboBox_broth_4->currentText().toStdString().substr(ui.comboBox_broth_4->currentText().toStdString().find("-") + 1).c_str());
-	vImg->at(3).group_id = ui.line_groupID_group->text().toInt();
-	vImg->at(3).filePath = ui.line_path_4->text().toStdString();
-	vImg->at(3).scale = ui.line_scale_4->text().toDouble();
-
+	int id = 0;
+	if (!ui.line_ID->text().isEmpty()) {
+		vImg->push_back(Image());
+		vImg->at(id).image_id = ui.line_ID->text().toInt();
+		vImg->at(id).date = ui.line_timestamp->text().toStdString();
+		vImg->at(id).imagesize = ui.line_imgSize->text().toDouble();
+		vImg->at(id).resolution_x = ui.line_resolution_x->text().toDouble();
+		vImg->at(id).resolution_y = ui.line_resolution_y->text().toDouble();
+		vImg->at(id).broth_id = atoi(ui.comboBox_broth->currentText().toStdString().substr(ui.comboBox_broth->currentText().toStdString().find("-") + 1).c_str());
+		vImg->at(id).group_id = ui.line_groupID_group->text().toInt();
+		vImg->at(id).filePath = ui.line_path->text().toStdString();
+		vImg->at(id).scale = ui.line_scale->text().toDouble();
+		QImage image(ui.line_path->text());
+		vImg->at(id).image_preview = image.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		id++;
+	}
+	if (!ui.line_ID_2->text().isEmpty()) {
+		vImg->push_back(Image());
+		vImg->at(id).image_id = ui.line_ID_2->text().toInt();
+		vImg->at(id).date = ui.line_timestamp_2->text().toStdString();
+		vImg->at(id).imagesize = ui.line_imgSize_2->text().toDouble();
+		vImg->at(id).resolution_x = ui.line_resolution_x_2->text().toDouble();
+		vImg->at(id).resolution_y = ui.line_resolution_y_2->text().toDouble();
+		vImg->at(id).broth_id = atoi(ui.comboBox_broth_2->currentText().toStdString().substr(ui.comboBox_broth_2->currentText().toStdString().find("-") + 1).c_str());
+		vImg->at(id).group_id = ui.line_groupID_group->text().toInt();
+		vImg->at(id).filePath = ui.line_path_2->text().toStdString();
+		vImg->at(id).scale = ui.line_scale_2->text().toDouble();
+		QImage image2(ui.line_path_2->text());
+		vImg->at(id).image_preview = image2.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		id++;
+	}
+	if (!ui.line_ID_3->text().isEmpty()) {
+		vImg->push_back(Image());
+		vImg->at(id).image_id = ui.line_ID_3->text().toInt();
+		vImg->at(id).date = ui.line_timestamp_3->text().toStdString();
+		vImg->at(id).imagesize = ui.line_imgSize_3->text().toDouble();
+		vImg->at(id).resolution_x = ui.line_resolution_x_3->text().toDouble();
+		vImg->at(id).resolution_y = ui.line_resolution_y_3->text().toDouble();
+		vImg->at(id).broth_id = atoi(ui.comboBox_broth_3->currentText().toStdString().substr(ui.comboBox_broth_3->currentText().toStdString().find("-") + 1).c_str());
+		vImg->at(id).group_id = ui.line_groupID_group->text().toInt();
+		vImg->at(id).filePath = ui.line_path_3->text().toStdString();
+		vImg->at(id).scale = ui.line_scale_3->text().toDouble();
+		QImage image3(ui.line_path_3->text());
+		vImg->at(id).image_preview = image3.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		id++;
+	}
+	if (!ui.line_ID_4->text().isEmpty()) {
+		vImg->push_back(Image());
+		vImg->at(id).image_id = ui.line_ID_4->text().toInt();
+		vImg->at(id).date = ui.line_timestamp_4->text().toStdString();
+		vImg->at(id).imagesize = ui.line_imgSize_4->text().toDouble();
+		vImg->at(id).resolution_x = ui.line_resolution_x_4->text().toDouble();
+		vImg->at(id).resolution_y = ui.line_resolution_y_4->text().toDouble();
+		vImg->at(id).broth_id = atoi(ui.comboBox_broth_4->currentText().toStdString().substr(ui.comboBox_broth_4->currentText().toStdString().find("-") + 1).c_str());
+		vImg->at(id).group_id = ui.line_groupID_group->text().toInt();
+		vImg->at(id).filePath = ui.line_path_4->text().toStdString();
+		vImg->at(id).scale = ui.line_scale_4->text().toDouble();
+		QImage image4(ui.line_path_4->text());
+		vImg->at(id).image_preview = image4.scaled(300, 300, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		id++;
+	}
 	if (dbcon2->addGroup(group)) {
 		for (int i = 0; i < vImg->size(); i++) {
 			if (dbcon2->addImage2(vImg->at(i))) {
@@ -298,6 +320,7 @@ void multiUploadDialog::saveAll() {
 void multiUploadDialog::dragOpenFiles(vector<string> urls){
 	vImg->clear();
 	ui.label_out->setText("Dont forget to save!");
+	clearInput();
 	if (!urls.empty()) {
 		for (int i = 0; i < urls.size(); i++) {
 			multiUploadDialog::loadFile(QString::fromStdString(urls[i]), 0);
@@ -305,4 +328,49 @@ void multiUploadDialog::dragOpenFiles(vector<string> urls){
 	}
 	urls.clear();
 
+}
+
+
+
+void multiUploadDialog::clearInput() {
+	ui.graphicsView->setScene(new QGraphicsScene());
+	ui.graphicsView_2->setScene(new QGraphicsScene());
+	ui.graphicsView_3->setScene(new QGraphicsScene());
+	ui.graphicsView_4->setScene(new QGraphicsScene());
+
+	ui.line_ID->setText("");
+	ui.line_timestamp->setText("");
+	ui.line_imgSize->setText("");
+	ui.line_resolution_x->setText("");
+	ui.line_resolution_y->setText("");
+	ui.line_groupID->setText("");
+	ui.line_path->setText("");
+	ui.line_scale->setText("");
+
+	ui.line_ID_2->setText("");
+	ui.line_timestamp_2->setText("");
+	ui.line_imgSize_2->setText("");
+	ui.line_resolution_x_2->setText("");
+	ui.line_resolution_y_2->setText("");
+	ui.line_groupID_2->setText("");
+	ui.line_path_2->setText("");
+	ui.line_scale_2->setText("");
+
+	ui.line_ID_3->setText("");
+	ui.line_timestamp_3->setText("");
+	ui.line_imgSize_3->setText("");
+	ui.line_resolution_x_3->setText("");
+	ui.line_resolution_y_3->setText("");
+	ui.line_groupID_3->setText("");
+	ui.line_path_3->setText("");
+	ui.line_scale_3->setText("");
+
+	ui.line_ID_4->setText("");
+	ui.line_timestamp_4->setText("");
+	ui.line_imgSize_4->setText("");
+	ui.line_resolution_x_4->setText("");
+	ui.line_resolution_y_4->setText("");
+	ui.line_groupID_4->setText("");
+	ui.line_path_4->setText("");
+	ui.line_scale_4->setText("");
 }

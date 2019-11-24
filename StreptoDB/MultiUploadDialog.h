@@ -25,6 +25,8 @@ public slots:
 	void saveAll();
 	void dragOpenFiles(vector<string> urls);
 
+	void clearInput();
+
 
 	//private slots:
 	//	void fillTable(vector<Image>);
